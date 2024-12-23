@@ -1,0 +1,47 @@
+package edu.IIT.user_management.controller;
+
+import edu.IIT.user_management.dto.UserDTO;
+import edu.IIT.user_management.producer.UserProducer;
+import edu.IIT.user_management.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/user")
+@RequiredArgsConstructor
+@CrossOrigin
+public class UserController {
+
+    private final UserService userService;
+    private final UserProducer userProducer;
+
+    @PostMapping("/createUser")
+    public String addUser(@RequestBody UserDTO user) {
+        return userService.createUser(user);
+    }
+
+    @PutMapping("/updateUser")
+    public String updateUser(@RequestBody UserDTO user) {
+        return userService.updateUser(user);
+    }
+
+    @DeleteMapping("/deleteUser/{id}")
+    public String deleteUser(@PathVariable int id) {
+        userService.deleteUser(id);
+        return "User deleted successfully";
+    }
+
+    @GetMapping("/getUser/{id}")
+    public UserDTO getUser(@PathVariable int id) {
+        userProducer.sendMessage(userService.getUserById(id));
+        return userService.getUserById(id);
+    }
+
+    @GetMapping("/getAllUsers")
+    public List<UserDTO> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
+}
