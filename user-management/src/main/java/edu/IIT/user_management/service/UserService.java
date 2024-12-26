@@ -11,4 +11,5 @@ public interface UserService {
     public String updateUser(UserDTO user);
     public void deleteUser(int id);
     public List<UserDTO> getAllUsers();
+    public List<String> filterUsers(List<Integer> userIds);
 }

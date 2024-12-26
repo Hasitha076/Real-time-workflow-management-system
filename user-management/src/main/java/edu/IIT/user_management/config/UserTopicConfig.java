@@ -11,8 +11,6 @@ public class UserTopicConfig {
     @Bean
     public NewTopic userTopic() {
         return TopicBuilder.name("user-events")
-                .partitions(1)
-                .replicas(1)
                 .build();
     }
 }

@@ -1,6 +1,7 @@
 package edu.IIT.user_management.producer;
 
 import edu.IIT.user_management.dto.UserDTO;
+import edu.IIT.user_management.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class UserProducer {
 
-    private final KafkaTemplate<UserDTO, UserDTO> kafkaTemplate;
+    private final KafkaTemplate<String, UserDTO> kafkaTemplate;
 
     public void sendMessage(UserDTO userDTO) {
         log.info(String.format("#### -> Producing message -> %s", userDTO));

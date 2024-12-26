@@ -19,6 +19,7 @@ public class UserController {
 
     @PostMapping("/createUser")
     public String addUser(@RequestBody UserDTO user) {
+        userProducer.sendMessage(user);
         return userService.createUser(user);
     }
 
@@ -35,13 +36,17 @@ public class UserController {
 
     @GetMapping("/getUser/{id}")
     public UserDTO getUser(@PathVariable int id) {
-        userProducer.sendMessage(userService.getUserById(id));
         return userService.getUserById(id);
     }
 
     @GetMapping("/getAllUsers")
     public List<UserDTO> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/filterUsers")
+    public List<String> filterUsers(@RequestParam List<Integer> ids) { // Ensure param matches WebClient
+        return userService.filterUsers(ids);
     }
 
 }

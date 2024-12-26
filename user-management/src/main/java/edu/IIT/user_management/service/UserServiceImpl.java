@@ -20,15 +20,18 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
+    @Override
     public String createUser(UserDTO user) {
         userRepository.save(modelMapper.map(user, User.class));
         return "User created successfully";
     }
 
+    @Override
     public UserDTO getUserById(int id) {
         return modelMapper.map(userRepository.findById(id), UserDTO.class);
     }
 
+    @Override
     public String updateUser(UserDTO userDTO) {
         Optional<User> user = (userRepository.findById(userDTO.getUserId()));
         if (user.isEmpty()) {
@@ -39,12 +42,25 @@ public class UserServiceImpl implements UserService {
         return "User updated successfully";
     }
 
+    @Override
     public void deleteUser(int id) {
         userRepository.deleteById(id);
     }
 
+    @Override
     public List<UserDTO> getAllUsers() {
         return modelMapper.map(userRepository.findAll(), new TypeToken<List<UserDTO>>(){}.getType());
+    }
+
+    @Override
+    public List<String> filterUsers(List<Integer> userIds) {
+        List<User> userList = userRepository.findAllById(userIds);
+
+        if (userList.isEmpty()) {
+            log.warn("No users found for IDs: {}", userIds);
+        }
+
+        return userList.stream().map(User::getEmail).toList();
     }
 
 }

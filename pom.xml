@@ -20,6 +20,8 @@
   <modules>
     <module>user-management</module>
     <module>task-management</module>
+    <module>project-management</module>
+    <module>notification-management</module>
   </modules>
 
   <build>
