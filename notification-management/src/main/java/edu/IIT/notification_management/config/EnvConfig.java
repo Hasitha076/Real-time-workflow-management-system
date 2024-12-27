@@ -1,15 +1,13 @@
 package edu.IIT.notification_management.config;
 
 import io.github.cdimascio.dotenv.Dotenv;
-import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class NotificationConfig {
-
+public class EnvConfig {
     @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
+    public Dotenv dotenv() {
+        return Dotenv.configure().load(); // Loads .env file automatically
     }
 }

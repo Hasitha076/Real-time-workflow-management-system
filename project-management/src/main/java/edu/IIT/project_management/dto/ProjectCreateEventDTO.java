@@ -9,7 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ProjectEventDTO {
+public class ProjectCreateEventDTO {
     private String projectName;
     private List<Integer> collaboratorIds;
 }

@@ -1,11 +1,10 @@
 package edu.IIT.project_management.producer;
 
-import edu.IIT.project_management.config.ProjectTopicConfig;
 import edu.IIT.project_management.dto.ProjectDTO;
-import edu.IIT.project_management.dto.ProjectEventDTO;
+import edu.IIT.project_management.dto.ProjectCreateEventDTO;
+import edu.IIT.project_management.dto.ProjectUpdateEventDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +15,20 @@ import java.util.List;
 @Slf4j
 public class ProjectProducer {
 
-    private final KafkaTemplate<ProjectDTO, ProjectEventDTO> kafkaTemplate;
+    private final KafkaTemplate<ProjectDTO, ProjectCreateEventDTO> kafkaTemplateCreate;
+    private final KafkaTemplate<ProjectDTO, ProjectUpdateEventDTO> kafkaTemplateUpdate;
 
-    public void sendMessage(String projectName, List<Integer> collaboratorIds) {
+    public void sendCreatedProjectMessage(String projectName, List<Integer> collaboratorIds) {
         log.info(String.format("#### -> Producing message -> %s", projectName, collaboratorIds));
 
-        ProjectEventDTO projectEventDTO = new ProjectEventDTO(projectName, collaboratorIds);
-        kafkaTemplate.send("project-events", projectEventDTO);
+        ProjectCreateEventDTO projectCreateEventDTO = new ProjectCreateEventDTO(projectName, collaboratorIds);
+        kafkaTemplateCreate.send("project-create-events", projectCreateEventDTO);
+    }
+
+    public void sendUpdateProjectMessage(String projectName, String collaboratorAssignmentType, List<Integer> collaboratorIds) {
+        log.info(String.format("#### -> Producing message -> %s", projectName, collaboratorIds));
+
+        ProjectUpdateEventDTO projectCreateEventDTO = new ProjectUpdateEventDTO(projectName, collaboratorAssignmentType, collaboratorIds);
+        kafkaTemplateUpdate.send("project-update-events", projectCreateEventDTO);
     }
 }

@@ -4,13 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Notification service is created (Not finished). When a project is created, can get collaborator emails">
+    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Notification service is finished. Collaborators can get an email.">
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/config/EnvConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/dto/ProjectUpdateEventDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notification-management/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/NotificationManagementApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/NotificationManagementApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/config/NotificationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/config/NotificationConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/consumer/NotificationConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/consumer/NotificationConsumer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-management/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/controller/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/controller/ProjectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/dto/ProjectEventDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/dto/ProjectCreateEventDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/producer/ProjectProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/producer/ProjectProducer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/service/ProjectServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/service/ProjectServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -86,6 +93,11 @@
       <recent name="$PROJECT_DIR$/project-management" />
       <recent name="$PROJECT_DIR$/task-management" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/notification-management" />
+      <recent name="$PROJECT_DIR$/notification-management/src/main/resources" />
+    </key>
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="edu.IIT.user_management.repository" />
     </key>
@@ -159,9 +171,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.NotificationManagementApplication" />
-        <item itemvalue="Application.TaskManagementApplication" />
-        <item itemvalue="Application.UserManagementApplication" />
         <item itemvalue="Application.ProjectManagementApplication" />
+        <item itemvalue="Application.UserManagementApplication" />
+        <item itemvalue="Application.TaskManagementApplication" />
         <item itemvalue="JUnit.All in Real-time-workflow-management-system" />
       </list>
     </recent_temporary>
@@ -191,7 +203,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735246819774</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Notification service is finished. Collaborators can get an email.">
+      <option name="closed" value="true" />
+      <created>1735284322401</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1735284322401</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -208,13 +228,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="User management service is created" />
     <MESSAGE value="Notification service is created (Not finished). When a project is created, can get collaborator emails" />
-    <option name="LAST_COMMIT_MESSAGE" value="Notification service is created (Not finished). When a project is created, can get collaborator emails" />
-  </component>
-  <component name="XDebuggerManager">
-    <watches-manager>
-      <configuration name="Application">
-        <watch expression="&quot;http://localhost:8080/api/v1/user/filterUsers/{List&lt;Integer&gt; ids}&quot;" />
-      </configuration>
-    </watches-manager>
+    <MESSAGE value="Notification service is finished. Collaborators can get an email." />
+    <option name="LAST_COMMIT_MESSAGE" value="Notification service is finished. Collaborators can get an email." />
   </component>
 </project>
