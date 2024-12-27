@@ -1,6 +1,7 @@
 package edu.IIT.notification_management.service;
 
 import edu.IIT.project_management.dto.ProjectCreateEventDTO;
+import edu.IIT.project_management.dto.ProjectDeleteEventDTO;
 import edu.IIT.project_management.dto.ProjectUpdateEventDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -73,6 +74,27 @@ public class NotificationServiceImpl implements NotificationService {
             subject = "Project has been changed as: " + projectUpdateEventDTO.getProjectName();
             body = "Project has been changed as: " + projectUpdateEventDTO.getProjectName();
         }
+
+        assert recipients != null;
+        sendMail(recipients, subject, body);
+    }
+
+    @Override
+    public void sendDeleteEmails(ProjectDeleteEventDTO projectDeleteEventDTO) {
+        List<Integer> ids = projectDeleteEventDTO.getCollaboratorIds();
+
+        List<String> recipients = webClientService.get()
+                .uri(uriBuilder -> uriBuilder.path("/user/filterUsers") // Ensure path matches the controller
+                        .queryParam("ids", ids) // Ensure param name matches the controller
+                        .build())
+                .retrieve()
+                .bodyToMono(List.class)
+                .block();
+
+        log.info("#### -> Sending email -> {}", recipients);
+
+        String subject = projectDeleteEventDTO.getProjectName() + " project is deleted";
+        String body = projectDeleteEventDTO.getProjectName() + " project is already deleted";
 
         assert recipients != null;
         sendMail(recipients, subject, body);

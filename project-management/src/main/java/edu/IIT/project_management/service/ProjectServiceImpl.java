@@ -87,7 +87,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void deleteProject(int id) {
+        ProjectDTO project = getProjectById(id);
         projectRepository.deleteById(id);
+        projectProducer.sendDeleteProjectMessage(project.getProjectName(), project.getCollaboratorIds());
     }
 
     @Override

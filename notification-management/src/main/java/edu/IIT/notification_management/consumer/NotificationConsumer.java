@@ -2,6 +2,7 @@ package edu.IIT.notification_management.consumer;
 
 import edu.IIT.notification_management.service.NotificationService;
 import edu.IIT.project_management.dto.ProjectCreateEventDTO;
+import edu.IIT.project_management.dto.ProjectDeleteEventDTO;
 import edu.IIT.project_management.dto.ProjectUpdateEventDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,18 @@ public class NotificationConsumer {
             assert message != null;
 
             notificationService.sendUpdatedEmails(message);
+
+        } catch (Exception e) {
+            log.error("Error consuming message", e);
+        }
+    }
+
+    @KafkaListener(topics = "project-delete-events", groupId = "notification-management")
+    public void consumeDeleteProject(ProjectDeleteEventDTO message) {
+        try {
+            assert message != null;
+
+            notificationService.sendDeleteEmails(message);
 
         } catch (Exception e) {
             log.error("Error consuming message", e);
