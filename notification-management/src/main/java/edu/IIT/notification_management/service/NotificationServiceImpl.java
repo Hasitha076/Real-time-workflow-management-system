@@ -3,6 +3,8 @@ package edu.IIT.notification_management.service;
 import edu.IIT.project_management.dto.ProjectCreateEventDTO;
 import edu.IIT.project_management.dto.ProjectDeleteEventDTO;
 import edu.IIT.project_management.dto.ProjectUpdateEventDTO;
+import edu.IIT.task_management.dto.TaskCreateEventDTO;
+import edu.IIT.task_management.dto.TaskUpdateEventDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,6 +101,60 @@ public class NotificationServiceImpl implements NotificationService {
         assert recipients != null;
         sendMail(recipients, subject, body);
     }
+
+
+//    Task
+@Override
+public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
+    List<Integer> ids = taskCreateEventDTO.getCollaboratorIds();
+
+    List<String> recipients = webClientService.get()
+            .uri(uriBuilder -> uriBuilder.path("/user/filterUsers") // Ensure path matches the controller
+                    .queryParam("ids", ids) // Ensure param name matches the controller
+                    .build())
+            .retrieve()
+            .bodyToMono(List.class)
+            .block();
+
+    log.info("#### -> Sending email -> {}", recipients);
+
+    String subject = "New Task Created: " + taskCreateEventDTO.getTaskName();
+    String body = "You have been added as a collaborator to the task: " + taskCreateEventDTO.getTaskName();
+
+    assert recipients != null;
+    sendMail(recipients, subject, body);
+}
+
+    @Override
+    public void sendTaskUpdatedEmails(TaskUpdateEventDTO taskUpdateEventDTO) {
+        List<Integer> ids = taskUpdateEventDTO.getCollaboratorIds();
+
+        List<String> recipients = webClientService.get()
+                .uri(uriBuilder -> uriBuilder.path("/user/filterUsers") // Ensure path matches the controller
+                        .queryParam("ids", ids) // Ensure param name matches the controller
+                        .build())
+                .retrieve()
+                .bodyToMono(List.class)
+                .block();
+
+        log.info("#### -> Sending email -> {}", recipients);
+        String subject = null;
+        String body = null;
+        if(taskUpdateEventDTO.getCollaboratorAssignmentType().equals("New")) {
+            subject = "New Task Created: " + taskUpdateEventDTO.getTaskName();
+            body = "You have been added as a collaborator to the task: " + taskUpdateEventDTO.getTaskName();
+        } else if(taskUpdateEventDTO.getCollaboratorAssignmentType().equals("Removed")) {
+            subject = "Collaborators Removed from Task: " + taskUpdateEventDTO.getTaskName();
+            body = "You have been removed from the task: " + taskUpdateEventDTO.getTaskName();
+        } else if(taskUpdateEventDTO.getCollaboratorAssignmentType().equals("Existing")) {
+            subject = "Task has been changed as: " + taskUpdateEventDTO.getTaskName();
+            body = "Task has been changed as: " + taskUpdateEventDTO.getTaskName();
+        }
+
+        assert recipients != null;
+        sendMail(recipients, subject, body);
+    }
+
 
     @Override
     public void sendMail(List<String> to, String subject, String body) {

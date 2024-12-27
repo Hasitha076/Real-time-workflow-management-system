@@ -2,6 +2,7 @@ package edu.IIT.task_management.service;
 
 import edu.IIT.task_management.dto.TaskDTO;
 import edu.IIT.task_management.model.Task;
+import edu.IIT.task_management.producer.TaskProducer;
 import edu.IIT.task_management.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,10 +21,12 @@ public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
     private final ModelMapper modelMapper;
+    private final TaskProducer taskProducer;
 
     @Override
     public String createTask(TaskDTO taskDTO) {
         taskRepository.save(modelMapper.map(taskDTO, Task.class));
+        taskProducer.sendCreateTaskMessage(taskDTO.getTaskName(), taskDTO.getCollaboratorIds());
         return "Task created successfully";
     }
 
@@ -37,8 +41,46 @@ public class TaskServiceImpl implements TaskService {
         if (task.isEmpty()) {
             return "Task not found";
         }
+
+        // Retain the createdAt value from the old task
+        taskDTO.setCreatedAt(task.get().getCreatedAt());
+        List<Integer> oldCollaboratorIds = task.get().getCollaboratorIds(); // Get existing collaborators
+
+        // Identify new collaborators: present in new project but not in old task
+        List<Integer> newCollaborators = taskDTO.getCollaboratorIds().stream()
+                .filter(collaboratorId -> !oldCollaboratorIds.contains(collaboratorId))
+                .collect(Collectors.toList());
+
+        // Identify removed collaborators: present in old project but not in new task
+        List<Integer> removedCollaborators = oldCollaboratorIds.stream()
+                .filter(collaboratorId -> !taskDTO.getCollaboratorIds().contains(collaboratorId))
+                .collect(Collectors.toList());
+
+        // Identify unchanged collaborators: present in both old and new task
+        List<Integer> unchangedCollaborators = oldCollaboratorIds.stream()
+                .filter(taskDTO.getCollaboratorIds()::contains)
+                .collect(Collectors.toList());
+
         taskDTO.setCreatedAt(task.get().getCreatedAt());
         taskRepository.save(modelMapper.map(taskDTO, new TypeToken<Task>(){}.getType()));
+
+        // Handle sending collaborator changes to the producer or further actions
+        if (!newCollaborators.isEmpty()) {
+            // Send newly added collaborators
+            taskProducer.sendUpdateTaskMessage(taskDTO.getTaskName(),"New", newCollaborators);
+        }
+
+        if (!removedCollaborators.isEmpty()) {
+            // Send removed collaborators
+            taskProducer.sendUpdateTaskMessage(taskDTO.getTaskName(),"Removed", removedCollaborators);
+        }
+
+        // Optionally, you can also send unchanged collaborators if needed
+        if (!unchangedCollaborators.isEmpty()) {
+            // Handle unchanged collaborators if necessary
+            taskProducer.sendUpdateTaskMessage(taskDTO.getTaskName(),"Existing", unchangedCollaborators);
+        }
+
         return "Task updated successfully";
     }
 

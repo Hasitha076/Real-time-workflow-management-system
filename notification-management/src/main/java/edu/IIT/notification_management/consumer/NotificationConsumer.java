@@ -4,6 +4,8 @@ import edu.IIT.notification_management.service.NotificationService;
 import edu.IIT.project_management.dto.ProjectCreateEventDTO;
 import edu.IIT.project_management.dto.ProjectDeleteEventDTO;
 import edu.IIT.project_management.dto.ProjectUpdateEventDTO;
+import edu.IIT.task_management.dto.TaskCreateEventDTO;
+import edu.IIT.task_management.dto.TaskUpdateEventDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -46,6 +48,30 @@ public class NotificationConsumer {
             assert message != null;
 
             notificationService.sendDeleteEmails(message);
+
+        } catch (Exception e) {
+            log.error("Error consuming message", e);
+        }
+    }
+
+    @KafkaListener(topics = "task-create-events", groupId = "notification-management")
+    public void consumeCreateTask(TaskCreateEventDTO message) {
+        try {
+            assert message != null;
+
+            notificationService.sendTaskCreateEmails(message);
+
+        } catch (Exception e) {
+            log.error("Error consuming message", e);
+        }
+    }
+
+    @KafkaListener(topics = "task-update-events", groupId = "notification-management")
+    public void consumeUpdateTask(TaskUpdateEventDTO message) {
+        try {
+            assert message != null;
+
+            notificationService.sendTaskUpdatedEmails(message);
 
         } catch (Exception e) {
             log.error("Error consuming message", e);
