@@ -30,6 +30,18 @@ spring:
       template:
         default-topic: notification-events
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: "hasithamadushanepa076@gmail.com"
+    password: "agsg eebs jvay dapa"
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 
 server:
   port: 8084

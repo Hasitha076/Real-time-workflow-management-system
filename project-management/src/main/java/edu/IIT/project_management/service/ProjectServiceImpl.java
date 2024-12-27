@@ -2,6 +2,7 @@ package edu.IIT.project_management.service;
 
 import edu.IIT.project_management.dto.ProjectDTO;
 import edu.IIT.project_management.model.Project;
+import edu.IIT.project_management.producer.ProjectProducer;
 import edu.IIT.project_management.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,10 +20,12 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
     private final ModelMapper modelMapper;
+    private final ProjectProducer projectProducer;
 
     @Override
     public String createProject(ProjectDTO projectDTO) {
         projectRepository.save(modelMapper.map(projectDTO, Project.class));
+        projectProducer.sendMessage(projectDTO.getProjectName(), projectDTO.getCollaboratorIds());
         return "Project created successfully";
     }
 

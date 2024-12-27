@@ -19,7 +19,6 @@ public class ProjectController {
 
     @PostMapping("/createProject")
     public String addProject(@RequestBody ProjectDTO projectDTO) {
-        projectProducer.sendMessage(projectDTO.getProjectName(), projectDTO.getCollaboratorIds());
         return projectService.createProject(projectDTO);
     }
 

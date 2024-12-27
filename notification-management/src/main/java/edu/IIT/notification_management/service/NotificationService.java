@@ -8,4 +8,5 @@ import java.util.List;
 public interface NotificationService {
 
     public void sendEmails(ProjectEventDTO projectEventDTO);
+    public void sendMail(List<String> to, String subject, String body);
 }
