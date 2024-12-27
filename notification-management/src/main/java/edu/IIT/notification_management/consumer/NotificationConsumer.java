@@ -5,6 +5,7 @@ import edu.IIT.project_management.dto.ProjectCreateEventDTO;
 import edu.IIT.project_management.dto.ProjectDeleteEventDTO;
 import edu.IIT.project_management.dto.ProjectUpdateEventDTO;
 import edu.IIT.task_management.dto.TaskCreateEventDTO;
+import edu.IIT.task_management.dto.TaskDeleteEventDTO;
 import edu.IIT.task_management.dto.TaskUpdateEventDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -72,6 +73,18 @@ public class NotificationConsumer {
             assert message != null;
 
             notificationService.sendTaskUpdatedEmails(message);
+
+        } catch (Exception e) {
+            log.error("Error consuming message", e);
+        }
+    }
+
+    @KafkaListener(topics = "task-delete-events", groupId = "notification-management")
+    public void consumeDeleteTask(TaskDeleteEventDTO message) {
+        try {
+            assert message != null;
+
+            notificationService.sendTaskDeleteEmails(message);
 
         } catch (Exception e) {
             log.error("Error consuming message", e);

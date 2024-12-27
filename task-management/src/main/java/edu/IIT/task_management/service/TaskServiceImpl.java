@@ -1,5 +1,6 @@
 package edu.IIT.task_management.service;
 
+import edu.IIT.project_management.dto.ProjectDTO;
 import edu.IIT.task_management.dto.TaskDTO;
 import edu.IIT.task_management.model.Task;
 import edu.IIT.task_management.producer.TaskProducer;
@@ -86,7 +87,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void deleteTask(int id) {
+        TaskDTO task = getTaskById(id);
         taskRepository.deleteById(id);
+        taskProducer.sendDeleteTaskMessage(task.getTaskName(), task.getCollaboratorIds());
     }
 
     @Override

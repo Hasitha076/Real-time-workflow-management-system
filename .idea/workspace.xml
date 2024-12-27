@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Collaborators can get an email after deleted the project.">
-      <change afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TaskCreateEventDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TaskDeleteEventDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TaskUpdateEventDTO.java" afterDir="false" />
+    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Collaborators can get an email after created &amp; updated the task.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/consumer/NotificationConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/consumer/NotificationConsumer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationService.java" afterDir="false" />
@@ -102,7 +99,7 @@
       <command value="mvn clean verify" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.NotificationManagementApplication">
+  <component name="RunManager" selected="Application.TaskManagementApplication">
     <configuration name="NotificationManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.IIT.notification_management.NotificationManagementApplication" />
       <module name="notification-management" />
@@ -165,8 +162,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.NotificationManagementApplication" />
         <item itemvalue="Application.TaskManagementApplication" />
+        <item itemvalue="Application.NotificationManagementApplication" />
         <item itemvalue="Application.ProjectManagementApplication" />
         <item itemvalue="Application.UserManagementApplication" />
         <item itemvalue="JUnit.All in Real-time-workflow-management-system" />
@@ -222,7 +219,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735311236543</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Collaborators can get an email after created &amp; updated the task.">
+      <option name="closed" value="true" />
+      <created>1735316249707</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1735316249708</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -242,6 +247,7 @@
     <MESSAGE value="Notification service is finished. Collaborators can get an email." />
     <MESSAGE value="Collaborators can get an email when updated the project." />
     <MESSAGE value="Collaborators can get an email after deleted the project." />
-    <option name="LAST_COMMIT_MESSAGE" value="Collaborators can get an email after deleted the project." />
+    <MESSAGE value="Collaborators can get an email after created &amp; updated the task." />
+    <option name="LAST_COMMIT_MESSAGE" value="Collaborators can get an email after created &amp; updated the task." />
   </component>
 </project>

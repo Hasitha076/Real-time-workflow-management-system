@@ -4,6 +4,7 @@ import edu.IIT.project_management.dto.ProjectCreateEventDTO;
 import edu.IIT.project_management.dto.ProjectDeleteEventDTO;
 import edu.IIT.project_management.dto.ProjectUpdateEventDTO;
 import edu.IIT.task_management.dto.TaskCreateEventDTO;
+import edu.IIT.task_management.dto.TaskDeleteEventDTO;
 import edu.IIT.task_management.dto.TaskUpdateEventDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -150,6 +151,27 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
             subject = "Task has been changed as: " + taskUpdateEventDTO.getTaskName();
             body = "Task has been changed as: " + taskUpdateEventDTO.getTaskName();
         }
+
+        assert recipients != null;
+        sendMail(recipients, subject, body);
+    }
+
+    @Override
+    public void sendTaskDeleteEmails(TaskDeleteEventDTO taskDeleteEventDTO) {
+        List<Integer> ids = taskDeleteEventDTO.getCollaboratorIds();
+
+        List<String> recipients = webClientService.get()
+                .uri(uriBuilder -> uriBuilder.path("/user/filterUsers") // Ensure path matches the controller
+                        .queryParam("ids", ids) // Ensure param name matches the controller
+                        .build())
+                .retrieve()
+                .bodyToMono(List.class)
+                .block();
+
+        log.info("#### -> Sending email -> {}", recipients);
+
+        String subject = taskDeleteEventDTO.getTaskName() + " task is deleted";
+        String body = taskDeleteEventDTO.getTaskName() + " task is already deleted";
 
         assert recipients != null;
         sendMail(recipients, subject, body);
