@@ -34,10 +34,10 @@ public class ProjectProducer {
         kafkaTemplateUpdate.send("project-update-events", projectCreateEventDTO);
     }
 
-    public void sendDeleteProjectMessage(String projectName, int assignerId, List<Integer> collaboratorIds) {
+    public void sendDeleteProjectMessage(int projectId, String projectName, int assignerId, List<Integer> collaboratorIds) {
         log.info(String.format("#### -> Producing message -> %s", projectName, collaboratorIds));
 
-        ProjectDeleteEventDTO projectDeleteEventDTO = new ProjectDeleteEventDTO(projectName, assignerId, collaboratorIds);
+        ProjectDeleteEventDTO projectDeleteEventDTO = new ProjectDeleteEventDTO(projectId, projectName, assignerId, collaboratorIds);
         kafkaTemplateDelete.send("project-delete-events", projectDeleteEventDTO);
     }
 }

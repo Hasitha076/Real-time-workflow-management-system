@@ -11,4 +11,5 @@ public interface TaskService {
     public String updateTask(TaskDTO taskDTO);
     public void deleteTask(int id);
     public List<TaskDTO> getAllTasks();
+    public void deleteByProjectId(int projectId);
 }

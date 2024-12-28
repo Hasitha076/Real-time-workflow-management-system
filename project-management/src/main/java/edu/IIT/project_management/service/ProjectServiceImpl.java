@@ -89,7 +89,7 @@ public class ProjectServiceImpl implements ProjectService {
     public void deleteProject(int id) {
         ProjectDTO project = getProjectById(id);
         projectRepository.deleteById(id);
-        projectProducer.sendDeleteProjectMessage(project.getProjectName(), project.getAssignerId(), project.getCollaboratorIds());
+        projectProducer.sendDeleteProjectMessage(project.getProjectId(), project.getProjectName(), project.getAssignerId(), project.getCollaboratorIds());
     }
 
     @Override

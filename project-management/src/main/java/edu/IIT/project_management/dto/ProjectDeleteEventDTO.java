@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class ProjectDeleteEventDTO {
+    private int projectId;
     private String projectName;
     private int assignerId;
     private List<Integer> collaboratorIds;

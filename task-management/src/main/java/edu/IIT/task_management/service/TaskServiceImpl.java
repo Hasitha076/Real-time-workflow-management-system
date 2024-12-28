@@ -7,6 +7,7 @@ import edu.IIT.task_management.producer.TaskProducer;
 import edu.IIT.task_management.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
@@ -89,8 +90,22 @@ public class TaskServiceImpl implements TaskService {
     public void deleteTask(int id) {
         TaskDTO task = getTaskById(id);
         taskRepository.deleteById(id);
+
         taskProducer.sendDeleteTaskMessage(task.getTaskName(), task.getAssignerId(), task.getCollaboratorIds());
     }
+
+    @Override
+    public void deleteByProjectId(int projectId) {
+        // Fetch all tasks that match the project ID
+        List<Task> tasks = taskRepository.findByProjectId(projectId);
+
+        tasks.forEach(task -> {
+            taskRepository.deleteById(task.getTaskId());
+            taskProducer.sendDeleteTaskMessage(task.getTaskName(), task.getAssignerId(), task.getCollaboratorIds());
+        });
+
+    }
+
 
     @Override
     public List<TaskDTO> getAllTasks() {
