@@ -20,24 +20,24 @@ public class ProjectProducer {
     private final KafkaTemplate<ProjectDTO, ProjectUpdateEventDTO> kafkaTemplateUpdate;
     private final KafkaTemplate<ProjectDTO, ProjectDeleteEventDTO> kafkaTemplateDelete;
 
-    public void sendCreatedProjectMessage(String projectName, List<Integer> collaboratorIds) {
-        log.info(String.format("#### -> Producing message -> %s", projectName, collaboratorIds));
+    public void sendCreatedProjectMessage(String projectName, int assignerId, List<Integer> collaboratorIds) {
+        log.info(String.format("#### -> Producing message -> %s", projectName, assignerId, collaboratorIds));
 
-        ProjectCreateEventDTO projectCreateEventDTO = new ProjectCreateEventDTO(projectName, collaboratorIds);
+        ProjectCreateEventDTO projectCreateEventDTO = new ProjectCreateEventDTO(projectName, assignerId, collaboratorIds);
         kafkaTemplateCreate.send("project-create-events", projectCreateEventDTO);
     }
 
-    public void sendUpdateProjectMessage(String projectName, String collaboratorAssignmentType, List<Integer> collaboratorIds) {
+    public void sendUpdateProjectMessage(String projectName, int assignerId, String collaboratorAssignmentType, List<Integer> collaboratorIds) {
         log.info(String.format("#### -> Producing message -> %s", projectName, collaboratorIds));
 
-        ProjectUpdateEventDTO projectCreateEventDTO = new ProjectUpdateEventDTO(projectName, collaboratorAssignmentType, collaboratorIds);
+        ProjectUpdateEventDTO projectCreateEventDTO = new ProjectUpdateEventDTO(projectName, assignerId, collaboratorAssignmentType, collaboratorIds);
         kafkaTemplateUpdate.send("project-update-events", projectCreateEventDTO);
     }
 
-    public void sendDeleteProjectMessage(String projectName, List<Integer> collaboratorIds) {
+    public void sendDeleteProjectMessage(String projectName, int assignerId, List<Integer> collaboratorIds) {
         log.info(String.format("#### -> Producing message -> %s", projectName, collaboratorIds));
 
-        ProjectDeleteEventDTO projectDeleteEventDTO = new ProjectDeleteEventDTO(projectName, collaboratorIds);
+        ProjectDeleteEventDTO projectDeleteEventDTO = new ProjectDeleteEventDTO(projectName, assignerId, collaboratorIds);
         kafkaTemplateDelete.send("project-delete-events", projectDeleteEventDTO);
     }
 }

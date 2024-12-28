@@ -24,6 +24,7 @@ public class Project {
 
     @Enumerated(EnumType.STRING)
     private ProjectPriorityLevel priority;
+    private int assignerId;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;

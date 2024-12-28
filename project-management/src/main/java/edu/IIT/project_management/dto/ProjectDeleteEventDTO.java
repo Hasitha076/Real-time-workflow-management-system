@@ -11,5 +11,6 @@ import java.util.List;
 @ToString
 public class ProjectDeleteEventDTO {
     private String projectName;
+    private int assignerId;
     private List<Integer> collaboratorIds;
 }

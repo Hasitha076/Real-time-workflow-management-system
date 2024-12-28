@@ -11,6 +11,7 @@ import java.util.List;
 @ToString
 public class ProjectUpdateEventDTO {
     private String projectName;
+    private int assignerId;
     private String collaboratorAssignmentType;
     private List<Integer> collaboratorIds;
 }

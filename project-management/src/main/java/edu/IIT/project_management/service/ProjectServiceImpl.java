@@ -26,7 +26,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public String createProject(ProjectDTO projectDTO) {
         projectRepository.save(modelMapper.map(projectDTO, Project.class));
-        projectProducer.sendCreatedProjectMessage(projectDTO.getProjectName(), projectDTO.getCollaboratorIds());
+        projectProducer.sendCreatedProjectMessage(projectDTO.getProjectName(), projectDTO.getAssignerId(), projectDTO.getCollaboratorIds());
         return "Project created successfully";
     }
 
@@ -67,18 +67,18 @@ public class ProjectServiceImpl implements ProjectService {
         // Handle sending collaborator changes to the producer or further actions
         if (!newCollaborators.isEmpty()) {
             // Send newly added collaborators
-            projectProducer.sendUpdateProjectMessage(projectDTO.getProjectName(),"New", newCollaborators);
+            projectProducer.sendUpdateProjectMessage(projectDTO.getProjectName(), projectDTO.getAssignerId(),"New", newCollaborators);
         }
 
         if (!removedCollaborators.isEmpty()) {
             // Send removed collaborators
-            projectProducer.sendUpdateProjectMessage(projectDTO.getProjectName(),"Removed", removedCollaborators);
+            projectProducer.sendUpdateProjectMessage(projectDTO.getProjectName(), projectDTO.getAssignerId(),"Removed", removedCollaborators);
         }
 
         // Optionally, you can also send unchanged collaborators if needed
         if (!unchangedCollaborators.isEmpty()) {
             // Handle unchanged collaborators if necessary
-            projectProducer.sendUpdateProjectMessage(projectDTO.getProjectName(),"Existing", unchangedCollaborators);
+            projectProducer.sendUpdateProjectMessage(projectDTO.getProjectName(), projectDTO.getAssignerId(),"Existing", unchangedCollaborators);
         }
 
         return "Project updated successfully";
@@ -89,7 +89,7 @@ public class ProjectServiceImpl implements ProjectService {
     public void deleteProject(int id) {
         ProjectDTO project = getProjectById(id);
         projectRepository.deleteById(id);
-        projectProducer.sendDeleteProjectMessage(project.getProjectName(), project.getCollaboratorIds());
+        projectProducer.sendDeleteProjectMessage(project.getProjectName(), project.getAssignerId(), project.getCollaboratorIds());
     }
 
     @Override

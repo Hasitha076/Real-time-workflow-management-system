@@ -1,7 +1,6 @@
 package edu.IIT.notification_management.service;
 
 import edu.IIT.notification_management.dto.NotificationEventDTO;
-import edu.IIT.notification_management.model.Notification;
 import edu.IIT.notification_management.repository.NotificationRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

@@ -15,6 +15,7 @@ public class ProjectDTO {
     private int projectId;
     private String projectName;
     private ProjectPriorityLevel priority;
+    private int assignerId;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;

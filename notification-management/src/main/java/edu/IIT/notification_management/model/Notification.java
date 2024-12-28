@@ -1,5 +1,6 @@
 package edu.IIT.notification_management.model;
 
+import edu.IIT.notification_management.dto.NotificationType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +21,8 @@ public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int notificationId;
-    private String taskName;
+    private String notificationName;
+    private NotificationType notificationType;
     private int assignerId;
     private List<Integer> collaboratorIds;
     private String subject;

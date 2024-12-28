@@ -13,7 +13,8 @@ import java.util.List;
 @Data
 public class NotificationEventDTO {
     private int notificationId;
-    private String taskName;
+    private String notificationName;
+    private NotificationType notificationType;
     private int assignerId;
     private List<Integer> collaboratorIds;
     private String subject;

@@ -25,6 +25,7 @@ public class NotificationConsumer {
             assert message != null;
 
             notificationService.sendEmails(message);
+            notificationService.createProjectNotification(message, null, "PROJECT");
 
         } catch (Exception e) {
             log.error("Error consuming message", e);
@@ -37,6 +38,7 @@ public class NotificationConsumer {
             assert message != null;
 
             notificationService.sendUpdatedEmails(message);
+            notificationService.updateProjectNotification(message, null, "PROJECT");
 
         } catch (Exception e) {
             log.error("Error consuming message", e);
@@ -49,6 +51,7 @@ public class NotificationConsumer {
             assert message != null;
 
             notificationService.sendDeleteEmails(message);
+            notificationService.deleteProjectNotification(message, null, "PROJECT");
 
         } catch (Exception e) {
             log.error("Error consuming message", e);
@@ -61,7 +64,7 @@ public class NotificationConsumer {
             assert message != null;
 
             notificationService.sendTaskCreateEmails(message);
-            notificationService.createNotification(message, null);
+            notificationService.createTaskNotification(message, null, "task");
 
         } catch (Exception e) {
             log.error("Error consuming message", e);
@@ -74,7 +77,7 @@ public class NotificationConsumer {
             assert message != null;
 
             notificationService.sendTaskUpdatedEmails(message);
-            notificationService.updateNotification(message, null);
+            notificationService.updateTaskNotification(message, null, "task");
 
         } catch (Exception e) {
             log.error("Error consuming message", e);
@@ -87,7 +90,7 @@ public class NotificationConsumer {
             assert message != null;
 
             notificationService.sendTaskDeleteEmails(message);
-            notificationService.deleteNotification(message, null);
+            notificationService.deleteTaskNotification(message, null, "task");
 
         } catch (Exception e) {
             log.error("Error consuming message", e);
