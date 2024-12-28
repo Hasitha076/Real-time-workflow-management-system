@@ -1,10 +1,12 @@
 package edu.IIT.project_management.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import edu.IIT.project_management.dto.ProjectPriorityLevel;
 import edu.IIT.project_management.dto.ProjectStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -22,6 +24,9 @@ public class Project {
 
     @Enumerated(EnumType.STRING)
     private ProjectPriorityLevel priority;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dueDate;
 
     private List<Integer> collaboratorIds;
 

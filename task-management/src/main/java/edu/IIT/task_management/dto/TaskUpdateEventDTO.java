@@ -11,6 +11,7 @@ import java.util.List;
 @ToString
 public class TaskUpdateEventDTO {
     private String taskName;
+    private int assignerId;
     private String collaboratorAssignmentType;
     private List<Integer> collaboratorIds;
 }

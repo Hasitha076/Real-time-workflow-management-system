@@ -11,5 +11,6 @@ import java.util.List;
 @ToString
 public class TaskDeleteEventDTO {
     private String taskName;
+    private int assignerId;
     private List<Integer> collaboratorIds;
 }

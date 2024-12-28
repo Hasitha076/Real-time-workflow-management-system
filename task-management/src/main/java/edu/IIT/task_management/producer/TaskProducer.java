@@ -26,24 +26,24 @@ public class TaskProducer {
         kafkaTemplate.send("task-events", taskDTO);
     }
 
-    public void sendCreateTaskMessage(String taskName, List<Integer> collaboratorIds) {
+    public void sendCreateTaskMessage(String taskName, int assigneeId, List<Integer> collaboratorIds) {
         log.info(String.format("#### -> Producing message -> %s", taskName, collaboratorIds));
 
-        TaskCreateEventDTO taskDTO = new TaskCreateEventDTO(taskName, collaboratorIds);
+        TaskCreateEventDTO taskDTO = new TaskCreateEventDTO(taskName, assigneeId, collaboratorIds);
         kafkaTemplateCreate.send("task-create-events", taskDTO);
     }
 
-    public void sendUpdateTaskMessage(String taskName, String collaboratorAssignmentType, List<Integer> collaboratorIds) {
+    public void sendUpdateTaskMessage(String taskName, int assignerId, String collaboratorAssignmentType, List<Integer> collaboratorIds) {
         log.info(String.format("#### -> Producing message -> %s", taskName, collaboratorIds));
 
-        TaskUpdateEventDTO taskDTO = new TaskUpdateEventDTO(taskName, collaboratorAssignmentType, collaboratorIds);
+        TaskUpdateEventDTO taskDTO = new TaskUpdateEventDTO(taskName, assignerId, collaboratorAssignmentType, collaboratorIds);
         kafkaTemplateUpdate.send("task-update-events", taskDTO);
     }
 
-    public void sendDeleteTaskMessage(String taskName, List<Integer> collaboratorIds) {
+    public void sendDeleteTaskMessage(String taskName, int assignerId, List<Integer> collaboratorIds) {
         log.info(String.format("#### -> Producing message -> %s", taskName, collaboratorIds));
 
-        TaskDeleteEventDTO taskDTO = new TaskDeleteEventDTO(taskName, collaboratorIds);
+        TaskDeleteEventDTO taskDTO = new TaskDeleteEventDTO(taskName, assignerId, collaboratorIds);
         kafkaTemplateDelete.send("task-delete-events", taskDTO);
     }
 }

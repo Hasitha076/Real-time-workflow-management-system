@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class TaskCreateEventDTO {
-    private String taskName;
+    private String TaskName;
+    private int assignerId;
     private List<Integer> collaboratorIds;
 }

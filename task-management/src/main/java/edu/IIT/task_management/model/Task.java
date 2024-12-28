@@ -1,9 +1,11 @@
 package edu.IIT.task_management.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import edu.IIT.task_management.dto.TaskPriorityLevel;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -20,7 +22,10 @@ public class Task {
     private String taskName;
     private String description;
     private boolean status = false;
-    private int assigneeId;
+    private int assignerId;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dueDate;
 
     @Enumerated(EnumType.STRING)
     private TaskPriorityLevel priority;

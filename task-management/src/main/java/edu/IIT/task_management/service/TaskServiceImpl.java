@@ -27,7 +27,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public String createTask(TaskDTO taskDTO) {
         taskRepository.save(modelMapper.map(taskDTO, Task.class));
-        taskProducer.sendCreateTaskMessage(taskDTO.getTaskName(), taskDTO.getCollaboratorIds());
+        taskProducer.sendCreateTaskMessage(taskDTO.getTaskName(), taskDTO.getAssignerId(), taskDTO.getCollaboratorIds());
         return "Task created successfully";
     }
 
@@ -68,18 +68,18 @@ public class TaskServiceImpl implements TaskService {
         // Handle sending collaborator changes to the producer or further actions
         if (!newCollaborators.isEmpty()) {
             // Send newly added collaborators
-            taskProducer.sendUpdateTaskMessage(taskDTO.getTaskName(),"New", newCollaborators);
+            taskProducer.sendUpdateTaskMessage(taskDTO.getTaskName(), taskDTO.getAssignerId(),"New", newCollaborators);
         }
 
         if (!removedCollaborators.isEmpty()) {
             // Send removed collaborators
-            taskProducer.sendUpdateTaskMessage(taskDTO.getTaskName(),"Removed", removedCollaborators);
+            taskProducer.sendUpdateTaskMessage(taskDTO.getTaskName(), taskDTO.getAssignerId(),"Removed", removedCollaborators);
         }
 
         // Optionally, you can also send unchanged collaborators if needed
         if (!unchangedCollaborators.isEmpty()) {
             // Handle unchanged collaborators if necessary
-            taskProducer.sendUpdateTaskMessage(taskDTO.getTaskName(),"Existing", unchangedCollaborators);
+            taskProducer.sendUpdateTaskMessage(taskDTO.getTaskName(), taskDTO.getAssignerId(),"Existing", unchangedCollaborators);
         }
 
         return "Task updated successfully";
@@ -89,7 +89,7 @@ public class TaskServiceImpl implements TaskService {
     public void deleteTask(int id) {
         TaskDTO task = getTaskById(id);
         taskRepository.deleteById(id);
-        taskProducer.sendDeleteTaskMessage(task.getTaskName(), task.getCollaboratorIds());
+        taskProducer.sendDeleteTaskMessage(task.getTaskName(), task.getAssignerId(), task.getCollaboratorIds());
     }
 
     @Override

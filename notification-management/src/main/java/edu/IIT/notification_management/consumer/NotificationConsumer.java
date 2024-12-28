@@ -61,6 +61,7 @@ public class NotificationConsumer {
             assert message != null;
 
             notificationService.sendTaskCreateEmails(message);
+            notificationService.createNotification(message, null);
 
         } catch (Exception e) {
             log.error("Error consuming message", e);
@@ -73,6 +74,7 @@ public class NotificationConsumer {
             assert message != null;
 
             notificationService.sendTaskUpdatedEmails(message);
+            notificationService.updateNotification(message, null);
 
         } catch (Exception e) {
             log.error("Error consuming message", e);
@@ -85,6 +87,7 @@ public class NotificationConsumer {
             assert message != null;
 
             notificationService.sendTaskDeleteEmails(message);
+            notificationService.deleteNotification(message, null);
 
         } catch (Exception e) {
             log.error("Error consuming message", e);

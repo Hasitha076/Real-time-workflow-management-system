@@ -1,5 +1,7 @@
 package edu.IIT.notification_management.service;
 
+import edu.IIT.notification_management.dto.NotificationDTO;
+import edu.IIT.notification_management.dto.NotificationEventDTO;
 import edu.IIT.project_management.dto.ProjectCreateEventDTO;
 import edu.IIT.project_management.dto.ProjectDeleteEventDTO;
 import edu.IIT.project_management.dto.ProjectUpdateEventDTO;
@@ -22,4 +24,8 @@ public interface NotificationService {
     public void sendTaskDeleteEmails(TaskDeleteEventDTO taskDeleteEventDTO);
 
     public void sendMail(List<String> to, String subject, String body);
+
+    public void createNotification(TaskCreateEventDTO taskCreateEventDTO, String subject);
+    public void updateNotification(TaskUpdateEventDTO taskUpdateEventDTO, String subject);
+    public void deleteNotification(TaskDeleteEventDTO taskDeleteEventDTO, String subject);
 }
