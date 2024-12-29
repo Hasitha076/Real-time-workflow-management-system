@@ -25,7 +25,7 @@ import java.util.List;
 public class NotificationServiceImpl implements NotificationService {
 
     private final ModelMapper modelMapper;
-    private final WebClient webClientService;
+    private final WebClient userWebClient;
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -33,8 +33,8 @@ public class NotificationServiceImpl implements NotificationService {
     @Autowired
     private NotificationRepository notificationRepository;
 
-    NotificationServiceImpl(WebClient.Builder webClientBuilder, ModelMapper modelMapper) {
-        this.webClientService = webClientBuilder.baseUrl("http://localhost:8081/api/v1").build();
+    NotificationServiceImpl(WebClient userWebClient, ModelMapper modelMapper) {
+        this.userWebClient = userWebClient;
         this.modelMapper = modelMapper;
     }
 
@@ -42,8 +42,8 @@ public class NotificationServiceImpl implements NotificationService {
     public void sendEmails(ProjectCreateEventDTO projectCreateEventDTO) {
         List<Integer> ids = projectCreateEventDTO.getCollaboratorIds();
 
-        List<String> recipients = webClientService.get()
-                .uri(uriBuilder -> uriBuilder.path("/user/filterUsers") // Ensure path matches the controller
+        List<String> recipients = userWebClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/filterUsers") // Ensure path matches the controller
                         .queryParam("ids", ids) // Ensure param name matches the controller
                         .build())
                 .retrieve()
@@ -63,8 +63,8 @@ public class NotificationServiceImpl implements NotificationService {
     public void sendUpdatedEmails(ProjectUpdateEventDTO projectUpdateEventDTO) {
         List<Integer> ids = projectUpdateEventDTO.getCollaboratorIds();
 
-        List<String> recipients = webClientService.get()
-                .uri(uriBuilder -> uriBuilder.path("/user/filterUsers") // Ensure path matches the controller
+        List<String> recipients = userWebClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/filterUsers") // Ensure path matches the controller
                         .queryParam("ids", ids) // Ensure param name matches the controller
                         .build())
                 .retrieve()
@@ -93,8 +93,8 @@ public class NotificationServiceImpl implements NotificationService {
     public void sendDeleteEmails(ProjectDeleteEventDTO projectDeleteEventDTO) {
         List<Integer> ids = projectDeleteEventDTO.getCollaboratorIds();
 
-        List<String> recipients = webClientService.get()
-                .uri(uriBuilder -> uriBuilder.path("/user/filterUsers") // Ensure path matches the controller
+        List<String> recipients = userWebClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/filterUsers") // Ensure path matches the controller
                         .queryParam("ids", ids) // Ensure param name matches the controller
                         .build())
                 .retrieve()
@@ -116,8 +116,8 @@ public class NotificationServiceImpl implements NotificationService {
 public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
     List<Integer> ids = taskCreateEventDTO.getCollaboratorIds();
 
-    List<String> recipients = webClientService.get()
-            .uri(uriBuilder -> uriBuilder.path("/user/filterUsers") // Ensure path matches the controller
+    List<String> recipients = userWebClient.get()
+            .uri(uriBuilder -> uriBuilder.path("/filterUsers") // Ensure path matches the controller
                     .queryParam("ids", ids) // Ensure param name matches the controller
                     .build())
             .retrieve()
@@ -137,8 +137,8 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
     public void sendTaskUpdatedEmails(TaskUpdateEventDTO taskUpdateEventDTO) {
         List<Integer> ids = taskUpdateEventDTO.getCollaboratorIds();
 
-        List<String> recipients = webClientService.get()
-                .uri(uriBuilder -> uriBuilder.path("/user/filterUsers") // Ensure path matches the controller
+        List<String> recipients = userWebClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/filterUsers") // Ensure path matches the controller
                         .queryParam("ids", ids) // Ensure param name matches the controller
                         .build())
                 .retrieve()
@@ -167,8 +167,8 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
     public void sendTaskDeleteEmails(TaskDeleteEventDTO taskDeleteEventDTO) {
         List<Integer> ids = taskDeleteEventDTO.getCollaboratorIds();
 
-        List<String> recipients = webClientService.get()
-                .uri(uriBuilder -> uriBuilder.path("/user/filterUsers") // Ensure path matches the controller
+        List<String> recipients = userWebClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/filterUsers") // Ensure path matches the controller
                         .queryParam("ids", ids) // Ensure param name matches the controller
                         .build())
                 .retrieve()

@@ -12,4 +12,8 @@ public class NotificationWebClient {
         return WebClient.builder().build();
     }
 
+    @Bean WebClient userWebClient() {
+        return WebClient.builder().baseUrl("http://localhost:8081/api/v1/user").build();
+    }
+
 }

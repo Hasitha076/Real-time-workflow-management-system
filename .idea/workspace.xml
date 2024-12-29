@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Collaborators can get notifications in their inbox  after created, changed and deleted the project.">
+    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Collaborators can get notifications in their email and inbox that all the tasks have been removed after deleted under the project.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/dto/ProjectDeleteEventDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/dto/ProjectDeleteEventDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/producer/ProjectProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/producer/ProjectProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/service/ProjectServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/service/ProjectServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/consumer/TaskConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/consumer/TaskConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/repository/TaskRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/repository/TaskRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/config/NotificationWebClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/config/NotificationWebClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +96,7 @@
       <command value="mvn clean verify" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.NotificationManagementApplication">
+  <component name="RunManager" selected="Application.UserManagementApplication">
     <configuration name="NotificationManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.IIT.notification_management.NotificationManagementApplication" />
       <module name="notification-management" />
@@ -164,10 +159,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.NotificationManagementApplication" />
-        <item itemvalue="Application.ProjectManagementApplication" />
-        <item itemvalue="Application.TaskManagementApplication" />
         <item itemvalue="Application.UserManagementApplication" />
+        <item itemvalue="Application.TaskManagementApplication" />
+        <item itemvalue="Application.ProjectManagementApplication" />
+        <item itemvalue="Application.NotificationManagementApplication" />
         <item itemvalue="JUnit.All in Real-time-workflow-management-system" />
       </list>
     </recent_temporary>
@@ -253,7 +248,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735414852870</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Collaborators can get notifications in their email and inbox that all the tasks have been removed after deleted under the project.">
+      <option name="closed" value="true" />
+      <created>1735424340183</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1735424340183</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -277,6 +280,7 @@
     <MESSAGE value="Collaborators can get an email after delete the task." />
     <MESSAGE value="Collaborators can get notifications in their inbox  after created, changed and deleted the task." />
     <MESSAGE value="Collaborators can get notifications in their inbox  after created, changed and deleted the project." />
-    <option name="LAST_COMMIT_MESSAGE" value="Collaborators can get notifications in their inbox  after created, changed and deleted the project." />
+    <MESSAGE value="Collaborators can get notifications in their email and inbox that all the tasks have been removed after deleted under the project." />
+    <option name="LAST_COMMIT_MESSAGE" value="Collaborators can get notifications in their email and inbox that all the tasks have been removed after deleted under the project." />
   </component>
 </project>
