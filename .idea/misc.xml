@@ -7,10 +7,12 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/user-management/pom.xml" />
         <option value="$PROJECT_DIR$/task-management/pom.xml" />
+        <option value="$PROJECT_DIR$/discovery-server/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/discovery-server/pom.xml" />
         <option value="$PROJECT_DIR$/task-management-service/pom.xml" />
         <option value="$PROJECT_DIR$/user-management-service/pom.xml" />
       </set>

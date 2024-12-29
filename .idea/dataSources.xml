@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="project_management@localhost" uuid="b6de775f-f7a0-49b5-a0db-9d0c8ee51564">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/project-management/src/main/resources/application.yml</remarks>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/project_management?createDatabaseIfNotExist=true</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="notification_management@localhost" uuid="cb6f05a4-4558-479c-a7d6-8e6ca905a034">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/notification-management/src/main/resources/application.yml</remarks>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/notification_management?createDatabaseIfNotExist=true</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="com.intellij.clouds.kubernetes.db.host.port" />
+        <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
+        <property name="com.intellij.clouds.kubernetes.db.container.port" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="task_management@localhost" uuid="56d223cc-a0ca-437a-ad53-1aaad808870f">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/task-management/src/main/resources/application.yml</remarks>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/task_management?createDatabaseIfNotExist=true</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="user_management@localhost" uuid="bf972b11-4087-448b-b352-d63b7634572f">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/user-management/src/main/resources/application.yml</remarks>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/user_management?createDatabaseIfNotExist=true</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </component>
+</project>
