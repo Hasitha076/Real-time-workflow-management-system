@@ -1,4 +1,4 @@
-package edu.IIT.project_management.dto;
+package edu.IIT.work_management.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -12,22 +12,19 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ProjectDTO {
-    private int projectId;
-    private String projectName;
-    private ProjectPriorityLevel priority;
+public class WorkDTO {
+    private int workId;
+    private String workName;
+    private String description;
+    private boolean status;
     private int assignerId;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate dueDate;
-
+    private WorkPriorityLevel priority;
+    private int projectId;
     private List<Integer> collaboratorIds;
-
     private List<Integer> teamIds;
-
-
-    private ProjectStatus status = ProjectStatus.PENDING;
     private LocalDateTime createdAt;
+
     private LocalDateTime updatedAt;
 
 }

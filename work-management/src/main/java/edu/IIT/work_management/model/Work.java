@@ -1,48 +1,44 @@
-package edu.IIT.project_management.model;
+package edu.IIT.work_management.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import edu.IIT.project_management.dto.ProjectPriorityLevel;
-import edu.IIT.project_management.dto.ProjectStatus;
+import edu.IIT.work_management.dto.WorkPriorityLevel;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-@Setter
 @Getter
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
-@ToString
+@AllArgsConstructor
 @Entity
-@Table(name = "project")
-public class Project {
+@Table(name = "work")
+public class Work {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int projectId;
-    private String projectName;
+    private int workId;
 
-    @Enumerated(EnumType.STRING)
-    private ProjectPriorityLevel priority;
+    private String workName;
+    private String description;
+    private boolean status = false;
     private int assignerId;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate dueDate;
+    @Enumerated(EnumType.STRING)
+    private WorkPriorityLevel priority;
+
+    private int projectId;
 
     @ElementCollection
-    @CollectionTable(name = "project_collaborators", joinColumns = @JoinColumn(name = "project_id"))
+    @CollectionTable(name = "work_collaborators", joinColumns = @JoinColumn(name = "work_id"))
     @Column(name = "collaborator_id")
     private List<Integer> collaboratorIds;
 
     @ElementCollection
-    @CollectionTable(name = "project_collaborators", joinColumns = @JoinColumn(name = "project_id"))
+    @CollectionTable(name = "work_collaborators", joinColumns = @JoinColumn(name = "work_id"))
     @Column(name = "team_id")
     private List<Integer> teamIds;
-
-    @Enumerated(EnumType.STRING)
-    private ProjectStatus status;
 
     @Column(updatable = false)
     private LocalDateTime createdAt;

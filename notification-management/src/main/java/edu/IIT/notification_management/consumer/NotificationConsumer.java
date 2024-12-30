@@ -8,9 +8,11 @@ import edu.IIT.task_management.dto.TaskCreateEventDTO;
 import edu.IIT.task_management.dto.TaskDeleteEventDTO;
 import edu.IIT.task_management.dto.TaskUpdateEventDTO;
 import edu.IIT.team_management.dto.TeamCreateEventDTO;
-import edu.IIT.team_management.dto.TeamDTO;
 import edu.IIT.team_management.dto.TeamDeleteEventDTO;
 import edu.IIT.team_management.dto.TeamUpdateEventDTO;
+import edu.IIT.work_management.dto.WorkCreateEventDTO;
+import edu.IIT.work_management.dto.WorkDeleteEventDTO;
+import edu.IIT.work_management.dto.WorkUpdateEventDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -136,6 +138,47 @@ public class NotificationConsumer {
 
             notificationService.sendTeamDeleteEmails(message);
             notificationService.deleteTeamNotification(message, null, "team");
+
+        } catch (Exception e) {
+            log.error("Error consuming message", e);
+        }
+    }
+
+
+    //    Work
+    @KafkaListener(topics = "work-create-events", groupId = "notification-management")
+    public void consumeCreateWork(WorkCreateEventDTO message) {
+        try {
+            assert message != null;
+
+//            notificationService.sendWorkCreateEmails(message);
+//            notificationService.createWorkNotification(message, null, "team");
+
+        } catch (Exception e) {
+            log.error("Error consuming message", e);
+        }
+    }
+
+    @KafkaListener(topics = "work-update-events", groupId = "notification-management")
+    public void consumeUpdateWork(WorkUpdateEventDTO message) {
+        try {
+            assert message != null;
+
+            notificationService.sendWorkUpdatedEmails(message);
+            notificationService.updateWorkNotification(message, null, "work");
+
+        } catch (Exception e) {
+            log.error("Error consuming message", e);
+        }
+    }
+
+    @KafkaListener(topics = "work-delete-events", groupId = "notification-management")
+    public void consumeDeleteWork(WorkDeleteEventDTO message) {
+        try {
+            assert message != null;
+
+            notificationService.sendWorkDeleteEmails(message);
+            notificationService.deleteWorkNotification(message, null, "work");
 
         } catch (Exception e) {
             log.error("Error consuming message", e);

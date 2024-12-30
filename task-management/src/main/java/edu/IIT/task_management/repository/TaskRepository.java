@@ -11,4 +11,6 @@ import java.util.Optional;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Integer> {
     public List<Task> findByProjectId(int projectId);
+
+    public List<Task> findByWorkId(int workId);
 }

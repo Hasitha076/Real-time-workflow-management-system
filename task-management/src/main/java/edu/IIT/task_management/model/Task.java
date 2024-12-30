@@ -32,6 +32,7 @@ public class Task {
     private TaskPriorityLevel priority;
 
     private int projectId;
+    private int workId;
 
     @ElementCollection
     @CollectionTable(name = "task_collaborators", joinColumns = @JoinColumn(name = "task_id"))

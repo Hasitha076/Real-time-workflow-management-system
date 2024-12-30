@@ -114,6 +114,25 @@ public class TaskServiceImpl implements TaskService {
         });
     }
 
+    @Transactional
+    @Override
+    public void deleteByWorkId(int workId) {
+        // Fetch all tasks that match the project ID
+        List<Task> tasks = taskRepository.findByWorkId(workId);
+
+        if (tasks.isEmpty()) {
+            throw new ResourceNotFoundException("No tasks found for work ID: " + workId);
+        }
+
+        tasks.forEach(task -> {
+            // Delete each task
+            taskRepository.deleteById(task.getTaskId());
+
+            // Send notification for deleted task
+            taskProducer.sendDeleteTaskMessage(task.getTaskName(), task.getAssignerId(), task.getCollaboratorIds());
+        });
+    }
+
 
 
     @Override

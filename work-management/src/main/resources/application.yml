@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: work-management
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/work_management?createDatabaseIfNotExist=true
+    username: root
+    password: Hasitha@8465
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: work-management
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+      properties:
+        spring.json.trusted.packages: '*'
+
+
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+    template:
+        default-topic: work-events
+
+#eureka:
+#  client:
+#      service-url:
+#        defaultZone: http://localhost:8761/eureka
+
+server:
+  port: 8086

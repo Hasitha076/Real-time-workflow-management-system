@@ -1,8 +1,6 @@
 package edu.IIT.user_management.consumer;
 
-import edu.IIT.project_management.dto.ProjectDTO;
 import edu.IIT.task_management.dto.TaskDTO;
-import edu.IIT.user_management.dto.UserDTO;
 import edu.IIT.user_management.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

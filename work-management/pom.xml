@@ -6,8 +6,8 @@
         <artifactId>Real-time-workflow-management-system</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>notification-management</artifactId>
-    <name>Archetype - notification-management</name>
+    <artifactId>work-management</artifactId>
+    <name>Archetype - work-management</name>
     <url>http://maven.apache.org</url>
 
     <dependencies>
@@ -27,13 +27,13 @@
             <artifactId>modelmapper</artifactId>
             <version>3.2.1</version>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>9.1.0</version>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -49,18 +49,10 @@
             <artifactId>spring-boot-starter-webflux</artifactId>
             <version>3.4.1</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-            <version>3.4.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.github.cdimascio</groupId>
-            <artifactId>dotenv-java</artifactId>
-            <version>3.0.0</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.cloud</groupId>-->
+        <!--            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -70,32 +62,6 @@
         <dependency>
             <groupId>edu.IIT</groupId>
             <artifactId>project-management</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>edu.IIT</groupId>
-            <artifactId>user-management</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>edu.IIT</groupId>
-            <artifactId>team-management</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>edu.IIT</groupId>
-            <artifactId>task-management</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>edu.IIT</groupId>
-            <artifactId>work-management</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

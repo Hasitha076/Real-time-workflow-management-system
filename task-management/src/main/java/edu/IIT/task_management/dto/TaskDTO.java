@@ -24,6 +24,7 @@ public class TaskDTO {
 
     private TaskPriorityLevel priority;
     private int projectId;
+    private int workId;
     private List<Integer> collaboratorIds;
     private LocalDateTime createdAt;
 

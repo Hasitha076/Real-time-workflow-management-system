@@ -62,6 +62,12 @@
 
         <dependency>
             <groupId>edu.IIT</groupId>
+            <artifactId>work-management</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>edu.IIT</groupId>
             <artifactId>task-management</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
