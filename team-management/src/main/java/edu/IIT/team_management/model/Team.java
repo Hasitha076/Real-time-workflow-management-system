@@ -1,11 +1,11 @@
-package edu.IIT.user_management.model;
+package edu.IIT.team_management.model;
 
-import edu.IIT.user_management.dto.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,16 +13,18 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "team")
+public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
-    private String userName;
-    private String email;
-    private String password;
-    private UserRole role;
-    private boolean status;
+    private int teamId;
+    private String teamName;
+    private int assignerId;
+
+    @ElementCollection
+    @CollectionTable(name = "team_collaborators", joinColumns = @JoinColumn(name = "team_id"))
+    @Column(name = "collaborator_id")
+    private List<Integer> collaboratorIds;
 
     @Column(updatable = false)
     private LocalDateTime createdAt;

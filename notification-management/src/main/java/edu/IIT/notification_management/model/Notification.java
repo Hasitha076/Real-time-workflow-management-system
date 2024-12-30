@@ -1,22 +1,18 @@
 package edu.IIT.notification_management.model;
 
 import edu.IIT.notification_management.dto.NotificationType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.List;
 
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Data
-@Entity(name = "Notification")
+@Entity
+@Table(name = "notification")
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +20,11 @@ public class Notification {
     private String notificationName;
     private NotificationType notificationType;
     private int assignerId;
+
+    @ElementCollection
+    @CollectionTable(name = "notification_collaborators", joinColumns = @JoinColumn(name = "notification_id"))
+    @Column(name = "collaborator_id")
     private List<Integer> collaboratorIds;
+
     private String subject;
 }

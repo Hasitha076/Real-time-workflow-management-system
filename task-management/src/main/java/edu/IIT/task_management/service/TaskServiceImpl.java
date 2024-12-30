@@ -5,6 +5,7 @@ import edu.IIT.task_management.dto.TaskDTO;
 import edu.IIT.task_management.model.Task;
 import edu.IIT.task_management.producer.TaskProducer;
 import edu.IIT.task_management.repository.TaskRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.errors.ResourceNotFoundException;
@@ -94,17 +95,25 @@ public class TaskServiceImpl implements TaskService {
         taskProducer.sendDeleteTaskMessage(task.getTaskName(), task.getAssignerId(), task.getCollaboratorIds());
     }
 
+    @Transactional
     @Override
     public void deleteByProjectId(int projectId) {
         // Fetch all tasks that match the project ID
         List<Task> tasks = taskRepository.findByProjectId(projectId);
 
+        if (tasks.isEmpty()) {
+            throw new ResourceNotFoundException("No tasks found for project ID: " + projectId);
+        }
+
         tasks.forEach(task -> {
+            // Delete each task
             taskRepository.deleteById(task.getTaskId());
+
+            // Send notification for deleted task
             taskProducer.sendDeleteTaskMessage(task.getTaskName(), task.getAssignerId(), task.getCollaboratorIds());
         });
-
     }
+
 
 
     @Override

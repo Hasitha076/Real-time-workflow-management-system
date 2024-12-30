@@ -10,7 +10,7 @@ public class TaskTopicConfig {
 
     @Bean
     public NewTopic userTopic() {
-        return TopicBuilder.name("user-events")
+        return TopicBuilder.name("task-events")
                 .build();
     }
 }

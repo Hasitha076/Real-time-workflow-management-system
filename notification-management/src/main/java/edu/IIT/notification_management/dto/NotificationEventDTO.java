@@ -1,16 +1,14 @@
 package edu.IIT.notification_management.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Data
 public class NotificationEventDTO {
     private int notificationId;
     private String notificationName;

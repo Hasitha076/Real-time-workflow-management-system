@@ -16,15 +16,15 @@ public class TaskConsumer {
 
     private final TaskService taskService;
 
-    @KafkaListener(topics = "user-events", groupId = "task-management")
-    public void consumeUser(String message) {
-        try {
-            assert message != null;
-            log.info(String.format("#### -> Consumed message -> %s", message));
-        } catch (Exception e) {
-            log.error("Error consuming message", e);
-        }
-    }
+//    @KafkaListener(topics = "user-events", groupId = "task-management")
+//    public void consumeUser(String message) {
+//        try {
+//            assert message != null;
+//            log.info(String.format("#### -> Consumed message -> %s", message));
+//        } catch (Exception e) {
+//            log.error("Error consuming message", e);
+//        }
+//    }
 
     @KafkaListener(topics = "project-delete-events", groupId = "task-management")
     public void consumeProject(ProjectDeleteEventDTO message) {

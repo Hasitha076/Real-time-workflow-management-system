@@ -7,10 +7,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Data
 public class TaskDTO {
     private int taskId;
     private String taskName;
@@ -24,7 +25,8 @@ public class TaskDTO {
     private TaskPriorityLevel priority;
     private int projectId;
     private List<Integer> collaboratorIds;
-    private String createdAt;
-    private String updatedAt;
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
 
 }

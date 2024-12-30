@@ -10,6 +10,9 @@ import edu.IIT.project_management.dto.ProjectUpdateEventDTO;
 import edu.IIT.task_management.dto.TaskCreateEventDTO;
 import edu.IIT.task_management.dto.TaskDeleteEventDTO;
 import edu.IIT.task_management.dto.TaskUpdateEventDTO;
+import edu.IIT.team_management.dto.TeamCreateEventDTO;
+import edu.IIT.team_management.dto.TeamDeleteEventDTO;
+import edu.IIT.team_management.dto.TeamUpdateEventDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -197,6 +200,80 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
     }
 
 
+    //    Team
+    @Override
+    public void sendTeamCreateEmails(TeamCreateEventDTO teamCreateEventDTO) {
+        List<Integer> ids = teamCreateEventDTO.getCollaboratorIds();
+
+        List<String> recipients = userWebClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/filterUsers") // Ensure path matches the controller
+                        .queryParam("ids", ids) // Ensure param name matches the controller
+                        .build())
+                .retrieve()
+                .bodyToMono(List.class)
+                .block();
+
+        log.info("#### -> Sending email -> {}", recipients);
+
+        String subject = "New Team Created: " + teamCreateEventDTO.getTeamName();
+        String body = "You have been added as a collaborator to the team: " + teamCreateEventDTO.getTeamName();
+
+        assert recipients != null;
+        sendMail(recipients, subject, body);
+    }
+
+    @Override
+    public void sendTeamUpdatedEmails(TeamUpdateEventDTO teamUpdateEventDTO) {
+        List<Integer> ids = teamUpdateEventDTO.getCollaboratorIds();
+
+        List<String> recipients = userWebClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/filterUsers") // Ensure path matches the controller
+                        .queryParam("ids", ids) // Ensure param name matches the controller
+                        .build())
+                .retrieve()
+                .bodyToMono(List.class)
+                .block();
+
+        log.info("#### -> Sending email -> {}", recipients);
+        String subject = null;
+        String body = null;
+        if(teamUpdateEventDTO.getCollaboratorAssignmentType().equals("New")) {
+            subject = "New Team Created: " + teamUpdateEventDTO.getTeamName();
+            body = "You have been added as a collaborator to the team: " + teamUpdateEventDTO.getTeamName();
+        } else if(teamUpdateEventDTO.getCollaboratorAssignmentType().equals("Removed")) {
+            subject = "Collaborators Removed from Team: " + teamUpdateEventDTO.getTeamName();
+            body = "You have been removed from the team: " + teamUpdateEventDTO.getTeamName();
+        } else if(teamUpdateEventDTO.getCollaboratorAssignmentType().equals("Existing")) {
+            subject = "Team has been changed as: " + teamUpdateEventDTO.getTeamName();
+            body = "Team has been changed as: " + teamUpdateEventDTO.getTeamName();
+        }
+
+        assert recipients != null;
+        sendMail(recipients, subject, body);
+    }
+
+    @Override
+    public void sendTeamDeleteEmails(TeamDeleteEventDTO teamDeleteEventDTO) {
+        List<Integer> ids = teamDeleteEventDTO.getCollaboratorIds();
+
+        List<String> recipients = userWebClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/filterUsers") // Ensure path matches the controller
+                        .queryParam("ids", ids) // Ensure param name matches the controller
+                        .build())
+                .retrieve()
+                .bodyToMono(List.class)
+                .block();
+
+        log.info("#### -> Sending email -> {}", recipients);
+
+        String subject = teamDeleteEventDTO.getTeamName() + " team is deleted";
+        String body = teamDeleteEventDTO.getTeamName() + " team is already deleted";
+
+        assert recipients != null;
+        sendMail(recipients, subject, body);
+    }
+
+
 //    Task Inbox Notification
     @Override
     public void createTaskNotification(TaskCreateEventDTO taskCreateEventDTO, String subject, String type) {
@@ -289,6 +366,54 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         notificationEventDTO.setCollaboratorIds(projectDeleteEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
         notificationEventDTO.setNotificationType(NotificationType.PROJECT);
+        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+    }
+
+
+    //    Team Inbox Notification
+    @Override
+    public void createTeamNotification(TeamCreateEventDTO teamCreateEventDTO, String subject, String type) {
+        System.out.println("#### -> Creating notification to db -> " + teamCreateEventDTO);
+        subject = subject == null ? "team-created" : subject;
+        NotificationEventDTO notificationEventDTO = new NotificationEventDTO();
+        notificationEventDTO.setNotificationName(teamCreateEventDTO.getTeamName());
+        notificationEventDTO.setAssignerId(teamCreateEventDTO.getAssignerId());
+        notificationEventDTO.setCollaboratorIds(teamCreateEventDTO.getCollaboratorIds());
+        notificationEventDTO.setSubject(subject);
+        notificationEventDTO.setNotificationType(NotificationType.TEAM);
+        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+    }
+
+    @Override
+    public void updateTeamNotification(TeamUpdateEventDTO teamUpdateEventDTO, String subject, String type) {
+        System.out.println("#### -> Creating notification -> " + teamUpdateEventDTO);
+        if(teamUpdateEventDTO.getCollaboratorAssignmentType().equals("New")) {
+            subject = subject == null ? "team-created" : subject;
+        } else if(teamUpdateEventDTO.getCollaboratorAssignmentType().equals("Removed")) {
+            subject = subject == null ? "removed-from-team" : subject;
+        } else if(teamUpdateEventDTO.getCollaboratorAssignmentType().equals("Existing")) {
+            subject = subject == null ? "team-changed" : subject;
+        }
+
+        NotificationEventDTO notificationEventDTO = new NotificationEventDTO();
+        notificationEventDTO.setNotificationName(teamUpdateEventDTO.getTeamName());
+        notificationEventDTO.setAssignerId(teamUpdateEventDTO.getAssignerId());
+        notificationEventDTO.setCollaboratorIds(teamUpdateEventDTO.getCollaboratorIds());
+        notificationEventDTO.setSubject(subject);
+        notificationEventDTO.setNotificationType(NotificationType.TEAM);
+        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+    }
+
+    @Override
+    public void deleteTeamNotification(TeamDeleteEventDTO teamDeleteEventDTO, String subject, String type) {
+        System.out.println("#### -> Creating notification -> " + teamDeleteEventDTO);
+        subject = subject == null ? "team-removed" : subject;
+        NotificationEventDTO notificationEventDTO = new NotificationEventDTO();
+        notificationEventDTO.setNotificationName(teamDeleteEventDTO.getTeamName());
+        notificationEventDTO.setAssignerId(teamDeleteEventDTO.getAssignerId());
+        notificationEventDTO.setCollaboratorIds(teamDeleteEventDTO.getCollaboratorIds());
+        notificationEventDTO.setSubject(subject);
+        notificationEventDTO.setNotificationType(NotificationType.TEAM);
         notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 

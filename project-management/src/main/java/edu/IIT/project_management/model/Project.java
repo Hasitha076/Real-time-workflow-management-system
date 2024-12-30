@@ -11,11 +11,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Data
-@Entity(name = "Project")
+@Entity
+@Table(name = "project")
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,29 +31,27 @@ public class Project {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
 
+    @ElementCollection
+    @CollectionTable(name = "project_collaborators", joinColumns = @JoinColumn(name = "project_id"))
+    @Column(name = "collaborator_id")
     private List<Integer> collaboratorIds;
 
     @Enumerated(EnumType.STRING)
     private ProjectStatus status;
 
     @Column(updatable = false)
-    private String createdAt;
+    private LocalDateTime createdAt;
 
-    private String updatedAt;
+    private LocalDateTime updatedAt;
 
     @PrePersist
     protected void onCreate() {
-        String currentTimestamp = getCurrentTimestamp();
-        this.createdAt = currentTimestamp;
-        this.updatedAt = currentTimestamp;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.updatedAt = getCurrentTimestamp();
-    }
-
-    private String getCurrentTimestamp() {
-        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.updatedAt = LocalDateTime.now();
     }
 }

@@ -2,10 +2,13 @@ package edu.IIT.user_management.dto;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Data
 public class UserDTO {
     private int userId;
     private String userName;
@@ -13,7 +16,7 @@ public class UserDTO {
     private String password;
     private UserRole role;
     private boolean status = true;
-    private String createdAt;
-    private String updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 }

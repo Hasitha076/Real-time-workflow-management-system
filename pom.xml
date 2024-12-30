@@ -22,6 +22,7 @@
     <module>task-management</module>
     <module>project-management</module>
     <module>notification-management</module>
+      <module>team-management</module>
   </modules>
 
   <dependencies>

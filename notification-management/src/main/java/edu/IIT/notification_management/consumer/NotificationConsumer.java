@@ -7,6 +7,10 @@ import edu.IIT.project_management.dto.ProjectUpdateEventDTO;
 import edu.IIT.task_management.dto.TaskCreateEventDTO;
 import edu.IIT.task_management.dto.TaskDeleteEventDTO;
 import edu.IIT.task_management.dto.TaskUpdateEventDTO;
+import edu.IIT.team_management.dto.TeamCreateEventDTO;
+import edu.IIT.team_management.dto.TeamDTO;
+import edu.IIT.team_management.dto.TeamDeleteEventDTO;
+import edu.IIT.team_management.dto.TeamUpdateEventDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -91,6 +95,47 @@ public class NotificationConsumer {
 
             notificationService.sendTaskDeleteEmails(message);
             notificationService.deleteTaskNotification(message, null, "task");
+
+        } catch (Exception e) {
+            log.error("Error consuming message", e);
+        }
+    }
+
+
+//    Team
+    @KafkaListener(topics = "team-create-events", groupId = "notification-management")
+    public void consumeCreateTeam(TeamCreateEventDTO message) {
+        try {
+            assert message != null;
+
+            notificationService.sendTeamCreateEmails(message);
+            notificationService.createTeamNotification(message, null, "team");
+
+        } catch (Exception e) {
+            log.error("Error consuming message", e);
+        }
+    }
+
+    @KafkaListener(topics = "team-update-events", groupId = "notification-management")
+    public void consumeUpdateTeam(TeamUpdateEventDTO message) {
+        try {
+            assert message != null;
+
+            notificationService.sendTeamUpdatedEmails(message);
+            notificationService.updateTeamNotification(message, null, "team");
+
+        } catch (Exception e) {
+            log.error("Error consuming message", e);
+        }
+    }
+
+    @KafkaListener(topics = "team-delete-events", groupId = "notification-management")
+    public void consumeDeleteTeam(TeamDeleteEventDTO message) {
+        try {
+            assert message != null;
+
+            notificationService.sendTeamDeleteEmails(message);
+            notificationService.deleteTeamNotification(message, null, "team");
 
         } catch (Exception e) {
             log.error("Error consuming message", e);

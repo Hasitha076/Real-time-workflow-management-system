@@ -7,10 +7,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Data
 public class ProjectDTO {
     private int projectId;
     private String projectName;
@@ -22,7 +23,7 @@ public class ProjectDTO {
 
     private List<Integer> collaboratorIds;
     private ProjectStatus status = ProjectStatus.PENDING;
-    private String createdAt;
-    private String updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 }

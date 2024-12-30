@@ -41,7 +41,7 @@ public class TaskProducer {
     }
 
     public void sendDeleteTaskMessage(String taskName, int assignerId, List<Integer> collaboratorIds) {
-        log.info(String.format("#### -> Producing message -> %s", taskName, collaboratorIds));
+        log.info(String.format("#### -> Producing delete message -> %s", taskName, assignerId, collaboratorIds));
 
         TaskDeleteEventDTO taskDTO = new TaskDeleteEventDTO(taskName, assignerId, collaboratorIds);
         kafkaTemplateDelete.send("task-delete-events", taskDTO);
