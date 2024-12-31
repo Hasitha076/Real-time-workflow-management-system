@@ -11,4 +11,5 @@ public interface TeamService {
     public String updateTeam(TeamDTO teamDTO);
     public void deleteTeam(int id);
     public List<TeamDTO> getAllTeams();
+    public List<String> filterTeams(List<Integer> teamIds);
 }

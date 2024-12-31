@@ -12,4 +12,5 @@ public interface UserService {
     public void deleteUser(int id);
     public List<UserDTO> getAllUsers();
     public List<String> filterUsers(List<Integer> userIds);
+    public List<String> filterUserNames(List<Integer> userIds);
 }

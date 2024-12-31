@@ -43,4 +43,9 @@ public class TeamController {
         return teamService.getAllTeams();
     }
 
+    @GetMapping("/filterTeams")
+    public List<String> filterTeams(@RequestParam List<Integer> ids) {
+        return teamService.filterTeams(ids);
+    }
+
 }

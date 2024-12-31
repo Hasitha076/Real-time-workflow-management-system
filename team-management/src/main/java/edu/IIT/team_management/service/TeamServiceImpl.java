@@ -97,4 +97,15 @@ public class TeamServiceImpl implements TeamService {
         return modelMapper.map(teamRepository.findAll(), new TypeToken<List<TeamDTO>>(){}.getType());
     }
 
+    @Override
+    public List<String> filterTeams(List<Integer> teamIds) {
+        List<Team> teamList = teamRepository.findAllById(teamIds);
+
+        if (teamList.isEmpty()) {
+            log.warn("No users found for IDs: {}", teamIds);
+        }
+
+        return teamList.stream().map(Team::getTeamName).toList();
+    }
+
 }

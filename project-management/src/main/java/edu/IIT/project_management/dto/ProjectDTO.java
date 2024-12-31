@@ -15,8 +15,11 @@ import java.util.List;
 public class ProjectDTO {
     private int projectId;
     private String projectName;
+    private String projectDescription;
     private ProjectPriorityLevel priority;
     private int assignerId;
+
+    private List<String> tags;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
@@ -24,6 +27,8 @@ public class ProjectDTO {
     private List<Integer> collaboratorIds;
 
     private List<Integer> teamIds;
+
+    private List<String> memberIcons;
 
 
     private ProjectStatus status = ProjectStatus.PENDING;

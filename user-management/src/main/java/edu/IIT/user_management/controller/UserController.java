@@ -49,4 +49,9 @@ public class UserController {
         return userService.filterUsers(ids);
     }
 
+    @GetMapping("/filterUserNames")
+    public List<String> filterUserNames(@RequestParam List<Integer> ids) { // Ensure param matches WebClient
+        return userService.filterUserNames(ids);
+    }
+
 }

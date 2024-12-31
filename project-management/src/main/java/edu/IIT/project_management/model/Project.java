@@ -8,7 +8,6 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Setter
@@ -23,9 +22,16 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int projectId;
     private String projectName;
+    private String projectDescription;
 
     @Enumerated(EnumType.STRING)
     private ProjectPriorityLevel priority;
+
+    @ElementCollection
+    @CollectionTable(name = "project_tags", joinColumns = @JoinColumn(name = "project_id"))
+    @Column(name = "tag_id")
+    private List<String> tags;
+
     private int assignerId;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -40,6 +46,11 @@ public class Project {
     @CollectionTable(name = "project_collaborators", joinColumns = @JoinColumn(name = "project_id"))
     @Column(name = "team_id")
     private List<Integer> teamIds;
+
+    @ElementCollection
+    @CollectionTable(name = "project_memberIcons", joinColumns = @JoinColumn(name = "project_id"))
+    @Column(name = "member_id")
+    private List<String> memberIcons;
 
     @Enumerated(EnumType.STRING)
     private ProjectStatus status;

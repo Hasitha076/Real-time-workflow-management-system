@@ -63,4 +63,15 @@ public class UserServiceImpl implements UserService {
         return userList.stream().map(User::getEmail).toList();
     }
 
+    @Override
+    public List<String> filterUserNames(List<Integer> userIds) {
+        List<User> userList = userRepository.findAllById(userIds);
+
+        if (userList.isEmpty()) {
+            log.warn("No users found for IDs: {}", userIds);
+        }
+
+        return userList.stream().map(User::getUserName).toList();
+    }
+
 }

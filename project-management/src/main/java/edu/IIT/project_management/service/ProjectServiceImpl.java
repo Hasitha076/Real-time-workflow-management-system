@@ -9,7 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,9 +24,48 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
     private final ModelMapper modelMapper;
     private final ProjectProducer projectProducer;
+    private final WebClient userWebClient;
+    private final WebClient teamWebClient;
 
     @Override
     public String createProject(ProjectDTO projectDTO) {
+
+        List<String> users = userWebClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/filterUserNames") // Ensure path matches the controller
+                        .queryParam("ids", projectDTO.getCollaboratorIds()) // Ensure param name matches the controller
+                        .build())
+                .retrieve()
+                .bodyToMono(List.class)
+                .block();
+
+        List<String> teams = teamWebClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/filterTeams") // Ensure path matches the controller
+                        .queryParam("ids", projectDTO.getTeamIds()) // Ensure param name matches the controller
+                        .build())
+                .retrieve()
+                .bodyToMono(List.class)
+                .block();
+
+        System.out.println("Users: " + users);
+        System.out.println("Teams: " + teams);
+
+        List<String> userInitials = users.stream()
+                .map(name -> name.substring(0, 1).toUpperCase())
+                .collect(Collectors.toList());
+
+        List<String> teamsInitials = teams.stream()
+                .map(name -> name.substring(0, 1).toUpperCase())
+                .collect(Collectors.toList());
+
+        // Combine initials
+        List<String> memberIcons = new ArrayList<>();
+        memberIcons.addAll(userInitials);
+        memberIcons.addAll(teamsInitials);
+
+        // Set the member icons in the project
+        projectDTO.setMemberIcons(memberIcons);
+
+
         projectRepository.save(modelMapper.map(projectDTO, Project.class));
         projectProducer.sendCreatedProjectMessage(projectDTO.getProjectName(), projectDTO.getAssignerId(), projectDTO.getCollaboratorIds());
         return "Project created successfully";
@@ -37,10 +78,13 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public String updateProject(ProjectDTO projectDTO) {
+        System.out.println("ProjectDTO: " + projectDTO);
         Optional<Project> project = projectRepository.findById(projectDTO.getProjectId());
         if (project.isEmpty()) {
             return "Project not found";
         }
+
+        System.out.println("Searched Project: " + project);
 
         // Retain the createdAt value from the old project
         projectDTO.setCreatedAt(project.get().getCreatedAt());
@@ -60,6 +104,43 @@ public class ProjectServiceImpl implements ProjectService {
         List<Integer> unchangedCollaborators = oldCollaboratorIds.stream()
                 .filter(projectDTO.getCollaboratorIds()::contains)
                 .collect(Collectors.toList());
+
+        List<String> users = userWebClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/filterUserNames") // Ensure path matches the controller
+                        .queryParam("ids", projectDTO.getCollaboratorIds()) // Ensure param name matches the controller
+                        .build())
+                .retrieve()
+                .bodyToMono(List.class)
+                .block();
+
+        List<String> teams = teamWebClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/filterTeams") // Ensure path matches the controller
+                        .queryParam("ids", projectDTO.getTeamIds()) // Ensure param name matches the controller
+                        .build())
+                .retrieve()
+                .bodyToMono(List.class)
+                .block();
+
+        System.out.println("Updated Users: " + users);
+        System.out.println("Updated Teams: " + teams);
+
+        List<String> userInitials = users.stream()
+                .map(name -> name.substring(0, 1).toUpperCase())
+                .collect(Collectors.toList());
+
+        List<String> teamsInitials = teams.stream()
+                .map(name -> name.substring(0, 1).toUpperCase())
+                .collect(Collectors.toList());
+
+        // Combine initials
+        List<String> memberIcons = new ArrayList<>();
+        memberIcons.addAll(userInitials);
+        memberIcons.addAll(teamsInitials);
+
+        // Set the member icons in the project
+        projectDTO.setMemberIcons(memberIcons);
+
+        System.out.println("New ProjectDTO: " + projectDTO);
 
         // Perform the update in the repository
         projectRepository.save(modelMapper.map(projectDTO, new TypeToken<Project>(){}.getType()));
