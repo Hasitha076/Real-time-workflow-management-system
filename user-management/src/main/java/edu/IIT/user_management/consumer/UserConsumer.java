@@ -15,13 +15,13 @@ public class UserConsumer {
 
     private final UserService userService;
 
-    @KafkaListener(topics = "task-events", groupId = "user-management")
-    public void consumeUser(Map<String, Object> message) {
-        try {
-            assert message != null;
-            log.info(String.format("#### -> Consumed message -> %s", message.get("collaboratorIds")));
-        } catch (Exception e) {
-            log.error("Error consuming message", e);
-        }
-    }
+//    @KafkaListener(topics = "task-events", groupId = "user-management")
+//    public void consumeUser(Map<String, Object> message) {
+//        try {
+//            assert message != null;
+//            log.info(String.format("#### -> Consumed message -> %s", message.get("collaboratorIds")));
+//        } catch (Exception e) {
+//            log.error("Error consuming message", e);
+//        }
+//    }
 }

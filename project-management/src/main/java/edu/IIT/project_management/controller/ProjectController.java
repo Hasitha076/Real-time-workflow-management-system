@@ -1,5 +1,6 @@
 package edu.IIT.project_management.controller;
 
+import edu.IIT.project_management.dto.CollaboratorsRequest;
 import edu.IIT.project_management.dto.ProjectDTO;
 import edu.IIT.project_management.producer.ProjectProducer;
 import edu.IIT.project_management.service.ProjectService;
@@ -41,6 +42,11 @@ public class ProjectController {
     @GetMapping("/getAllProjects")
     public List<ProjectDTO> getAllProjects() {
         return projectService.getAllProjects();
+    }
+
+    @PutMapping("/updateCollaborators/{projectId}")
+    public void updateCollaborators(@PathVariable int projectId, @RequestBody CollaboratorsRequest collaboratorsRequest) {
+        projectService.updateCollaborators(projectId, collaboratorsRequest);
     }
 
 }

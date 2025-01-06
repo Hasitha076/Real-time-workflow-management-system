@@ -1,5 +1,6 @@
 package edu.IIT.work_management.service;
 
+import edu.IIT.project_management.dto.CollaboratorsRequest;
 import edu.IIT.work_management.dto.WorkDTO;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface WorkService {
     public void deleteWork(int id);
     public List<WorkDTO> getAllWorks();
     public void deleteByProjectId(int projectId);
+    public List<WorkDTO> getWorksByProjectId(int projectId);
+    public void updateCollaborators(int workId, CollaboratorsRequest collaboratorsRequest);
 }

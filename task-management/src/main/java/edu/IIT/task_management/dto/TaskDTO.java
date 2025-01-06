@@ -17,7 +17,7 @@ public class TaskDTO {
     private String taskName;
     private String description;
     private boolean status;
-    private int assignerId;
+    private int assignerId = 1;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
@@ -26,6 +26,9 @@ public class TaskDTO {
     private int projectId;
     private int workId;
     private List<Integer> collaboratorIds;
+    private List<Integer> teamIds;
+    private List<String> memberIcons;
+    private List<String> tags;
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;

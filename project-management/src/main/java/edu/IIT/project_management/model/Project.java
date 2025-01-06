@@ -43,7 +43,7 @@ public class Project {
     private List<Integer> collaboratorIds;
 
     @ElementCollection
-    @CollectionTable(name = "project_collaborators", joinColumns = @JoinColumn(name = "project_id"))
+    @CollectionTable(name = "project_teams", joinColumns = @JoinColumn(name = "project_id"))
     @Column(name = "team_id")
     private List<Integer> teamIds;
 

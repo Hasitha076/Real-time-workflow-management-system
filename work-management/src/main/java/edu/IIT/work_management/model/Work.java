@@ -22,11 +22,14 @@ public class Work {
 
     private String workName;
     private String description;
-    private boolean status = false;
+    private boolean status;
     private int assignerId;
 
     @Enumerated(EnumType.STRING)
     private WorkPriorityLevel priority;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dueDate;
 
     private int projectId;
 
@@ -36,9 +39,19 @@ public class Work {
     private List<Integer> collaboratorIds;
 
     @ElementCollection
-    @CollectionTable(name = "work_collaborators", joinColumns = @JoinColumn(name = "work_id"))
+    @CollectionTable(name = "work_teams", joinColumns = @JoinColumn(name = "work_id"))
     @Column(name = "team_id")
     private List<Integer> teamIds;
+
+    @ElementCollection
+    @CollectionTable(name = "work_memberIcons", joinColumns = @JoinColumn(name = "work_id"))
+    @Column(name = "member_id")
+    private List<String> memberIcons;
+
+    @ElementCollection
+    @CollectionTable(name = "work_tags", joinColumns = @JoinColumn(name = "work_id"))
+    @Column(name = "tag_id")
+    private List<String> tags;
 
     @Column(updatable = false)
     private LocalDateTime createdAt;

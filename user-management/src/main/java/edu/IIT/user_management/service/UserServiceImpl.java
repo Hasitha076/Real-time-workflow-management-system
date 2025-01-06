@@ -53,6 +53,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserDTO> filterUsersDetails(List<Integer> userIds) {
+        List<User> userList = userRepository.findAllById(userIds);
+
+        if (userList.isEmpty()) {
+            log.warn("No users found for IDs: {}", userIds);
+        }
+
+        return userList.stream().map(user -> modelMapper.map(user, UserDTO.class)).toList();
+    }
+
+    @Override
     public List<String> filterUsers(List<Integer> userIds) {
         List<User> userList = userRepository.findAllById(userIds);
 

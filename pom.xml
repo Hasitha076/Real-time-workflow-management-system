@@ -16,7 +16,21 @@
 
   <name>Real-time Workflow Management System</name>
   <url>http://maven.apache.org</url>
-
+  <licenses>
+    <license/>
+  </licenses>
+  <developers>
+    <developer/>
+  </developers>
+  <scm>
+    <connection/>
+    <developerConnection/>
+    <tag/>
+    <url/>
+  </scm>
+  <properties>
+    <java.version>17</java.version>
+  </properties>
   <modules>
     <module>user-management</module>
     <module>task-management</module>

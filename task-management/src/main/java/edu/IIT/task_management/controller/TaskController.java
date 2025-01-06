@@ -40,6 +40,16 @@ public class TaskController {
         return taskService.getTaskById(id);
     }
 
+    @GetMapping("/getTasksByProjectId/{id}")
+    public List<TaskDTO> getTasksByProjectId(@PathVariable int id) {
+        return taskService.getTasksByProjectId(id);
+    }
+
+    @GetMapping("/getTasksByWorkId/{id}")
+    public List<TaskDTO> getTasksByWorkId(@PathVariable int id) {
+        return taskService.getTasksByWorkId(id);
+    }
+
     @GetMapping("/getAllTasks")
     public List<TaskDTO> getAllTasks() {
         return taskService.getAllTasks();

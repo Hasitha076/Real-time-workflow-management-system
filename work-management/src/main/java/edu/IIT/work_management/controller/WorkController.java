@@ -1,5 +1,6 @@
 package edu.IIT.work_management.controller;
 
+import edu.IIT.project_management.dto.CollaboratorsRequest;
 import edu.IIT.work_management.dto.WorkDTO;
 import edu.IIT.work_management.producer.WorkProducer;
 import edu.IIT.work_management.service.WorkService;
@@ -40,9 +41,19 @@ public class WorkController {
         return workService.getWorkById(id);
     }
 
+    @GetMapping("/getWorksByProjectId/{id}")
+    public List<WorkDTO> getWorksByProjectId(@PathVariable int id) {
+        return workService.getWorksByProjectId(id);
+    }
+
     @GetMapping("/getAllWorks")
     public List<WorkDTO> getAllTasks() {
         return workService.getAllWorks();
+    }
+
+    @PutMapping("/updateCollaborators/{workId}")
+    public void updateCollaborators(@PathVariable int workId, @RequestBody CollaboratorsRequest collaboratorsRequest) {
+        workService.updateCollaborators(workId, collaboratorsRequest);
     }
 
 }

@@ -39,6 +39,21 @@ public class Task {
     @Column(name = "collaborator_id")
     private List<Integer> collaboratorIds;
 
+    @ElementCollection
+    @CollectionTable(name = "task_teams", joinColumns = @JoinColumn(name = "task_id"))
+    @Column(name = "team_id")
+    private List<Integer> teamIds;
+
+    @ElementCollection
+    @CollectionTable(name = "task_memberIcons", joinColumns = @JoinColumn(name = "task_id"))
+    @Column(name = "member_id")
+    private List<String> memberIcons;
+
+    @ElementCollection
+    @CollectionTable(name = "task_tags", joinColumns = @JoinColumn(name = "task_id"))
+    @Column(name = "tag_id")
+    private List<String> tags;
+
     @Column(updatable = false)
     private LocalDateTime createdAt;
 

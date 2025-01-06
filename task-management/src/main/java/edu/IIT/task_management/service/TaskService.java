@@ -13,4 +13,6 @@ public interface TaskService {
     public List<TaskDTO> getAllTasks();
     public void deleteByProjectId(int projectId);
     public void deleteByWorkId(int workId);
+    public List<TaskDTO> getTasksByProjectId(int projectId);
+    public List<TaskDTO> getTasksByWorkId(int workId);
 }

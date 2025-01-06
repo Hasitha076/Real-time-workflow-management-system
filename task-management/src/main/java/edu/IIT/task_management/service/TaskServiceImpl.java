@@ -12,7 +12,9 @@ import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,9 +27,49 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final ModelMapper modelMapper;
     private final TaskProducer taskProducer;
+    private final WebClient userWebClient;
+    private final WebClient teamWebClient;
 
     @Override
     public String createTask(TaskDTO taskDTO) {
+
+        List<String> users = userWebClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/filterUserNames") // Ensure path matches the controller
+                        .queryParam("ids", taskDTO.getCollaboratorIds()) // Ensure param name matches the controller
+                        .build())
+                .retrieve()
+                .bodyToMono(List.class)
+                .block();
+
+        List<String> teams = teamWebClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/filterTeams") // Ensure path matches the controller
+                        .queryParam("ids", taskDTO.getTeamIds()) // Ensure param name matches the controller
+                        .build())
+                .retrieve()
+                .bodyToMono(List.class)
+                .block();
+
+        System.out.println("Users: " + users);
+        System.out.println("Teams: " + teams);
+
+
+        List<String> userInitials = users.stream()
+                .map(name -> name.substring(0, 1).toUpperCase())
+                .collect(Collectors.toList());
+
+        List<String> teamsInitials = teams.stream()
+                .map(name -> name.substring(0, 1).toUpperCase())
+                .collect(Collectors.toList());
+
+        // Combine initials
+        List<String> memberIcons = new ArrayList<>();
+        memberIcons.addAll(userInitials);
+        memberIcons.addAll(teamsInitials);
+
+        // Set the member icons in the project
+        taskDTO.setMemberIcons(memberIcons);
+
+
         taskRepository.save(modelMapper.map(taskDTO, Task.class));
         taskProducer.sendCreateTaskMessage(taskDTO.getTaskName(), taskDTO.getAssignerId(), taskDTO.getCollaboratorIds());
         return "Task created successfully";
@@ -133,11 +175,33 @@ public class TaskServiceImpl implements TaskService {
         });
     }
 
-
-
     @Override
     public List<TaskDTO> getAllTasks() {
         return modelMapper.map(taskRepository.findAll(), new TypeToken<List<TaskDTO>>(){}.getType());
+    }
+
+    @Override
+    public List<TaskDTO> getTasksByProjectId(int projectId) {
+        // Fetch all tasks that match the project ID
+        List<Task> tasks = taskRepository.findByProjectId(projectId);
+
+        if (tasks.isEmpty()) {
+            throw new ResourceNotFoundException("No tasks found for work ID: " + projectId);
+        }
+
+        return modelMapper.map(tasks, new TypeToken<List<TaskDTO>>(){}.getType());
+    }
+
+    @Override
+    public List<TaskDTO> getTasksByWorkId(int workId) {
+        // Fetch all tasks that match the project ID
+        List<Task> tasks = taskRepository.findByWorkId(workId);
+
+        if (tasks.isEmpty()) {
+            throw new ResourceNotFoundException("No tasks found for work ID: " + workId);
+        }
+
+        return modelMapper.map(tasks, new TypeToken<List<TaskDTO>>(){}.getType());
     }
 
 }

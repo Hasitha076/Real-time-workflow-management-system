@@ -1,5 +1,6 @@
 package edu.IIT.project_management.service;
 
+import edu.IIT.project_management.dto.CollaboratorsRequest;
 import edu.IIT.project_management.dto.ProjectDTO;
 import edu.IIT.project_management.model.Project;
 import edu.IIT.project_management.producer.ProjectProducer;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
@@ -75,6 +77,44 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectDTO getProjectById(int id) {
         return modelMapper.map(projectRepository.findById(id), ProjectDTO.class);
     }
+
+    @Override
+    public void updateCollaborators(int projectId, CollaboratorsRequest collaboratorsRequest) {
+        // Retrieve the existing project
+        ProjectDTO project = getProjectById(projectId);
+
+        // Get the current collaborators and teams
+        List<Integer> existingCollaborators = project.getCollaboratorIds();
+        List<Integer> existingTeams = project.getTeamIds();
+
+        // If the lists are null, initialize them
+        if (existingCollaborators == null) {
+            existingCollaborators = new ArrayList<>();
+        }
+        if (existingTeams == null) {
+            existingTeams = new ArrayList<>();
+        }
+
+        // Add new collaborators and teams (avoid duplicates)
+        for (Integer collaboratorId : collaboratorsRequest.getCollaboratorIds()) {
+            if (!existingCollaborators.contains(collaboratorId)) {
+                existingCollaborators.add(collaboratorId);
+            }
+        }
+        for (Integer teamId : collaboratorsRequest.getTeamIds()) {
+            if (!existingTeams.contains(teamId)) {
+                existingTeams.add(teamId);
+            }
+        }
+
+        // Update the project with the new lists
+        project.setCollaboratorIds(collaboratorsRequest.getCollaboratorIds());
+        project.setTeamIds(collaboratorsRequest.getTeamIds());
+
+        // Save the updated project
+        updateProject(project);
+    }
+
 
     @Override
     public String updateProject(ProjectDTO projectDTO) {

@@ -17,7 +17,7 @@ public class ProjectDTO {
     private String projectName;
     private String projectDescription;
     private ProjectPriorityLevel priority;
-    private int assignerId;
+    private int assignerId = 1;
 
     private List<String> tags;
 

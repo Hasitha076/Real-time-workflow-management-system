@@ -1,5 +1,7 @@
 package edu.IIT.work_management.service;
 
+import edu.IIT.project_management.dto.CollaboratorsRequest;
+import edu.IIT.project_management.dto.ProjectDTO;
 import edu.IIT.work_management.dto.WorkDTO;
 import edu.IIT.work_management.model.Work;
 import edu.IIT.work_management.producer.WorkProducer;
@@ -11,7 +13,9 @@ import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,9 +28,48 @@ public class WorkServiceImpl implements WorkService {
     private final WorkRepository workRepository;
     private final ModelMapper modelMapper;
     private final WorkProducer workProducer;
+    private final WebClient userWebClient;
+    private final WebClient teamWebClient;
 
     @Override
     public String createWork(WorkDTO workDTO) {
+
+        List<String> users = userWebClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/filterUserNames") // Ensure path matches the controller
+                        .queryParam("ids", workDTO.getCollaboratorIds()) // Ensure param name matches the controller
+                        .build())
+                .retrieve()
+                .bodyToMono(List.class)
+                .block();
+
+        List<String> teams = teamWebClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/filterTeams") // Ensure path matches the controller
+                        .queryParam("ids", workDTO.getTeamIds()) // Ensure param name matches the controller
+                        .build())
+                .retrieve()
+                .bodyToMono(List.class)
+                .block();
+
+        System.out.println("Users: " + users);
+        System.out.println("Teams: " + teams);
+
+
+        List<String> userInitials = users.stream()
+                .map(name -> name.substring(0, 1).toUpperCase())
+                .collect(Collectors.toList());
+
+        List<String> teamsInitials = teams.stream()
+                .map(name -> name.substring(0, 1).toUpperCase())
+                .collect(Collectors.toList());
+
+        // Combine initials
+        List<String> memberIcons = new ArrayList<>();
+        memberIcons.addAll(userInitials);
+        memberIcons.addAll(teamsInitials);
+
+        // Set the member icons in the project
+        workDTO.setMemberIcons(memberIcons);
+
         workRepository.save(modelMapper.map(workDTO, Work.class));
 //        workProducer.sendCreateTaskMessage(workDTO.getWorkName(), workDTO.getAssignerId(), workDTO.getCollaboratorIds());
         return "Work created successfully";
@@ -64,6 +107,44 @@ public class WorkServiceImpl implements WorkService {
                 .collect(Collectors.toList());
 
         workDTO.setCreatedAt(task.get().getCreatedAt());
+
+        List<String> users = userWebClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/filterUserNames") // Ensure path matches the controller
+                        .queryParam("ids", workDTO.getCollaboratorIds()) // Ensure param name matches the controller
+                        .build())
+                .retrieve()
+                .bodyToMono(List.class)
+                .block();
+
+        List<String> teams = teamWebClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/filterTeams") // Ensure path matches the controller
+                        .queryParam("ids", workDTO.getTeamIds()) // Ensure param name matches the controller
+                        .build())
+                .retrieve()
+                .bodyToMono(List.class)
+                .block();
+
+        System.out.println("Users: " + users);
+        System.out.println("Teams: " + teams);
+
+
+        List<String> userInitials = users.stream()
+                .map(name -> name.substring(0, 1).toUpperCase())
+                .collect(Collectors.toList());
+
+        List<String> teamsInitials = teams.stream()
+                .map(name -> name.substring(0, 1).toUpperCase())
+                .collect(Collectors.toList());
+
+        // Combine initials
+        List<String> memberIcons = new ArrayList<>();
+        memberIcons.addAll(userInitials);
+        memberIcons.addAll(teamsInitials);
+
+        // Set the member icons in the project
+        workDTO.setMemberIcons(memberIcons);
+
+
         workRepository.save(modelMapper.map(workDTO, new TypeToken<Work>(){}.getType()));
 
         // Handle sending collaborator changes to the producer or further actions
@@ -117,6 +198,55 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public List<WorkDTO> getAllWorks() {
         return modelMapper.map(workRepository.findAll(), new TypeToken<List<WorkDTO>>(){}.getType());
+    }
+
+    @Override
+    public List<WorkDTO> getWorksByProjectId(int projectId) {
+        // Fetch all tasks that match the project ID
+        List<Work> tasks = workRepository.findByProjectId(projectId);
+
+        if (tasks.isEmpty()) {
+            throw new ResourceNotFoundException("No works found for project ID: " + projectId);
+        }
+
+        return modelMapper.map(tasks, new TypeToken<List<WorkDTO>>(){}.getType());
+    }
+
+    @Override
+    public void updateCollaborators(int workId, CollaboratorsRequest collaboratorsRequest) {
+        // Retrieve the existing project
+        WorkDTO work = getWorkById(workId);
+
+        // Get the current collaborators and teams
+        List<Integer> existingCollaborators = work.getCollaboratorIds();
+        List<Integer> existingTeams = work.getTeamIds();
+
+        // If the lists are null, initialize them
+        if (existingCollaborators == null) {
+            existingCollaborators = new ArrayList<>();
+        }
+        if (existingTeams == null) {
+            existingTeams = new ArrayList<>();
+        }
+
+        // Add new collaborators and teams (avoid duplicates)
+        for (Integer collaboratorId : collaboratorsRequest.getCollaboratorIds()) {
+            if (!existingCollaborators.contains(collaboratorId)) {
+                existingCollaborators.add(collaboratorId);
+            }
+        }
+        for (Integer teamId : collaboratorsRequest.getTeamIds()) {
+            if (!existingTeams.contains(teamId)) {
+                existingTeams.add(teamId);
+            }
+        }
+
+        // Update the project with the new lists
+        work.setCollaboratorIds(collaboratorsRequest.getCollaboratorIds());
+        work.setTeamIds(collaboratorsRequest.getTeamIds());
+
+        // Save the updated project
+        updateWork(work);
     }
 
 }
