@@ -204,4 +204,15 @@ public class TaskServiceImpl implements TaskService {
         return modelMapper.map(tasks, new TypeToken<List<TaskDTO>>(){}.getType());
     }
 
+    @Override
+    public void changeTaskStatus(int taskId, boolean status) {
+        Task task = modelMapper.map(taskRepository.findById(taskId), Task.class);
+        if (task.equals(null)) {
+            throw new ResourceNotFoundException("Task not found");
+        }
+
+        task.setStatus(status);
+        taskRepository.save(task);
+    }
+
 }

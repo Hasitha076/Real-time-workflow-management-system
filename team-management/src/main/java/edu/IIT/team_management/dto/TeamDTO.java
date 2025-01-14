@@ -13,7 +13,7 @@ import java.util.List;
 public class TeamDTO {
     private int teamId;
     private String teamName;
-    private int assignerId;
+    private int assignerId = 1;
     private List<Integer> collaboratorIds;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

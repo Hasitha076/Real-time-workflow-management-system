@@ -203,13 +203,14 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public List<WorkDTO> getWorksByProjectId(int projectId) {
         // Fetch all tasks that match the project ID
-        List<Work> tasks = workRepository.findByProjectId(projectId);
+        List<Work> works = workRepository.findByProjectId(projectId);
 
-        if (tasks.isEmpty()) {
-            throw new ResourceNotFoundException("No works found for project ID: " + projectId);
+        if (works.isEmpty()) {
+            return null;
+//            throw new ResourceNotFoundException("No works found for project ID: " + projectId);
         }
 
-        return modelMapper.map(tasks, new TypeToken<List<WorkDTO>>(){}.getType());
+        return modelMapper.map(works, new TypeToken<List<WorkDTO>>(){}.getType());
     }
 
     @Override

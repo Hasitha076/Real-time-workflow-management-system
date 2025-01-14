@@ -4,9 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Fixed some issues of work and task services according to the front end">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="README file added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/controller/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/controller/TaskController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TaskDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TaskDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/model/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/model/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/team-management/src/main/java/edu/IIT/team_management/dto/TeamDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/team-management/src/main/java/edu/IIT/team_management/dto/TeamDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/service/WorkServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/service/WorkServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,7 +149,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Application.WorkManagementApplication">
+  <component name="RunManager" selected="Application.UserManagementApplication">
     <configuration name="ProjectManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.IIT.project_management.ProjectManagementApplication" />
       <module name="project-management" />
@@ -391,7 +397,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736194435385</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="README file added">
+      <option name="closed" value="true" />
+      <created>1736195537132</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1736195537133</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -425,6 +439,7 @@
     <MESSAGE value="Work microservice CRUD is created" />
     <MESSAGE value="Fixed some issues and updated microservices according to the front end" />
     <MESSAGE value="Fixed some issues of work and task services according to the front end" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed some issues of work and task services according to the front end" />
+    <MESSAGE value="README file added" />
+    <option name="LAST_COMMIT_MESSAGE" value="README file added" />
   </component>
 </project>

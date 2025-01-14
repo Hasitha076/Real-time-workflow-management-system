@@ -55,4 +55,9 @@ public class TaskController {
         return taskService.getAllTasks();
     }
 
+    @PutMapping("/changeTaskStatus/{taskId}")
+    public void changeTaskStatus(@PathVariable int taskId, @RequestBody boolean status) {
+        taskService.changeTaskStatus(taskId, status);
+    }
+
 }

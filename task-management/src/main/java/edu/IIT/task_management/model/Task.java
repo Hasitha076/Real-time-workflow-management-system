@@ -22,7 +22,7 @@ public class Task {
 
     private String taskName;
     private String description;
-    private boolean status = false;
+    private boolean status;
     private int assignerId;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
