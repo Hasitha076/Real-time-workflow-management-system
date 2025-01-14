@@ -87,8 +87,13 @@ public class TaskServiceImpl implements TaskService {
             return "Task not found";
         }
 
+        List<String> comment = modelMapper.map(task.get().getComments(), new TypeToken<ArrayList<String>>(){}.getType());
+        comment.add(taskDTO.getComments().get(0));
+
+
         // Retain the createdAt value from the old task
         taskDTO.setCreatedAt(task.get().getCreatedAt());
+        taskDTO.setComments(comment);
         List<Integer> oldCollaboratorIds = task.get().getCollaboratorIds(); // Get existing collaborators
 
         // Identify new collaborators: present in new project but not in old task
@@ -105,6 +110,8 @@ public class TaskServiceImpl implements TaskService {
         List<Integer> unchangedCollaborators = oldCollaboratorIds.stream()
                 .filter(taskDTO.getCollaboratorIds()::contains)
                 .collect(Collectors.toList());
+
+
 
         taskDTO.setCreatedAt(task.get().getCreatedAt());
         taskRepository.save(modelMapper.map(taskDTO, new TypeToken<Task>(){}.getType()));

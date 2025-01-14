@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -29,6 +30,7 @@ public class TaskDTO {
     private List<Integer> teamIds;
     private List<String> memberIcons;
     private List<String> tags;
+    private List<String> comments;
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;

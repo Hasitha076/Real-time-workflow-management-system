@@ -54,6 +54,11 @@ public class Task {
     @Column(name = "tag_id")
     private List<String> tags;
 
+    @ElementCollection
+    @CollectionTable(name = "task_comments", joinColumns = @JoinColumn(name = "task_id"))
+    @Column(name = "comment_id")
+    private List<String> comments;
+
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
