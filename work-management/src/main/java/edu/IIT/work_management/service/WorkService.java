@@ -15,4 +15,6 @@ public interface WorkService {
     public void deleteByProjectId(int projectId);
     public List<WorkDTO> getWorksByProjectId(int projectId);
     public void updateCollaborators(int workId, CollaboratorsRequest collaboratorsRequest);
+    public List<WorkDTO> getWorksByTeamId(int teamId);
+    public String updateWorkStatus(int workId);
 }

@@ -19,12 +19,14 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int teamId;
     private String teamName;
+    private String teamDescription;
     private int assignerId;
 
     @ElementCollection
     @CollectionTable(name = "team_collaborators", joinColumns = @JoinColumn(name = "team_id"))
     @Column(name = "collaborator_id")
     private List<Integer> collaboratorIds;
+    private List<String> tags;
 
     @Column(updatable = false)
     private LocalDateTime createdAt;

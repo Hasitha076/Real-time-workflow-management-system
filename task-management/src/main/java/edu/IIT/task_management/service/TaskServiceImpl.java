@@ -5,12 +5,14 @@ import edu.IIT.task_management.dto.TaskDTO;
 import edu.IIT.task_management.model.Task;
 import edu.IIT.task_management.producer.TaskProducer;
 import edu.IIT.task_management.repository.TaskRepository;
+import edu.IIT.work_management.dto.WorkDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -29,6 +31,7 @@ public class TaskServiceImpl implements TaskService {
     private final TaskProducer taskProducer;
     private final WebClient userWebClient;
     private final WebClient teamWebClient;
+    private final WebClient workWebClient;
 
     @Override
     public String createTask(TaskDTO taskDTO) {
@@ -87,13 +90,16 @@ public class TaskServiceImpl implements TaskService {
             return "Task not found";
         }
 
-        List<String> comment = modelMapper.map(task.get().getComments(), new TypeToken<ArrayList<String>>(){}.getType());
-        comment.add(taskDTO.getComments().get(0));
+        if(taskDTO.getComments() != null) {
+            List<String> comment = modelMapper.map(task.get().getComments(), new TypeToken<ArrayList<String>>(){}.getType());
+            comment.add(taskDTO.getComments().get(0));
 
+            taskDTO.setComments(comment);
+        }
 
         // Retain the createdAt value from the old task
         taskDTO.setCreatedAt(task.get().getCreatedAt());
-        taskDTO.setComments(comment);
+
         List<Integer> oldCollaboratorIds = task.get().getCollaboratorIds(); // Get existing collaborators
 
         // Identify new collaborators: present in new project but not in old task
@@ -196,30 +202,57 @@ public class TaskServiceImpl implements TaskService {
             throw new ResourceNotFoundException("No tasks found for work ID: " + projectId);
         }
 
-        return modelMapper.map(tasks, new TypeToken<List<TaskDTO>>(){}.getType());
+        return modelMapper.map(tasks.isEmpty() ? null : tasks, new TypeToken<List<TaskDTO>>(){}.getType());
     }
 
     @Override
     public List<TaskDTO> getTasksByWorkId(int workId) {
+        System.out.println("Called: "+ workId);
         // Fetch all tasks that match the project ID
         List<Task> tasks = taskRepository.findByWorkId(workId);
-
+        System.out.println("Called: "+ workId);
+        System.out.println("Tasks: "+ tasks);
         if (tasks.isEmpty()) {
-            throw new ResourceNotFoundException("No tasks found for work ID: " + workId);
+            tasks = new ArrayList<>();
+//            throw new ResourceNotFoundException("No tasks found for work ID: " + workId);
+            return modelMapper.map(tasks, new TypeToken<List<TaskDTO>>(){}.getType());
         }
 
         return modelMapper.map(tasks, new TypeToken<List<TaskDTO>>(){}.getType());
     }
 
     @Override
-    public void changeTaskStatus(int taskId, boolean status) {
-        Task task = modelMapper.map(taskRepository.findById(taskId), Task.class);
-        if (task.equals(null)) {
-            throw new ResourceNotFoundException("Task not found");
+    public void changeTaskStatus(int taskId) {
+        // Fetch task properly
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
+
+        // Fetch works using WebClient
+        List<WorkDTO> work = workWebClient.get()
+                .uri("/getWorksByProjectId/{id}", task.getProjectId()) // Correct URI usage
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<List<WorkDTO>>() {})
+                .block();
+
+        System.out.println("work ======> " + work);
+
+        List<Integer> workIds = work.stream()
+                .map(WorkDTO::getWorkId)
+                .collect(Collectors.toList());
+
+        int taskIndex = workIds.indexOf(task.getWorkId());
+        System.out.println("Task index in workIds: " + taskIndex);
+
+        // Update the task status
+        if(workIds.size() > taskIndex + 1) {
+            task.setWorkId(workIds.get(taskIndex + 1));
+        } else {
+            task.setStatus(true);
         }
 
-        task.setStatus(status);
+        // Save the updated task
         taskRepository.save(task);
     }
+
 
 }

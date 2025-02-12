@@ -2,9 +2,11 @@ package edu.IIT.work_management.controller;
 
 import edu.IIT.project_management.dto.CollaboratorsRequest;
 import edu.IIT.work_management.dto.WorkDTO;
+import edu.IIT.work_management.dto.WorkStatusUpdateRequest;
 import edu.IIT.work_management.producer.WorkProducer;
 import edu.IIT.work_management.service.WorkService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,6 +56,16 @@ public class WorkController {
     @PutMapping("/updateCollaborators/{workId}")
     public void updateCollaborators(@PathVariable int workId, @RequestBody CollaboratorsRequest collaboratorsRequest) {
         workService.updateCollaborators(workId, collaboratorsRequest);
+    }
+
+    @GetMapping("/getWorksByTeamId/{teamId}")
+    public List<WorkDTO> getWorksByTeamId(@PathVariable int teamId) {
+        return workService.getWorksByTeamId(teamId);
+    }
+
+    @PutMapping("/updateWorkStatus")
+    public ResponseEntity<String> updateWorkStatus(@RequestBody WorkStatusUpdateRequest request) {
+        return ResponseEntity.ok(workService.updateWorkStatus(request.getWorkId()));
     }
 
 }

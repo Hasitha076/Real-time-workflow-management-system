@@ -5,10 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Some changes done in task service">
+      <change afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/config/CorsConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project-management/src/main/resources/graphql/schema.graphqls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TaskTemplateDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/dto/WorkStatusUpdateRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TaskDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TaskDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/model/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/model/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project-management/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/controller/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/controller/ProjectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/repository/ProjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/repository/ProjectRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/service/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/service/ProjectService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/service/ProjectServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/service/ProjectServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project-management/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/config/TaskWebClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/config/TaskWebClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/controller/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/controller/TaskController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/team-management/src/main/java/edu/IIT/team_management/dto/TeamDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/team-management/src/main/java/edu/IIT/team_management/dto/TeamDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/team-management/src/main/java/edu/IIT/team_management/model/Team.java" beforeDir="false" afterPath="$PROJECT_DIR$/team-management/src/main/java/edu/IIT/team_management/model/Team.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/controller/WorkController.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/controller/WorkController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/dto/WorkDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/dto/WorkDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/repository/WorkRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/repository/WorkRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/service/WorkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/service/WorkService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/service/WorkServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/service/WorkServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +39,7 @@
       <list>
         <option value="Interface" />
         <option value="Enum" />
+        <option value="GraphQL File" />
         <option value="Class" />
       </list>
     </option>
@@ -145,7 +165,20 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Application.UserManagementApplication">
+  <component name="RunManager" selected="Application.TaskManagementApplication">
+    <configuration name="NotificationManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="edu.IIT.notification_management.NotificationManagementApplication" />
+      <module name="notification-management" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="edu.IIT.notification_management.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ProjectManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.IIT.project_management.ProjectManagementApplication" />
       <module name="project-management" />
@@ -178,19 +211,6 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="edu.IIT.team_management.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="edu.IIT.user_management.UserManagementApplication" />
-      <module name="user-management" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="edu.IIT.user_management.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -243,9 +263,9 @@
       <list>
         <item itemvalue="Application.TaskManagementApplication" />
         <item itemvalue="Application.WorkManagementApplication" />
-        <item itemvalue="Application.UserManagementApplication" />
-        <item itemvalue="Application.ProjectManagementApplication" />
         <item itemvalue="Application.TeamManagementApplication" />
+        <item itemvalue="Application.NotificationManagementApplication" />
+        <item itemvalue="Application.ProjectManagementApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -409,7 +429,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736858942790</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Some changes done in task service">
+      <option name="closed" value="true" />
+      <created>1736891135703</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1736891135703</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

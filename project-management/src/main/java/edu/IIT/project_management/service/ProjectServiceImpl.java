@@ -7,6 +7,7 @@ import edu.IIT.project_management.producer.ProjectProducer;
 import edu.IIT.project_management.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
@@ -63,6 +64,8 @@ public class ProjectServiceImpl implements ProjectService {
         List<String> memberIcons = new ArrayList<>();
         memberIcons.addAll(userInitials);
         memberIcons.addAll(teamsInitials);
+
+
 
         // Set the member icons in the project
         projectDTO.setMemberIcons(memberIcons);
@@ -216,6 +219,19 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<ProjectDTO> getAllProjects() {
         return modelMapper.map(projectRepository.findAll(), new TypeToken<List<ProjectDTO>>(){}.getType());
+    }
+
+    @Override
+    public List<ProjectDTO> getProjectsByTeamId(int teamId) {
+        List<Project> projects = projectRepository.findByTeamIds(teamId);
+
+        log.info("Projects: {}", projects);
+
+        if (projects.isEmpty()) {
+            throw new ResourceNotFoundException("No projects found for team ID: " + teamId);
+        }
+
+        return modelMapper.map(projects, new TypeToken<List<ProjectDTO>>(){}.getType());
     }
 
 }

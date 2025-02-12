@@ -13,4 +13,5 @@ public interface ProjectService {
     public void deleteProject(int id);
     public List<ProjectDTO> getAllProjects();
     public void updateCollaborators(int projectId, CollaboratorsRequest collaboratorsRequest);
+    public List<ProjectDTO> getProjectsByTeamId(int teamId);
 }

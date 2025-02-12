@@ -20,4 +20,8 @@ public class TaskWebClient {
         return WebClient.builder().baseUrl("http://localhost:8085/api/v1/team").build();
     }
 
+    @Bean WebClient workWebClient() {
+        return WebClient.builder().baseUrl("http://localhost:8086/api/v1/work").build();
+    }
+
 }

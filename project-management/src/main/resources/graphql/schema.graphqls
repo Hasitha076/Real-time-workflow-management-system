@@ -1,0 +1,35 @@
+type ProjectDTO {
+    projectId: ID!
+    projectName: String!
+    projectDescription: String!
+    priority: ProjectPriorityLevel
+    assignerId: Int
+    tags: [String]
+    dueDate: LocalDate
+    collaboratorIds: [Int]
+    teamIds: [Int]
+    memberIcons: [String]
+    status: ProjectStatus
+    createdAt: LocalDateTime
+    updatedAt: LocalDateTime
+}
+
+scalar LocalDate
+
+scalar LocalDateTime
+
+type Query {
+    getAllProjects: [ProjectDTO]
+}
+
+enum ProjectPriorityLevel {
+    LOW
+    MEDIUM
+    HIGH
+}
+
+enum ProjectStatus {
+    PENDING,
+    ON_GOING,
+    COMPLETED
+}

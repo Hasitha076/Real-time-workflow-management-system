@@ -250,4 +250,26 @@ public class WorkServiceImpl implements WorkService {
         updateWork(work);
     }
 
+    @Override
+    public List<WorkDTO> getWorksByTeamId(int teamId) {
+        List<Work> works = workRepository.findByTeamIds(teamId);
+
+        log.info("Works: {}", works);
+
+        if (works.isEmpty()) {
+            throw new ResourceNotFoundException("No works found for team ID: " + teamId);
+        }
+
+        return modelMapper.map(works, new TypeToken<List<WorkDTO>>(){}.getType());
+    }
+
+    @Override
+    public String updateWorkStatus(int workId) {
+        WorkDTO work = getWorkById(workId);
+        System.out.println("Work: " + work);
+        work.setStatus(true);
+        workRepository.save(modelMapper.map(work, new TypeToken<Work>(){}.getType()));
+        return "Work status updated successfully";
+    }
+
 }

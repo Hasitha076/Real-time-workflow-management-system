@@ -15,5 +15,5 @@ public interface TaskService {
     public void deleteByWorkId(int workId);
     public List<TaskDTO> getTasksByProjectId(int projectId);
     public List<TaskDTO> getTasksByWorkId(int workId);
-    public void changeTaskStatus(int taskId, boolean status);
+    public void changeTaskStatus(int taskId);
 }

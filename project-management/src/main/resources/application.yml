@@ -35,6 +35,10 @@ spring:
 #      service-url:
 #        defaultZone: http://localhost:8761/eureka
 
+  graphql:
+    graphiql:
+      enabled: true
+      path: /graphiql
 
 server:
   port: 8083

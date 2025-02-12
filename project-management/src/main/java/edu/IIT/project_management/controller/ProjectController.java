@@ -5,6 +5,7 @@ import edu.IIT.project_management.dto.ProjectDTO;
 import edu.IIT.project_management.producer.ProjectProducer;
 import edu.IIT.project_management.service.ProjectService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,9 +45,19 @@ public class ProjectController {
         return projectService.getAllProjects();
     }
 
+//    @QueryMapping
+//    public List<ProjectDTO> getAllProjects() {
+//        return projectService.getAllProjects();
+//    }
+
     @PutMapping("/updateCollaborators/{projectId}")
     public void updateCollaborators(@PathVariable int projectId, @RequestBody CollaboratorsRequest collaboratorsRequest) {
         projectService.updateCollaborators(projectId, collaboratorsRequest);
+    }
+
+    @GetMapping("/getProjectsByTeamId/{teamId}")
+    public List<ProjectDTO> getProjectsByTeamId(@PathVariable int teamId) {
+        return projectService.getProjectsByTeamId(teamId);
     }
 
 }
