@@ -37,13 +37,21 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public String updateTeam(TeamDTO teamDTO) {
+        System.out.println("Team updated");
         Optional<Team> team = teamRepository.findById(teamDTO.getTeamId());
+
+        System.out.println("Team: " + team);
         if (team.isEmpty()) {
             return "Team not found";
         }
 
-        // Retain the createdAt value from the old project
+        teamDTO.setUpdatedAt(team.get().getUpdatedAt()); // Retain the updatedAt value from the old project
+        teamDTO.setTeamDescription(team.get().getTeamDescription()); // Retain the teamDescription value from the old project
+        teamDTO.setTeamName(team.get().getTeamName()); // Retain the teamName value from the old project
         teamDTO.setCreatedAt(team.get().getCreatedAt());
+        teamDTO.setAssignerId(team.get().getAssignerId());
+        teamDTO.setTags(team.get().getTags());
+
         List<Integer> oldCollaboratorIds = team.get().getCollaboratorIds(); // Get existing collaborators
 
         // Identify new collaborators: present in new project but not in old project

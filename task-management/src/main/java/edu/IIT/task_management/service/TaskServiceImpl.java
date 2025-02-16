@@ -276,6 +276,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<TemplateDTO> getTaskTemplatesByProjectId(int projectId) {
+        return modelMapper.map(templateRepository.findByProjectId(projectId), new TypeToken<List<TemplateDTO>>(){}.getType());
+    }
+
+    @Override
     public String updateTaskTemplate(TemplateDTO taskTemplateDTO) {
         templateRepository.save(modelMapper.map(taskTemplateDTO, new TypeToken<Template>(){}.getType()));
         return "Task template updated successfully";

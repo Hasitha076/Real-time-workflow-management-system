@@ -4,22 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Workflow implementation done">
-      <change afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/CollaboratorsBlockDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TemplateDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/model/CollaboratorsBlock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/model/Template.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/repository/CollaboratorsBlockRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/repository/TemplateRepository.java" afterDir="false" />
+    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Template task and task assignees of work in workflow implementation is done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/config/CorsConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/controller/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/controller/ProjectController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project-management/src/main/resources/graphql/schema.graphqls" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/resources/graphql/schema.graphqls" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/controller/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/controller/TaskController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TaskDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TaskDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TaskTemplateDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/repository/TemplateRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/repository/TemplateRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/team-management/src/main/java/edu/IIT/team_management/service/TeamServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/team-management/src/main/java/edu/IIT/team_management/service/TeamServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -253,8 +244,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TaskManagementApplication" />
         <item itemvalue="Application.TeamManagementApplication" />
+        <item itemvalue="Application.TaskManagementApplication" />
         <item itemvalue="Application.WorkManagementApplication" />
         <item itemvalue="Application.NotificationManagementApplication" />
         <item itemvalue="Application.ProjectManagementApplication" />
@@ -437,7 +428,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739371419764</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Template task and task assignees of work in workflow implementation is done">
+      <option name="closed" value="true" />
+      <created>1739698034379</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1739698034379</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -474,6 +473,7 @@
     <MESSAGE value="README file added" />
     <MESSAGE value="Some changes done in task service" />
     <MESSAGE value="Workflow implementation done" />
-    <option name="LAST_COMMIT_MESSAGE" value="Workflow implementation done" />
+    <MESSAGE value="Template task and task assignees of work in workflow implementation is done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Template task and task assignees of work in workflow implementation is done" />
   </component>
 </project>

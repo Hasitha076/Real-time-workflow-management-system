@@ -24,6 +24,7 @@ public interface TaskService {
     public String updateTaskTemplate(TemplateDTO taskTemplateDTO);
     public void deleteTaskTemplate(int id);
     public List<TemplateDTO> getAllTaskTemplates();
+    public List<TemplateDTO> getTaskTemplatesByProjectId(int projectId);
 
     public void createCollaboratorsBlock(CollaboratorsBlockDTO collaboratorsBlockDTO);
     public String updateCollaboratorsBlock(CollaboratorsBlockDTO collaboratorsBlockDTO);

@@ -88,6 +88,11 @@ public class TaskController {
         return taskService.getAllTaskTemplates();
     }
 
+    @GetMapping("/getTaskTemplatesByProjectId/{projectId}")
+    public List<TemplateDTO> getTaskTemplateByProjectId(@PathVariable int projectId) {
+        return taskService.getTaskTemplatesByProjectId(projectId);
+    }
+
     @PostMapping("/createCollaboratorsBlock")
     public void createCollaboratorsBlock(@RequestBody CollaboratorsBlockDTO collaboratorsBlockDTO) {
         taskService.createCollaboratorsBlock(collaboratorsBlockDTO);
