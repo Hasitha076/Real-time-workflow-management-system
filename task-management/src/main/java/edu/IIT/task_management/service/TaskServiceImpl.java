@@ -1,10 +1,18 @@
 package edu.IIT.task_management.service;
 
-import edu.IIT.project_management.dto.ProjectDTO;
+//import edu.IIT.project_management.dto.ProjectDTO;
+import edu.IIT.task_management.dto.CollaboratorsBlockDTO;
 import edu.IIT.task_management.dto.TaskDTO;
+//import edu.IIT.task_management.dto.TaskTemplateDTO;
+import edu.IIT.task_management.dto.TemplateDTO;
+import edu.IIT.task_management.model.CollaboratorsBlock;
 import edu.IIT.task_management.model.Task;
+import edu.IIT.task_management.model.Template;
 import edu.IIT.task_management.producer.TaskProducer;
+import edu.IIT.task_management.repository.CollaboratorsBlockRepository;
 import edu.IIT.task_management.repository.TaskRepository;
+//import edu.IIT.task_management.repository.TaskTemplateRepository;
+import edu.IIT.task_management.repository.TemplateRepository;
 import edu.IIT.work_management.dto.WorkDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +35,8 @@ import java.util.stream.Collectors;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
+    private final TemplateRepository templateRepository;
+    private final CollaboratorsBlockRepository collaboratorsBlockRepository;
     private final ModelMapper modelMapper;
     private final TaskProducer taskProducer;
     private final WebClient userWebClient;
@@ -214,7 +224,6 @@ public class TaskServiceImpl implements TaskService {
         System.out.println("Tasks: "+ tasks);
         if (tasks.isEmpty()) {
             tasks = new ArrayList<>();
-//            throw new ResourceNotFoundException("No tasks found for work ID: " + workId);
             return modelMapper.map(tasks, new TypeToken<List<TaskDTO>>(){}.getType());
         }
 
@@ -253,6 +262,60 @@ public class TaskServiceImpl implements TaskService {
         // Save the updated task
         taskRepository.save(task);
     }
+
+    //    Task Template methods
+    @Override
+    public String createTaskTemplate(TemplateDTO templateDTO) {
+        templateRepository.save(modelMapper.map(templateDTO, Template.class));
+        return "Task template created successfully";
+    }
+
+    @Override
+    public TemplateDTO getTaskTemplateById(int id) {
+        return modelMapper.map(templateRepository.findById(id), TemplateDTO.class);
+    }
+
+    @Override
+    public String updateTaskTemplate(TemplateDTO taskTemplateDTO) {
+        templateRepository.save(modelMapper.map(taskTemplateDTO, new TypeToken<Template>(){}.getType()));
+        return "Task template updated successfully";
+    }
+
+    @Override
+    public void deleteTaskTemplate(int id) {
+        templateRepository.deleteById(id);
+    }
+
+    @Override
+    public List<TemplateDTO> getAllTaskTemplates() {
+        return modelMapper.map(templateRepository.findAll(), new TypeToken<List<TemplateDTO>>(){}.getType());
+    }
+
+
+    @Override
+    public void createCollaboratorsBlock(CollaboratorsBlockDTO collaboratorsBlockDTO) {
+        collaboratorsBlockRepository.save(modelMapper.map(collaboratorsBlockDTO, CollaboratorsBlock.class));
+    }
+
+    @Override
+    public String updateCollaboratorsBlock(CollaboratorsBlockDTO collaboratorsBlockDTO) {
+        System.out.println("Updated CollaboratorsBlockDTO: " + collaboratorsBlockDTO);
+        collaboratorsBlockRepository.save(modelMapper.map(collaboratorsBlockDTO, new TypeToken<CollaboratorsBlock>(){}.getType()));
+        return "Collaborators block updated successfully";
+    }
+
+    @Override
+    public CollaboratorsBlockDTO getCollaboratorsBlockByWorkId(int workId) {
+        CollaboratorsBlock collaboratorsBlock = collaboratorsBlockRepository.findByWorkId(workId);
+
+        if (collaboratorsBlock == null) {
+            return null; // Return null instead of wrong object
+        }
+
+        // Ensure correct conversion from Model -> DTO
+        return modelMapper.map(collaboratorsBlock, CollaboratorsBlockDTO.class);
+    }
+
 
 
 }

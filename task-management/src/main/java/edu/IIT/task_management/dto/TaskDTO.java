@@ -32,7 +32,6 @@ public class TaskDTO {
     private List<String> tags;
     private List<String> comments;
     private LocalDateTime createdAt;
-
     private LocalDateTime updatedAt;
 
 }

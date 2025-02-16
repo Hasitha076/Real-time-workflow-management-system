@@ -5,6 +5,8 @@ import edu.IIT.project_management.dto.ProjectDTO;
 import edu.IIT.project_management.producer.ProjectProducer;
 import edu.IIT.project_management.service.ProjectService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,44 +21,40 @@ public class ProjectController {
     private final ProjectService projectService;
     private final ProjectProducer projectProducer;
 
-    @PostMapping("/createProject")
-    public String addProject(@RequestBody ProjectDTO projectDTO) {
+    @MutationMapping
+    public String createProject(@Argument("input") ProjectDTO projectDTO) {
         return projectService.createProject(projectDTO);
     }
 
-    @PutMapping("/updateProject")
-    public String updateProject(@RequestBody ProjectDTO projectDTO) {
+    @MutationMapping
+    public String updateProject(@Argument("input") ProjectDTO projectDTO) {
         return projectService.updateProject(projectDTO);
     }
 
-    @DeleteMapping("/deleteProject/{id}")
-    public String deleteProject(@PathVariable int id) {
+    @MutationMapping
+    public String deleteProject(@Argument int id) {
         projectService.deleteProject(id);
         return "Project deleted successfully";
     }
 
-    @GetMapping("/getProject/{id}")
-    public ProjectDTO getProject(@PathVariable int id) {
+    @QueryMapping
+    public ProjectDTO getProject(@Argument int id) {
         return projectService.getProjectById(id);
     }
 
-    @GetMapping("/getAllProjects")
+    @QueryMapping
     public List<ProjectDTO> getAllProjects() {
         return projectService.getAllProjects();
     }
 
-//    @QueryMapping
-//    public List<ProjectDTO> getAllProjects() {
-//        return projectService.getAllProjects();
-//    }
-
-    @PutMapping("/updateCollaborators/{projectId}")
-    public void updateCollaborators(@PathVariable int projectId, @RequestBody CollaboratorsRequest collaboratorsRequest) {
-        projectService.updateCollaborators(projectId, collaboratorsRequest);
+    @MutationMapping
+    public String updateCollaborators(@Argument int projectId, @Argument CollaboratorsRequest input) {
+        projectService.updateCollaborators(projectId, input);
+        return "Collaborators updated successfully";
     }
 
-    @GetMapping("/getProjectsByTeamId/{teamId}")
-    public List<ProjectDTO> getProjectsByTeamId(@PathVariable int teamId) {
+    @QueryMapping
+    public List<ProjectDTO> getProjectsByTeamId(@Argument int teamId) {
         return projectService.getProjectsByTeamId(teamId);
     }
 

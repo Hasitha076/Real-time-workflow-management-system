@@ -1,3 +1,6 @@
+scalar LocalDate
+scalar LocalDateTime
+
 type ProjectDTO {
     projectId: ID!
     projectName: String!
@@ -14,12 +17,36 @@ type ProjectDTO {
     updatedAt: LocalDateTime
 }
 
-scalar LocalDate
-
-scalar LocalDateTime
-
 type Query {
     getAllProjects: [ProjectDTO]
+    getProject(id: Int!): ProjectDTO
+    getProjectsByTeamId(teamId: Int!): [ProjectDTO]
+}
+
+type Mutation {
+    createProject(input: ProjectInput!): String
+    updateProject(input: ProjectInput!): String
+    deleteProject(id: Int!): String
+    updateCollaborators(projectId: Int!, input: CollaboratorsAndTeamsInput!): String
+}
+
+input ProjectInput {
+    projectId: ID
+    projectName: String!
+    projectDescription: String!
+    priority: ProjectPriorityLevel
+    assignerId: Int
+    tags: [String]
+    dueDate: LocalDate
+    collaboratorIds: [Int]
+    teamIds: [Int]
+    memberIcons: [String]
+    status: ProjectStatus
+}
+
+input CollaboratorsAndTeamsInput {
+    collaboratorIds: [Int]!
+    teamIds: [Int]!
 }
 
 enum ProjectPriorityLevel {
@@ -29,7 +56,7 @@ enum ProjectPriorityLevel {
 }
 
 enum ProjectStatus {
-    PENDING,
-    ON_GOING,
+    PENDING
+    ON_GOING
     COMPLETED
 }

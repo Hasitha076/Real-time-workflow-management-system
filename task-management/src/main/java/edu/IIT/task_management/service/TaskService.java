@@ -1,6 +1,8 @@
 package edu.IIT.task_management.service;
 
+import edu.IIT.task_management.dto.CollaboratorsBlockDTO;
 import edu.IIT.task_management.dto.TaskDTO;
+import edu.IIT.task_management.dto.TemplateDTO;
 
 import java.util.List;
 
@@ -16,4 +18,14 @@ public interface TaskService {
     public List<TaskDTO> getTasksByProjectId(int projectId);
     public List<TaskDTO> getTasksByWorkId(int workId);
     public void changeTaskStatus(int taskId);
+
+    public String createTaskTemplate(TemplateDTO taskTemplateDTO);
+    public TemplateDTO getTaskTemplateById(int id);
+    public String updateTaskTemplate(TemplateDTO taskTemplateDTO);
+    public void deleteTaskTemplate(int id);
+    public List<TemplateDTO> getAllTaskTemplates();
+
+    public void createCollaboratorsBlock(CollaboratorsBlockDTO collaboratorsBlockDTO);
+    public String updateCollaboratorsBlock(CollaboratorsBlockDTO collaboratorsBlockDTO);
+    public CollaboratorsBlockDTO getCollaboratorsBlockByWorkId(int workId);
 }

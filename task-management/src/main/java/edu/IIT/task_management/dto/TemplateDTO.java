@@ -12,25 +12,22 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class TaskTemplateDTO {
+public class TemplateDTO {
 
     private int taskTemplateId;
     private String taskTemplateName;
-    private String taskDescription;
-    private boolean templateStatus= false;
+    private String taskTemplateDescription;
+    private boolean taskTemplateStatus= false;
     private int assignerId = 1;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate templateDueDate;
+    private LocalDate taskTemplateDueDate;
 
-    private TaskPriorityLevel priority;
+    private TaskPriorityLevel taskTemplatePriority;
     private int projectId;
-    private int workId;
-    private List<Integer> collaboratorIds;
-    private List<Integer> teamIds;
-    private List<String> memberIcons;
-    private List<String> tags;
-    private List<String> comments;
+    private List<Integer> taskTemplateCollaboratorIds;
+    private List<Integer> taskTemplateTeamIds;
+    private List<String> taskTemplateTags;
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
