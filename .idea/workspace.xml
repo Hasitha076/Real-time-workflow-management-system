@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Template task and task assignees of work in workflow implementation is done">
+    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Team service changes done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/controller/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/controller/TaskController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/repository/TemplateRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/repository/TemplateRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/team-management/src/main/java/edu/IIT/team_management/service/TeamServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/team-management/src/main/java/edu/IIT/team_management/service/TeamServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,47 +61,47 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.DiscoveryServerApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.NotificationManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.ProjectManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.TaskManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.TeamManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.UserManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.WorkManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.All in Real-time-workflow-management-system.executor&quot;: &quot;Run&quot;,
-    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Real-time-workflow-management-system [clean...].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.NotificationManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.ProjectManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.TaskManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.TeamManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.UserManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.WorkManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/hasithamadushanepa/Desktop/MSc/Academic/sem 05/Software Development Project/CODE/Real-time-workflow-management-system&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.DiscoveryServerApplication.executor": "Debug",
+    "Application.NotificationManagementApplication.executor": "Debug",
+    "Application.ProjectManagementApplication.executor": "Debug",
+    "Application.TaskManagementApplication.executor": "Debug",
+    "Application.TeamManagementApplication.executor": "Debug",
+    "Application.UserManagementApplication.executor": "Debug",
+    "Application.WorkManagementApplication.executor": "Debug",
+    "JUnit.All in Real-time-workflow-management-system.executor": "Run",
+    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
+    "Maven.Real-time-workflow-management-system [clean...].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.NotificationManagementApplication.executor": "Debug",
+    "Spring Boot.ProjectManagementApplication.executor": "Debug",
+    "Spring Boot.TaskManagementApplication.executor": "Debug",
+    "Spring Boot.TeamManagementApplication.executor": "Debug",
+    "Spring Boot.UserManagementApplication.executor": "Debug",
+    "Spring Boot.WorkManagementApplication.executor": "Debug",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/hasithamadushanepa/Desktop/MSc/Academic/sem 05/Software Development Project/CODE/Real-time-workflow-management-system",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "com.github.copilot.settings.ApplicationConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -148,7 +144,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Application.TaskManagementApplication">
+  <component name="RunManager" selected="Application.ProjectManagementApplication">
     <configuration name="NotificationManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.IIT.notification_management.NotificationManagementApplication" />
       <module name="notification-management" />
@@ -244,11 +240,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ProjectManagementApplication" />
+        <item itemvalue="Application.NotificationManagementApplication" />
+        <item itemvalue="Application.WorkManagementApplication" />
         <item itemvalue="Application.TeamManagementApplication" />
         <item itemvalue="Application.TaskManagementApplication" />
-        <item itemvalue="Application.WorkManagementApplication" />
-        <item itemvalue="Application.NotificationManagementApplication" />
-        <item itemvalue="Application.ProjectManagementApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -436,7 +432,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739698034379</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Team service changes done">
+      <option name="closed" value="true" />
+      <created>1739720675526</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1739720675526</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -474,6 +478,7 @@
     <MESSAGE value="Some changes done in task service" />
     <MESSAGE value="Workflow implementation done" />
     <MESSAGE value="Template task and task assignees of work in workflow implementation is done" />
-    <option name="LAST_COMMIT_MESSAGE" value="Template task and task assignees of work in workflow implementation is done" />
+    <MESSAGE value="Team service changes done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Team service changes done" />
   </component>
 </project>

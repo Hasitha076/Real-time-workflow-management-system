@@ -95,6 +95,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public String updateTask(TaskDTO taskDTO) {
+
+        System.out.println("Task updated: " + taskDTO);
         Optional<Task> task = (taskRepository.findById(taskDTO.getTaskId()));
         if (task.isEmpty()) {
             return "Task not found";
@@ -105,6 +107,8 @@ public class TaskServiceImpl implements TaskService {
             comment.add(taskDTO.getComments().get(0));
 
             taskDTO.setComments(comment);
+        } else {
+            taskDTO.setComments(task.get().getComments());
         }
 
         // Retain the createdAt value from the old task
