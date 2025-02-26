@@ -2,6 +2,7 @@ package edu.IIT.project_management.service;
 
 import edu.IIT.project_management.dto.CollaboratorsRequest;
 import edu.IIT.project_management.dto.ProjectDTO;
+import edu.IIT.project_management.dto.ProjectUpdateStatus;
 import edu.IIT.project_management.model.Project;
 import edu.IIT.project_management.producer.ProjectProducer;
 import edu.IIT.project_management.repository.ProjectRepository;
@@ -232,6 +233,18 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         return modelMapper.map(projects, new TypeToken<List<ProjectDTO>>(){}.getType());
+    }
+
+    @Override
+    public void updateProjectStatus(int projectId, ProjectUpdateStatus projectUpdateStatus) {
+        System.out.println("ProjectUpdateStatus: " + projectUpdateStatus);
+        Optional<Project> project = projectRepository.findById(projectId);
+        if (project.isEmpty()) {
+            throw new ResourceNotFoundException("Project not found");
+        }
+
+        project.get().setStatus(projectUpdateStatus.getStatus());
+        projectRepository.save(project.get());
     }
 
 }

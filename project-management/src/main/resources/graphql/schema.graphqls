@@ -28,6 +28,7 @@ type Mutation {
     updateProject(input: ProjectInput!): String
     deleteProject(id: Int!): String
     updateCollaborators(projectId: Int!, input: CollaboratorsAndTeamsInput!): String
+    updateProjectStatus(projectId: Int!, input: ProjectStatusInput!): String
 }
 
 input ProjectInput {
@@ -47,6 +48,10 @@ input ProjectInput {
 input CollaboratorsAndTeamsInput {
     collaboratorIds: [Int]!
     teamIds: [Int]!
+}
+
+input ProjectStatusInput {
+    status: ProjectStatus!
 }
 
 enum ProjectPriorityLevel {

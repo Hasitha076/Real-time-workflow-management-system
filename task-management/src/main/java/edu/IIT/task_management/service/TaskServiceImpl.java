@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -209,15 +210,15 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDTO> getTasksByProjectId(int projectId) {
-        // Fetch all tasks that match the project ID
         List<Task> tasks = taskRepository.findByProjectId(projectId);
 
         if (tasks.isEmpty()) {
-            throw new ResourceNotFoundException("No tasks found for work ID: " + projectId);
+            return Collections.emptyList(); // Return an empty list instead of mapping null
         }
 
-        return modelMapper.map(tasks.isEmpty() ? null : tasks, new TypeToken<List<TaskDTO>>(){}.getType());
+        return modelMapper.map(tasks, new TypeToken<List<TaskDTO>>(){}.getType());
     }
+
 
     @Override
     public List<TaskDTO> getTasksByWorkId(int workId) {

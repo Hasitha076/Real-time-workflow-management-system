@@ -2,6 +2,7 @@ package edu.IIT.project_management.service;
 
 import edu.IIT.project_management.dto.CollaboratorsRequest;
 import edu.IIT.project_management.dto.ProjectDTO;
+import edu.IIT.project_management.dto.ProjectUpdateStatus;
 
 import java.util.List;
 
@@ -14,4 +15,5 @@ public interface ProjectService {
     public List<ProjectDTO> getAllProjects();
     public void updateCollaborators(int projectId, CollaboratorsRequest collaboratorsRequest);
     public List<ProjectDTO> getProjectsByTeamId(int teamId);
+    public void updateProjectStatus(int projectId, ProjectUpdateStatus projectUpdateStatus);
 }

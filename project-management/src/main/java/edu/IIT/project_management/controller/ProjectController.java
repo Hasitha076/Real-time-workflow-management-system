@@ -2,6 +2,7 @@ package edu.IIT.project_management.controller;
 
 import edu.IIT.project_management.dto.CollaboratorsRequest;
 import edu.IIT.project_management.dto.ProjectDTO;
+import edu.IIT.project_management.dto.ProjectUpdateStatus;
 import edu.IIT.project_management.producer.ProjectProducer;
 import edu.IIT.project_management.service.ProjectService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class ProjectController {
 
     @MutationMapping
     public String createProject(@Argument("input") ProjectDTO projectDTO) {
+        System.out.println(projectDTO);
         return projectService.createProject(projectDTO);
     }
 
@@ -56,6 +58,13 @@ public class ProjectController {
     @QueryMapping
     public List<ProjectDTO> getProjectsByTeamId(@Argument int teamId) {
         return projectService.getProjectsByTeamId(teamId);
+    }
+
+    @MutationMapping
+    public String updateProjectStatus(@Argument int projectId,  @Argument("input") ProjectUpdateStatus projectUpdateStatus) {
+        System.out.println(projectUpdateStatus);
+        projectService.updateProjectStatus(projectId, projectUpdateStatus);
+        return "Project status updated successfully";
     }
 
 }
