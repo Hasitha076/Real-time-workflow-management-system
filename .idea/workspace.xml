@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Project service Changes done">
+    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Project service status updating process done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/service/UserServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -239,11 +241,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TaskManagementApplication" />
         <item itemvalue="Application.UserManagementApplication" />
         <item itemvalue="Application.NotificationManagementApplication" />
         <item itemvalue="Application.WorkManagementApplication" />
         <item itemvalue="Application.TeamManagementApplication" />
+        <item itemvalue="Application.TaskManagementApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -463,7 +465,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740581394811</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Project service status updating process done">
+      <option name="closed" value="true" />
+      <created>1740602463868</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1740602463868</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -504,6 +514,7 @@
     <MESSAGE value="Team service changes done" />
     <MESSAGE value="Changes done" />
     <MESSAGE value="Project service Changes done" />
-    <option name="LAST_COMMIT_MESSAGE" value="Project service Changes done" />
+    <MESSAGE value="Project service status updating process done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Project service status updating process done" />
   </component>
 </project>

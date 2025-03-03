@@ -38,6 +38,8 @@ public class UserServiceImpl implements UserService {
             return "User not found";
         }
         userDTO.setCreatedAt(user.get().getCreatedAt());
+        userDTO.setEmail(user.get().getEmail());
+        userDTO.setPassword(user.get().getPassword());
         userRepository.save(modelMapper.map(userDTO, new TypeToken<User>(){}.getType()));
         return "User updated successfully";
     }

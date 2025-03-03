@@ -25,6 +25,7 @@ public class UserController {
 
     @PutMapping("/updateUser")
     public String updateUser(@RequestBody UserDTO user) {
+        System.out.println("User updated details: " + user);
         return userService.updateUser(user);
     }
 
