@@ -1,6 +1,7 @@
 package edu.IIT.user_management.service;
 
 import edu.IIT.user_management.dto.UserDTO;
+import edu.IIT.user_management.model.User;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface UserService {
     public List<String> filterUsers(List<Integer> userIds);
     public List<UserDTO> filterUsersDetails(List<Integer> userIds);
     public List<String> filterUserNames(List<Integer> userIds);
+    public UserDTO findByEmail(String email);
+    public boolean checkPassword(String rawPassword, String encodedPassword);
 }

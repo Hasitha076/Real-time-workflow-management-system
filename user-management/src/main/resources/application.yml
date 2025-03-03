@@ -31,6 +31,9 @@ spring:
     template:
       default-topic: user-event
 
+jwt:
+  secret: vSc1SCW8W32cewBDWeE0dy6X62eLB1zOyjyP/EYdnSE=
+
 #eureka:
 #  client:
 #      service-url:

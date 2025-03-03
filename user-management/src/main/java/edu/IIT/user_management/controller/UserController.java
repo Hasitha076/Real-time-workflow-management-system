@@ -4,14 +4,16 @@ import edu.IIT.user_management.dto.UserDTO;
 import edu.IIT.user_management.producer.UserProducer;
 import edu.IIT.user_management.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class UserController {
 
     private final UserService userService;
@@ -37,6 +39,7 @@ public class UserController {
 
     @GetMapping("/getUser/{id}")
     public UserDTO getUser(@PathVariable int id) {
+
         return userService.getUserById(id);
     }
 
@@ -44,6 +47,7 @@ public class UserController {
     public List<UserDTO> getAllUsers() {
         return userService.getAllUsers();
     }
+
 
     @GetMapping("/filterUsers")
     public List<String> filterUsers(@RequestParam List<Integer> ids) { // Ensure param matches WebClient

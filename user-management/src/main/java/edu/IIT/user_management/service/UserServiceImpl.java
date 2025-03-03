@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,11 +21,23 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserDTO findByEmail(String email) {
+        return modelMapper.map(userRepository.findByEmail(email), UserDTO.class);
+    }
 
     @Override
     public String createUser(UserDTO user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(modelMapper.map(user, User.class));
         return "User created successfully";
+    }
+
+    @Override
+    public boolean checkPassword(String rawPassword, String encodedPassword) {
+        return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 
     @Override

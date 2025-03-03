@@ -4,10 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Project service status updating process done">
+    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="User service changes done">
+      <change afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/controller/AuthController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/dto/AuthRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/dto/AuthResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/utils/JwtUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/UserManagementApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/UserManagementApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/service/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +156,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Application.NotificationManagementApplication">
+  <component name="RunManager" selected="Application.TaskManagementApplication">
     <configuration name="NotificationManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.IIT.notification_management.NotificationManagementApplication" />
       <module name="notification-management" />
@@ -242,10 +253,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.UserManagementApplication" />
-        <item itemvalue="Application.NotificationManagementApplication" />
-        <item itemvalue="Application.WorkManagementApplication" />
-        <item itemvalue="Application.TeamManagementApplication" />
         <item itemvalue="Application.TaskManagementApplication" />
+        <item itemvalue="Application.TeamManagementApplication" />
+        <item itemvalue="Application.WorkManagementApplication" />
+        <item itemvalue="Application.NotificationManagementApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -473,7 +484,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740602463868</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="User service changes done">
+      <option name="closed" value="true" />
+      <created>1740980965115</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1740980965115</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -515,6 +534,7 @@
     <MESSAGE value="Changes done" />
     <MESSAGE value="Project service Changes done" />
     <MESSAGE value="Project service status updating process done" />
-    <option name="LAST_COMMIT_MESSAGE" value="Project service status updating process done" />
+    <MESSAGE value="User service changes done" />
+    <option name="LAST_COMMIT_MESSAGE" value="User service changes done" />
   </component>
 </project>
