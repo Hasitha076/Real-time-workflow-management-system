@@ -4,21 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="User service changes done">
-      <change afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/controller/AuthController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/dto/AuthRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/dto/AuthResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/utils/JwtUtil.java" afterDir="false" />
+    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="User auth part is implemented">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-management/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/UserManagementApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/UserManagementApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/service/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-management/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/dto/ProjectDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/dto/ProjectDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TaskDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TaskDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TemplateDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TemplateDTO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +146,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Application.TaskManagementApplication">
+  <component name="RunManager" selected="Application.UserManagementApplication">
     <configuration name="NotificationManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.IIT.notification_management.NotificationManagementApplication" />
       <module name="notification-management" />
@@ -252,11 +242,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.UserManagementApplication" />
         <item itemvalue="Application.TaskManagementApplication" />
-        <item itemvalue="Application.TeamManagementApplication" />
         <item itemvalue="Application.WorkManagementApplication" />
+        <item itemvalue="Application.UserManagementApplication" />
         <item itemvalue="Application.NotificationManagementApplication" />
+        <item itemvalue="Application.TeamManagementApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -492,7 +482,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740980965115</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="User auth part is implemented">
+      <option name="closed" value="true" />
+      <created>1741030528318</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1741030528318</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -510,7 +508,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="User management service is created" />
     <MESSAGE value="Notification service is created (Not finished). When a project is created, can get collaborator emails" />
     <MESSAGE value="Notification service is finished. Collaborators can get an email." />
     <MESSAGE value="Collaborators can get an email when updated the project." />
@@ -535,6 +532,7 @@
     <MESSAGE value="Project service Changes done" />
     <MESSAGE value="Project service status updating process done" />
     <MESSAGE value="User service changes done" />
-    <option name="LAST_COMMIT_MESSAGE" value="User service changes done" />
+    <MESSAGE value="User auth part is implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="User auth part is implemented" />
   </component>
 </project>

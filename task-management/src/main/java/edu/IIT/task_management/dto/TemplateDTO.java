@@ -18,7 +18,7 @@ public class TemplateDTO {
     private String taskTemplateName;
     private String taskTemplateDescription;
     private boolean taskTemplateStatus= false;
-    private int assignerId = 1;
+    private int assignerId;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate taskTemplateDueDate;

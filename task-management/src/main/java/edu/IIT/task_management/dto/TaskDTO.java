@@ -18,7 +18,7 @@ public class TaskDTO {
     private String taskName;
     private String description;
     private boolean status= false;
-    private int assignerId = 1;
+    private int assignerId;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
