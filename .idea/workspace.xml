@@ -5,10 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="User auth part is implemented">
+      <change afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/dto/ProjectDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/dto/ProjectDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TaskDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TaskDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TemplateDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TemplateDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project-management/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/controller/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/controller/ProjectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/service/ProjectServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/service/ProjectServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/consumer/TaskConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/consumer/TaskConsumer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,10 +128,10 @@
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="edu.IIT.task_management.config" />
-      <recent name="edu.IIT.work_management.dto" />
       <recent name="edu.IIT.work_management.config" />
+      <recent name="edu.IIT.project_management.config" />
+      <recent name="edu.IIT.work_management.dto" />
       <recent name="edu.IIT.team_management.config" />
-      <recent name="edu.IIT.user_management.config" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -146,7 +149,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Application.UserManagementApplication">
+  <component name="RunManager" selected="Application.TeamManagementApplication">
     <configuration name="NotificationManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.IIT.notification_management.NotificationManagementApplication" />
       <module name="notification-management" />
@@ -240,13 +243,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.TaskManagementApplication" />
+      <item itemvalue="Application.WorkManagementApplication" />
+      <item itemvalue="Application.NotificationManagementApplication" />
+      <item itemvalue="Application.TeamManagementApplication" />
+      <item itemvalue="Application.UserManagementApplication" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TaskManagementApplication" />
-        <item itemvalue="Application.WorkManagementApplication" />
-        <item itemvalue="Application.UserManagementApplication" />
-        <item itemvalue="Application.NotificationManagementApplication" />
         <item itemvalue="Application.TeamManagementApplication" />
+        <item itemvalue="Application.UserManagementApplication" />
+        <item itemvalue="Application.WorkManagementApplication" />
+        <item itemvalue="Application.TaskManagementApplication" />
+        <item itemvalue="Application.NotificationManagementApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -534,5 +544,8 @@
     <MESSAGE value="User service changes done" />
     <MESSAGE value="User auth part is implemented" />
     <option name="LAST_COMMIT_MESSAGE" value="User auth part is implemented" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Real_time_workflow_management_system$UserManagementApplication.ic" NAME="UserManagementApplication Coverage Results" MODIFIED="1741298444527" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>

@@ -39,16 +39,16 @@ public class TaskConsumer {
         }
     }
 
-    @KafkaListener(topics = "work-delete-events", groupId = "task-management")
-    public void consumeWork(WorkDeleteEventDTO message) {
-        try {
-            assert message != null;
-            log.info(String.format("#### -> Consumed message -> %s", message));
-            taskService.deleteByProjectId(message.getWorkId());
-
-        } catch (Exception e) {
-            log.error("Error consuming message", e);
-        }
-    }
+//    @KafkaListener(topics = "work-delete-events", groupId = "task-management")
+//    public void consumeWork(WorkDeleteEventDTO message) {
+//        try {
+//            assert message != null;
+//            log.info(String.format("#### -> Consumed message -> %s", message));
+//            taskService.deleteByProjectId(message.getWorkId());
+//
+//        } catch (Exception e) {
+//            log.error("Error consuming message", e);
+//        }
+//    }
 
 }

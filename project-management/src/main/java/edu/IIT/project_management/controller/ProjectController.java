@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/project")
 @RequiredArgsConstructor
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class ProjectController {
 
     private final ProjectService projectService;
@@ -46,7 +46,9 @@ public class ProjectController {
 
     @QueryMapping
     public List<ProjectDTO> getAllProjects() {
-        return projectService.getAllProjects();
+        List<ProjectDTO> projects = projectService.getAllProjects();
+        System.out.println(projects);
+        return projects;
     }
 
     @MutationMapping
