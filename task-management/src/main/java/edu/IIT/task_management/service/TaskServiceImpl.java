@@ -13,7 +13,7 @@ import edu.IIT.task_management.repository.CollaboratorsBlockRepository;
 import edu.IIT.task_management.repository.TaskRepository;
 //import edu.IIT.task_management.repository.TaskTemplateRepository;
 import edu.IIT.task_management.repository.TemplateRepository;
-import edu.IIT.work_management.dto.WorkDTO;
+//import edu.IIT.work_management.dto.WorkDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,10 +24,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -235,30 +232,30 @@ public class TaskServiceImpl implements TaskService {
         return modelMapper.map(tasks, new TypeToken<List<TaskDTO>>(){}.getType());
     }
 
-    @Override
     public void changeTaskStatus(int taskId) {
         // Fetch task properly
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
 
-        // Fetch works using WebClient
-        List<WorkDTO> work = workWebClient.get()
+        // Fetch works using WebClient with generic Map response
+        List<Map<String, Object>> work = workWebClient.get()
                 .uri("/getWorksByProjectId/{id}", task.getProjectId()) // Correct URI usage
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<List<WorkDTO>>() {})
+                .bodyToMono(new ParameterizedTypeReference<List<Map<String, Object>>>() {})
                 .block();
 
         System.out.println("work ======> " + work);
 
+        // Extract workIds assuming each work object has a key named "workId"
         List<Integer> workIds = work.stream()
-                .map(WorkDTO::getWorkId)
+                .map(workMap -> (Integer) workMap.get("workId")) // Extract workId from map
                 .collect(Collectors.toList());
 
         int taskIndex = workIds.indexOf(task.getWorkId());
         System.out.println("Task index in workIds: " + taskIndex);
 
         // Update the task status
-        if(workIds.size() > taskIndex + 1) {
+        if (workIds.size() > taskIndex + 1) {
             task.setWorkId(workIds.get(taskIndex + 1));
         } else {
             task.setStatus(true);
@@ -267,6 +264,7 @@ public class TaskServiceImpl implements TaskService {
         // Save the updated task
         taskRepository.save(task);
     }
+
 
     //    Task Template methods
     @Override

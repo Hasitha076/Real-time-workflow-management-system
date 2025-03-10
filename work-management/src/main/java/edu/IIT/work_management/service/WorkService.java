@@ -1,6 +1,6 @@
 package edu.IIT.work_management.service;
 
-import edu.IIT.project_management.dto.CollaboratorsRequest;
+import edu.IIT.work_management.dto.CollaboratorsRequest;
 import edu.IIT.work_management.dto.WorkDTO;
 
 import java.util.List;

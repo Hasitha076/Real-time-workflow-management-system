@@ -1,6 +1,5 @@
 package edu.IIT.work_management.producer;
 
-import edu.IIT.project_management.dto.ProjectDeleteEventDTO;
 import edu.IIT.work_management.dto.WorkCreateEventDTO;
 import edu.IIT.work_management.dto.WorkDTO;
 import edu.IIT.work_management.dto.WorkDeleteEventDTO;

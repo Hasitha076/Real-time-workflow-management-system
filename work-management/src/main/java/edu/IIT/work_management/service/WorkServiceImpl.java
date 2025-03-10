@@ -1,7 +1,6 @@
 package edu.IIT.work_management.service;
 
-import edu.IIT.project_management.dto.CollaboratorsRequest;
-import edu.IIT.project_management.dto.ProjectDTO;
+import edu.IIT.work_management.dto.CollaboratorsRequest;
 import edu.IIT.work_management.dto.WorkDTO;
 import edu.IIT.work_management.model.Work;
 import edu.IIT.work_management.producer.WorkProducer;

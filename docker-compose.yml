@@ -1,27 +1,83 @@
+version: '3.8'
+
 services:
-  app:
-    build: .
-    container_name: work-management
+
+  # User Service
+  user-service:
+    build:
+      context: user-management
+    container_name: user_management
     ports:
-      - "8080:8080"
-    depends_on:
-      - db
+      - "8081:8081"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/work_management
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/user_management_db
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
+    networks:
+      - app-network
 
-  db:
-    image: mysql:8.0
-    container_name: mysql_db
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: work_management
+  # Task Service
+  task-service:
+    build:
+      context: task-management
+    container_name: task_management
     ports:
-      - "3307:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
+      - "8082:8082"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/task_management_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    networks:
+      - app-network
 
+  # Project Service
+  project-service:
+    build:
+      context: project-management
+    container_name: project_management
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/project_management_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    networks:
+      - app-network
+
+  # Notification Service
+  notification-service:
+    build:
+      context: notification-management
+    container_name: notification_management
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/notification_management_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    networks:
+      - app-network
+
+  # Team Service
+  team-service:
+    build:
+      context: team-management
+    container_name: team_management
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/team_management_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    networks:
+      - app-network
+
+
+# Define a network for internal communication
+networks:
+  app-network:
+    driver: bridge
+
+# Define persistent volume for MySQL
 volumes:
   mysql_data:

@@ -18,7 +18,7 @@ public class ProjectProducer {
 
     private final KafkaTemplate<ProjectDTO, ProjectCreateEventDTO> kafkaTemplateCreate;
     private final KafkaTemplate<ProjectDTO, ProjectUpdateEventDTO> kafkaTemplateUpdate;
-    private final KafkaTemplate<ProjectDTO, ProjectDeleteEventDTO> kafkaTemplateDelete;
+    private final KafkaTemplate<Integer, Integer> kafkaTemplateDelete;
 
     public void sendCreatedProjectMessage(String projectName, int assignerId, List<Integer> collaboratorIds) {
         log.info(String.format("#### -> Producing message -> %s", projectName, assignerId, collaboratorIds));
@@ -37,7 +37,7 @@ public class ProjectProducer {
     public void sendDeleteProjectMessage(int projectId, String projectName, int assignerId, List<Integer> collaboratorIds) {
         log.info(String.format("#### -> Producing message -> %s", projectName, collaboratorIds));
 
-        ProjectDeleteEventDTO projectDeleteEventDTO = new ProjectDeleteEventDTO(projectId, projectName, assignerId, collaboratorIds);
-        kafkaTemplateDelete.send("project-delete-events", projectDeleteEventDTO);
+//        ProjectDeleteEventDTO projectDeleteEventDTO = new ProjectDeleteEventDTO(projectId, projectName, assignerId, collaboratorIds);
+        kafkaTemplateDelete.send("project-delete-events", projectId);
     }
 }

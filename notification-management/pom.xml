@@ -9,6 +9,7 @@
     <artifactId>notification-management</artifactId>
     <name>Archetype - notification-management</name>
     <url>http://maven.apache.org</url>
+    <packaging>pom</packaging>
 
     <dependencies>
         <dependency>
