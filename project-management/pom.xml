@@ -9,6 +9,7 @@
     <artifactId>project-management</artifactId>
     <name>Archetype - project-management</name>
     <url>http://maven.apache.org</url>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>

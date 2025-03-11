@@ -4,32 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="docker-compose file added">
-      <change afterPath="$PROJECT_DIR$/notification-management/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-management/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project-management/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project-management/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task-management/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task-management/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/team-management/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/team-management/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-management/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-management/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/work-management/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/work-management/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="docker-compose file edit and mvn install successfully done">
+      <change afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/dto/ProjectCreateEventDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/dto/ProjectDeleteEventDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/dto/ProjectUpdateEventDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-management/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notification-management/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/consumer/NotificationConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/consumer/NotificationConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project-management/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/producer/ProjectProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/producer/ProjectProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/consumer/TaskConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/consumer/TaskConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work-management/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/consumer/WorkConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/consumer/WorkConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/controller/WorkController.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/controller/WorkController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/producer/WorkProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/producer/WorkProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/service/WorkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/service/WorkService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/service/WorkServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/service/WorkServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/team-management/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/team-management/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work-management/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,49 +75,49 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.DiscoveryServerApplication.executor": "Debug",
-    "Application.NotificationManagementApplication.executor": "Debug",
-    "Application.ProjectManagementApplication.executor": "Debug",
-    "Application.TaskManagementApplication.executor": "Debug",
-    "Application.TeamManagementApplication.executor": "Debug",
-    "Application.UserManagementApplication.executor": "Debug",
-    "Application.WorkManagementApplication.executor": "Debug",
-    "JUnit.All in Real-time-workflow-management-system.executor": "Run",
-    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
-    "Maven.Real-time-workflow-management-system [clean...].executor": "Run",
-    "Maven.Real-time-workflow-management-system [clean].executor": "Run",
-    "Maven.Real-time-workflow-management-system [install].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.NotificationManagementApplication.executor": "Debug",
-    "Spring Boot.ProjectManagementApplication.executor": "Debug",
-    "Spring Boot.TaskManagementApplication.executor": "Debug",
-    "Spring Boot.TeamManagementApplication.executor": "Debug",
-    "Spring Boot.UserManagementApplication.executor": "Debug",
-    "Spring Boot.WorkManagementApplication.executor": "Debug",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/hasithamadushanepa/Desktop/MSc/Academic/sem 05/Software Development Project/CODE/Real-time-workflow-management-system",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "com.github.copilot.settings.ApplicationConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.DiscoveryServerApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.NotificationManagementApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.ProjectManagementApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.TaskManagementApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.TeamManagementApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.UserManagementApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.WorkManagementApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.All in Real-time-workflow-management-system.executor&quot;: &quot;Run&quot;,
+    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Real-time-workflow-management-system [clean...].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Real-time-workflow-management-system [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Real-time-workflow-management-system [install].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.NotificationManagementApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ProjectManagementApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.TaskManagementApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.TeamManagementApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.UserManagementApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.WorkManagementApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/hasithamadushanepa/Desktop/MSc/Academic/sem 05/Software Development Project/CODE/Real-time-workflow-management-system&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.github.copilot.settings.ApplicationConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -148,17 +139,18 @@
       <recent name="edu.IIT.user_management.repository" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="edu.IIT.notification_management.dto" />
       <recent name="edu.IIT.task_management.config" />
       <recent name="edu.IIT.work_management.config" />
       <recent name="edu.IIT.project_management.config" />
       <recent name="edu.IIT.work_management.dto" />
-      <recent name="edu.IIT.team_management.config" />
     </key>
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
-      <command value="mvn clean verify" />
       <command value="mvn clean" />
+      <command value="mvn clean verify" />
+      <command value="mvn clean install" />
       <command value="mvn install" />
     </option>
   </component>
@@ -172,7 +164,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Application.TaskManagementApplication">
+  <component name="RunManager" selected="Application.NotificationManagementApplication">
     <configuration name="NotificationManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.IIT.notification_management.NotificationManagementApplication" />
       <module name="notification-management" />
@@ -186,12 +178,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TaskManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="edu.IIT.task_management.TaskManagementApplication" />
-      <module name="task-management" />
+    <configuration name="ProjectManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="edu.IIT.project_management.ProjectManagementApplication" />
+      <module name="project-management" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="edu.IIT.task_management.*" />
+          <option name="PATTERN" value="edu.IIT.project_management.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -199,12 +191,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TeamManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="edu.IIT.team_management.TeamManagementApplication" />
-      <module name="team-management" />
+    <configuration name="TaskManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="edu.IIT.task_management.TaskManagementApplication" />
+      <module name="task-management" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="edu.IIT.team_management.*" />
+          <option name="PATTERN" value="edu.IIT.task_management.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -267,19 +259,19 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.ProjectManagementApplication" />
+      <item itemvalue="Application.NotificationManagementApplication" />
       <item itemvalue="Application.TaskManagementApplication" />
       <item itemvalue="Application.WorkManagementApplication" />
-      <item itemvalue="Application.NotificationManagementApplication" />
-      <item itemvalue="Application.TeamManagementApplication" />
       <item itemvalue="Application.UserManagementApplication" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TaskManagementApplication" />
-        <item itemvalue="Application.WorkManagementApplication" />
-        <item itemvalue="Application.TeamManagementApplication" />
-        <item itemvalue="Application.UserManagementApplication" />
         <item itemvalue="Application.NotificationManagementApplication" />
+        <item itemvalue="Application.ProjectManagementApplication" />
+        <item itemvalue="Application.UserManagementApplication" />
+        <item itemvalue="Application.WorkManagementApplication" />
+        <item itemvalue="Application.TaskManagementApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -547,7 +539,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741618494918</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="docker-compose file edit and mvn install successfully done">
+      <option name="closed" value="true" />
+      <created>1741628101185</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1741628101185</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -565,7 +565,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Collaborators can get an email when updated the project." />
     <MESSAGE value="Collaborators can get an email after deleted the project." />
     <MESSAGE value="Collaborators can get an email after created &amp; updated the task." />
     <MESSAGE value="Collaborators can get an email after delete the task." />
@@ -590,7 +589,8 @@
     <MESSAGE value="User auth part is implemented" />
     <MESSAGE value="new changes done after the security integrated&#10;(After the troubleshoot)" />
     <MESSAGE value="docker-compose file added" />
-    <option name="LAST_COMMIT_MESSAGE" value="docker-compose file added" />
+    <MESSAGE value="docker-compose file edit and mvn install successfully done" />
+    <option name="LAST_COMMIT_MESSAGE" value="docker-compose file edit and mvn install successfully done" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Real_time_workflow_management_system$UserManagementApplication.ic" NAME="UserManagementApplication Coverage Results" MODIFIED="1741298444527" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />

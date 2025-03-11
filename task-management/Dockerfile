@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the built JAR file into the container
-COPY target/project-management-1.0-SNAPSHOT.jar app.jar
+COPY target/task-management-1.0-SNAPSHOT.jar app.jar
 
 # Expose the application port
 EXPOSE 8082

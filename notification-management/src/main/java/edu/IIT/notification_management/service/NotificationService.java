@@ -1,8 +1,8 @@
 package edu.IIT.notification_management.service;
 
-import edu.IIT.project_management.dto.ProjectCreateEventDTO;
-import edu.IIT.project_management.dto.ProjectDeleteEventDTO;
-import edu.IIT.project_management.dto.ProjectUpdateEventDTO;
+import edu.IIT.notification_management.dto.ProjectCreateEventDTO;
+import edu.IIT.notification_management.dto.ProjectDeleteEventDTO;
+import edu.IIT.notification_management.dto.ProjectUpdateEventDTO;
 import edu.IIT.task_management.dto.TaskCreateEventDTO;
 import edu.IIT.task_management.dto.TaskDeleteEventDTO;
 import edu.IIT.task_management.dto.TaskUpdateEventDTO;

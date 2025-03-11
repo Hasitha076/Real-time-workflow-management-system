@@ -1,12 +1,8 @@
 package edu.IIT.notification_management.service;
 
-import edu.IIT.notification_management.dto.NotificationEventDTO;
-import edu.IIT.notification_management.dto.NotificationType;
+import edu.IIT.notification_management.dto.*;
 import edu.IIT.notification_management.model.Notification;
 import edu.IIT.notification_management.repository.NotificationRepository;
-import edu.IIT.project_management.dto.ProjectCreateEventDTO;
-import edu.IIT.project_management.dto.ProjectDeleteEventDTO;
-import edu.IIT.project_management.dto.ProjectUpdateEventDTO;
 import edu.IIT.task_management.dto.TaskCreateEventDTO;
 import edu.IIT.task_management.dto.TaskDeleteEventDTO;
 import edu.IIT.task_management.dto.TaskUpdateEventDTO;
@@ -61,7 +57,7 @@ public class NotificationServiceImpl implements NotificationService {
         String body = "You have been added as a collaborator to the project: " + projectCreateEventDTO.getProjectName();
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -91,7 +87,7 @@ public class NotificationServiceImpl implements NotificationService {
         }
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -112,7 +108,7 @@ public class NotificationServiceImpl implements NotificationService {
         String body = projectDeleteEventDTO.getProjectName() + " project is already deleted";
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
 

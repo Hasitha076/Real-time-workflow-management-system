@@ -1,9 +1,10 @@
 package edu.IIT.notification_management.consumer;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.IIT.notification_management.dto.ProjectCreateEventDTO;
+import edu.IIT.notification_management.dto.ProjectDeleteEventDTO;
+import edu.IIT.notification_management.dto.ProjectUpdateEventDTO;
 import edu.IIT.notification_management.service.NotificationService;
-import edu.IIT.project_management.dto.ProjectCreateEventDTO;
-import edu.IIT.project_management.dto.ProjectDeleteEventDTO;
-import edu.IIT.project_management.dto.ProjectUpdateEventDTO;
 import edu.IIT.task_management.dto.TaskCreateEventDTO;
 import edu.IIT.task_management.dto.TaskDeleteEventDTO;
 import edu.IIT.task_management.dto.TaskUpdateEventDTO;
@@ -25,39 +26,97 @@ public class NotificationConsumer {
 
     private final NotificationService notificationService;
 
-    @KafkaListener(topics = "project-create-events", groupId = "notification-management")
-    public void consumeCreateProject(ProjectCreateEventDTO message) {
-        try {
-            assert message != null;
+//    @KafkaListener(topics = "project-create-events", groupId = "notification-management")
+//    public void consumeCreateProject(ProjectCreateEventDTO message) {
+//        try {
+//            assert message != null;
+//
+//            notificationService.sendEmails(message);
+//            notificationService.createProjectNotification(message, null, "PROJECT");
+//
+//        } catch (Exception e) {
+//            log.error("Error consuming message", e);
+//        }
+//    }
 
-            notificationService.sendEmails(message);
-            notificationService.createProjectNotification(message, null, "PROJECT");
+    @KafkaListener(topics = "project-create-events", groupId = "notification-management")
+    public void consumeCreateProject(String message) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            ProjectCreateEventDTO projectCreateEventDTO = objectMapper.readValue(message, ProjectCreateEventDTO.class);
+
+            System.out.println("Project create message: " + projectCreateEventDTO.getProjectName());
+            System.out.println("Project create message: " + projectCreateEventDTO.getAssignerId());
+            System.out.println("Project create message: " + projectCreateEventDTO.getCollaboratorIds());
+
+
+            notificationService.sendEmails(projectCreateEventDTO);
+            notificationService.createProjectNotification(projectCreateEventDTO, null, "PROJECT");
 
         } catch (Exception e) {
             log.error("Error consuming message", e);
         }
     }
+
+
+//    @KafkaListener(topics = "project-update-events", groupId = "notification-management")
+//    public void consumeUpdateProject(ProjectUpdateEventDTO message) {
+//        try {
+//            assert message != null;
+//
+//            notificationService.sendUpdatedEmails(message);
+//            notificationService.updateProjectNotification(message, null, "PROJECT");
+//
+//        } catch (Exception e) {
+//            log.error("Error consuming message", e);
+//        }
+//    }
 
     @KafkaListener(topics = "project-update-events", groupId = "notification-management")
-    public void consumeUpdateProject(ProjectUpdateEventDTO message) {
+    public void consumeUpdateProject(String message) {
         try {
-            assert message != null;
+            ObjectMapper objectMapper = new ObjectMapper();
+            ProjectUpdateEventDTO projectUpdateEventDTO = objectMapper.readValue(message, ProjectUpdateEventDTO.class);
 
-            notificationService.sendUpdatedEmails(message);
-            notificationService.updateProjectNotification(message, null, "PROJECT");
+            System.out.println("Project create message: " + projectUpdateEventDTO.getProjectName());
+            System.out.println("Project create message: " + projectUpdateEventDTO.getAssignerId());
+            System.out.println("Project create message: " + projectUpdateEventDTO.getCollaboratorIds());
+
+
+            notificationService.sendUpdatedEmails(projectUpdateEventDTO);
+            notificationService.updateProjectNotification(projectUpdateEventDTO, null, "PROJECT");
 
         } catch (Exception e) {
             log.error("Error consuming message", e);
         }
     }
 
-    @KafkaListener(topics = "project-delete-events", groupId = "notification-management")
-    public void consumeDeleteProject(ProjectDeleteEventDTO message) {
-        try {
-            assert message != null;
+//    @KafkaListener(topics = "project-delete-events", groupId = "notification-management")
+//    public void consumeDeleteProject(ProjectDeleteEventDTO message) {
+//        try {
+//            assert message != null;
+//
+//            notificationService.sendDeleteEmails(message);
+//            notificationService.deleteProjectNotification(message, null, "PROJECT");
+//
+//        } catch (Exception e) {
+//            log.error("Error consuming message", e);
+//        }
+//    }
 
-            notificationService.sendDeleteEmails(message);
-            notificationService.deleteProjectNotification(message, null, "PROJECT");
+    @KafkaListener(topics = "project-delete-events", groupId = "notification-management")
+    public void consumeDeleteProject(String message) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            ProjectDeleteEventDTO projectDeleteEventDTO = objectMapper.readValue(message, ProjectDeleteEventDTO.class);
+
+            System.out.println("Project create message: " + projectDeleteEventDTO.getProjectName());
+            System.out.println("Project create message: " + projectDeleteEventDTO.getAssignerId());
+            System.out.println("Project create message: " + projectDeleteEventDTO.getCollaboratorIds());
+
+
+            notificationService.sendDeleteEmails(projectDeleteEventDTO);
+            notificationService.deleteProjectNotification(projectDeleteEventDTO, null, "PROJECT");
 
         } catch (Exception e) {
             log.error("Error consuming message", e);
