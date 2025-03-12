@@ -3,14 +3,6 @@ package edu.IIT.notification_management.service;
 import edu.IIT.notification_management.dto.*;
 import edu.IIT.notification_management.model.Notification;
 import edu.IIT.notification_management.repository.NotificationRepository;
-import edu.IIT.task_management.dto.TaskCreateEventDTO;
-import edu.IIT.task_management.dto.TaskDeleteEventDTO;
-import edu.IIT.task_management.dto.TaskUpdateEventDTO;
-import edu.IIT.team_management.dto.TeamCreateEventDTO;
-import edu.IIT.team_management.dto.TeamDeleteEventDTO;
-import edu.IIT.team_management.dto.TeamUpdateEventDTO;
-import edu.IIT.work_management.dto.WorkDeleteEventDTO;
-import edu.IIT.work_management.dto.WorkUpdateEventDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,7 +123,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
     String body = "You have been added as a collaborator to the task: " + taskCreateEventDTO.getTaskName();
 
     assert recipients != null;
-//    sendMail(recipients, subject, body);
+    sendMail(recipients, subject, body);
 }
 
     @Override
@@ -161,7 +153,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         }
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -182,7 +174,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         String body = taskDeleteEventDTO.getTaskName() + " task is already deleted";
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
 
@@ -205,7 +197,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         String body = "You have been added as a collaborator to the team: " + teamCreateEventDTO.getTeamName();
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -235,7 +227,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         }
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -256,31 +248,31 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         String body = teamDeleteEventDTO.getTeamName() + " team is already deleted";
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
 
     //    Work
-//    @Override
-//    public void sendWorkCreateEmails(WorkCreateEventDTO workCreateEventDTO) {
-//        List<Integer> ids = workCreateEventDTO.getCollaboratorIds();
-//
-//        List<String> recipients = userWebClient.get()
-//                .uri(uriBuilder -> uriBuilder.path("/filterUsers") // Ensure path matches the controller
-//                        .queryParam("ids", ids) // Ensure param name matches the controller
-//                        .build())
-//                .retrieve()
-//                .bodyToMono(List.class)
-//                .block();
-//
-//        log.info("#### -> Sending email -> {}", recipients);
-//
-//        String subject = "New Work Created: " + workCreateEventDTO.getWorkName();
-//        String body = "You have been added as a collaborator to the work: " + workCreateEventDTO.getWorkName();
-//
-//        assert recipients != null;
-//        sendMail(recipients, subject, body);
-//    }
+    @Override
+    public void sendWorkCreateEmails(WorkCreateEventDTO workCreateEventDTO) {
+        List<Integer> ids = workCreateEventDTO.getCollaboratorIds();
+
+        List<String> recipients = userWebClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/filterUsers") // Ensure path matches the controller
+                        .queryParam("ids", ids) // Ensure param name matches the controller
+                        .build())
+                .retrieve()
+                .bodyToMono(List.class)
+                .block();
+
+        log.info("#### -> Sending email -> {}", recipients);
+
+        String subject = "New Work Created: " + workCreateEventDTO.getWorkName();
+        String body = "You have been added as a collaborator to the work: " + workCreateEventDTO.getWorkName();
+
+        assert recipients != null;
+        sendMail(recipients, subject, body);
+    }
 
     @Override
     public void sendWorkUpdatedEmails(WorkUpdateEventDTO workUpdateEventDTO) {
@@ -309,7 +301,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         }
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -330,7 +322,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         String body = workDeleteEventDTO.getWorkName() + " work is already deleted";
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
 
@@ -491,18 +483,18 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
 
 
     //    Work Inbox Notification
-//    @Override
-//    public void createWorkNotification(WorkCreateEventDTO workCreateEventDTO, String subject, String type) {
-//        System.out.println("#### -> Creating notification to db -> " + workCreateEventDTO);
-//        subject = subject == null ? "work-created" : subject;
-//        NotificationEventDTO notificationEventDTO = new NotificationEventDTO();
-//        notificationEventDTO.setNotificationName(workCreateEventDTO.getWorkName());
-//        notificationEventDTO.setAssignerId(workCreateEventDTO.getAssignerId());
-//        notificationEventDTO.setCollaboratorIds(workCreateEventDTO.getCollaboratorIds());
-//        notificationEventDTO.setSubject(subject);
-//        notificationEventDTO.setNotificationType(NotificationType.WORK);
-//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
-//    }
+    @Override
+    public void createWorkNotification(WorkCreateEventDTO workCreateEventDTO, String subject, String type) {
+        System.out.println("#### -> Creating notification to db -> " + workCreateEventDTO);
+        subject = subject == null ? "work-created" : subject;
+        NotificationEventDTO notificationEventDTO = new NotificationEventDTO();
+        notificationEventDTO.setNotificationName(workCreateEventDTO.getWorkName());
+        notificationEventDTO.setAssignerId(workCreateEventDTO.getAssignerId());
+        notificationEventDTO.setCollaboratorIds(workCreateEventDTO.getCollaboratorIds());
+        notificationEventDTO.setSubject(subject);
+        notificationEventDTO.setNotificationType(NotificationType.WORK);
+        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+    }
 
     @Override
     public void updateWorkNotification(WorkUpdateEventDTO workUpdateEventDTO, String subject, String type) {

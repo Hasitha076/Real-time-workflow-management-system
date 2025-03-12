@@ -22,12 +22,13 @@ public class WorkController {
 
     @PostMapping("/createWork")
     public String addWork(@RequestBody WorkDTO workDTO) {
-    workProducer.sendMessage(workDTO);
+//    workProducer.sendCreateWorkMessage(workDTO);
         return workService.createWork(workDTO);
     }
 
     @PutMapping("/updateWork")
     public String updateWork(@RequestBody WorkDTO workDTO) {
+
         return workService.updateWork(workDTO);
     }
 

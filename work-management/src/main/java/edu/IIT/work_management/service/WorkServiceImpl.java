@@ -70,7 +70,7 @@ public class WorkServiceImpl implements WorkService {
         workDTO.setMemberIcons(memberIcons);
 
         workRepository.save(modelMapper.map(workDTO, Work.class));
-//        workProducer.sendCreateTaskMessage(workDTO.getWorkName(), workDTO.getAssignerId(), workDTO.getCollaboratorIds());
+        workProducer.sendCreateWorkMessage(workDTO.getWorkName(), workDTO.getAssignerId(), workDTO.getCollaboratorIds());
         return "Work created successfully";
     }
 
