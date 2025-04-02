@@ -49,7 +49,7 @@ public class NotificationServiceImpl implements NotificationService {
         String body = "You have been added as a collaborator to the project: " + projectCreateEventDTO.getProjectName();
 
         assert recipients != null;
-        sendMail(recipients, subject, body);
+//        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class NotificationServiceImpl implements NotificationService {
         }
 
         assert recipients != null;
-        sendMail(recipients, subject, body);
+//        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class NotificationServiceImpl implements NotificationService {
         String body = projectDeleteEventDTO.getProjectName() + " project is already deleted";
 
         assert recipients != null;
-        sendMail(recipients, subject, body);
+//        sendMail(recipients, subject, body);
     }
 
 
@@ -123,7 +123,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
     String body = "You have been added as a collaborator to the task: " + taskCreateEventDTO.getTaskName();
 
     assert recipients != null;
-    sendMail(recipients, subject, body);
+//    sendMail(recipients, subject, body);
 }
 
     @Override
@@ -153,7 +153,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         }
 
         assert recipients != null;
-        sendMail(recipients, subject, body);
+//        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -174,7 +174,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         String body = taskDeleteEventDTO.getTaskName() + " task is already deleted";
 
         assert recipients != null;
-        sendMail(recipients, subject, body);
+//        sendMail(recipients, subject, body);
     }
 
 
@@ -197,7 +197,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         String body = "You have been added as a collaborator to the team: " + teamCreateEventDTO.getTeamName();
 
         assert recipients != null;
-        sendMail(recipients, subject, body);
+//        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -227,7 +227,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         }
 
         assert recipients != null;
-        sendMail(recipients, subject, body);
+//        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -248,7 +248,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         String body = teamDeleteEventDTO.getTeamName() + " team is already deleted";
 
         assert recipients != null;
-        sendMail(recipients, subject, body);
+//        sendMail(recipients, subject, body);
     }
 
 
@@ -271,7 +271,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         String body = "You have been added as a collaborator to the work: " + workCreateEventDTO.getWorkName();
 
         assert recipients != null;
-        sendMail(recipients, subject, body);
+//        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -301,7 +301,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         }
 
         assert recipients != null;
-        sendMail(recipients, subject, body);
+//        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -322,7 +322,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         String body = workDeleteEventDTO.getWorkName() + " work is already deleted";
 
         assert recipients != null;
-        sendMail(recipients, subject, body);
+//        sendMail(recipients, subject, body);
     }
 
 
@@ -349,7 +349,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         notificationEventDTO.setCollaboratorIds(taskCreateEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
         notificationEventDTO.setNotificationType(NotificationType.TASK);
-        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
     @Override
@@ -369,7 +369,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         notificationEventDTO.setCollaboratorIds(taskUpdateEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
         notificationEventDTO.setNotificationType(NotificationType.TASK);
-        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
     @Override
@@ -382,7 +382,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         notificationEventDTO.setCollaboratorIds(taskDeleteEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
         notificationEventDTO.setNotificationType(NotificationType.TASK);
-        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
 
@@ -397,7 +397,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         notificationEventDTO.setCollaboratorIds(projectCreateEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
         notificationEventDTO.setNotificationType(NotificationType.PROJECT);
-        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
     @Override
@@ -417,7 +417,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         notificationEventDTO.setCollaboratorIds(projectUpdateEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
         notificationEventDTO.setNotificationType(NotificationType.PROJECT);
-        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
     @Override
@@ -430,7 +430,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         notificationEventDTO.setCollaboratorIds(projectDeleteEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
         notificationEventDTO.setNotificationType(NotificationType.PROJECT);
-        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
 
@@ -445,7 +445,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         notificationEventDTO.setCollaboratorIds(teamCreateEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
         notificationEventDTO.setNotificationType(NotificationType.TEAM);
-        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
     @Override
@@ -465,7 +465,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         notificationEventDTO.setCollaboratorIds(teamUpdateEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
         notificationEventDTO.setNotificationType(NotificationType.TEAM);
-        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
     @Override
@@ -478,7 +478,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         notificationEventDTO.setCollaboratorIds(teamDeleteEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
         notificationEventDTO.setNotificationType(NotificationType.TEAM);
-        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
 
@@ -493,7 +493,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         notificationEventDTO.setCollaboratorIds(workCreateEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
         notificationEventDTO.setNotificationType(NotificationType.WORK);
-        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
     @Override
@@ -513,7 +513,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         notificationEventDTO.setCollaboratorIds(workUpdateEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
         notificationEventDTO.setNotificationType(NotificationType.WORK);
-        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
     @Override
@@ -526,7 +526,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         notificationEventDTO.setCollaboratorIds(workDeleteEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
         notificationEventDTO.setNotificationType(NotificationType.WORK);
-        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
 }

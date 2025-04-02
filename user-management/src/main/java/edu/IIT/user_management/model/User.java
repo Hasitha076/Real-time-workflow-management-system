@@ -3,9 +3,7 @@ package edu.IIT.user_management.model;
 import edu.IIT.user_management.dto.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -24,7 +22,9 @@ public class User {
     private String email;
 
     private String password;
+
     private UserRole role;
+
     private boolean status;
 
     @Column(updatable = false)

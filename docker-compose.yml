@@ -17,6 +17,33 @@ services:
     networks:
       - app-network
 
+  # Zookeeper (Required for Kafka)
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: zookeeper
+    restart: always
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    networks:
+      - app-network
+
+  # Kafka Broker
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka
+    restart: always
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
+    networks:
+      - app-network
+
   # User Service
   user-service:
     build:
@@ -28,8 +55,12 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/user_management_db
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
     networks:
       - app-network
+    depends_on:
+      - db
+      - kafka
 
   # Task Service
   task-service:
@@ -42,8 +73,12 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/task_management_db
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
     networks:
       - app-network
+    depends_on:
+      - db
+      - kafka
 
   # Project Service
   project-service:
@@ -56,8 +91,12 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/project_management_db
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
     networks:
       - app-network
+    depends_on:
+      - db
+      - kafka
 
   # Notification Service
   notification-service:
@@ -70,8 +109,12 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/notification_management_db
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
     networks:
       - app-network
+    depends_on:
+      - db
+      - kafka
 
   # Team Service
   team-service:
@@ -84,8 +127,12 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/team_management_db
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
     networks:
       - app-network
+    depends_on:
+      - db
+      - kafka
 
   # Work Service
   work-service:
@@ -98,9 +145,12 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/work_management_db
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
     networks:
       - app-network
-
+    depends_on:
+      - db
+      - kafka
 
 # Define a network for internal communication
 networks:
