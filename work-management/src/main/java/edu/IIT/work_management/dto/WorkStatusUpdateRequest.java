@@ -9,4 +9,5 @@ import lombok.*;
 @NoArgsConstructor
 public class WorkStatusUpdateRequest {
     private int workId;
+    private Boolean status;
 }

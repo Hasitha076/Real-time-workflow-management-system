@@ -263,10 +263,10 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
-    public String updateWorkStatus(int workId) {
+    public String updateWorkStatus(int workId, Boolean status) {
         WorkDTO work = getWorkById(workId);
         System.out.println("Work: " + work);
-        work.setStatus(true);
+        work.setStatus(status);
         workRepository.save(modelMapper.map(work, new TypeToken<Work>(){}.getType()));
         return "Work status updated successfully";
     }

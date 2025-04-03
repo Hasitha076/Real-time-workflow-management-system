@@ -16,5 +16,5 @@ public interface WorkService {
     public List<WorkDTO> getWorksByProjectId(int projectId);
     public void updateCollaborators(int workId, CollaboratorsRequest collaboratorsRequest);
     public List<WorkDTO> getWorksByTeamId(int teamId);
-    public String updateWorkStatus(int workId);
+    public String updateWorkStatus(int workId, Boolean status);
 }

@@ -66,7 +66,7 @@ public class WorkController {
 
     @PutMapping("/updateWorkStatus")
     public ResponseEntity<String> updateWorkStatus(@RequestBody WorkStatusUpdateRequest request) {
-        return ResponseEntity.ok(workService.updateWorkStatus(request.getWorkId()));
+        return ResponseEntity.ok(workService.updateWorkStatus(request.getWorkId(), request.getStatus()));
     }
 
 }

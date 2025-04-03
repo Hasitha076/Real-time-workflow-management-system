@@ -69,6 +69,7 @@ public class TaskController {
 
     @PutMapping("/updateTaskTemplate")
     public String updateTaskTemplate(@RequestBody TemplateDTO taskTemplateDTO) {
+        System.out.println("Task template update: " + taskTemplateDTO);
         return taskService.updateTaskTemplate(taskTemplateDTO);
     }
 

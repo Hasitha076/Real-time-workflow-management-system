@@ -4,16 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="docker-compose file run and build image">
+    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Some updates done in user register">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/UserManagementApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/UserManagementApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/service/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/controller/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/controller/TaskController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/controller/WorkController.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/controller/WorkController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/dto/WorkStatusUpdateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/dto/WorkStatusUpdateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/service/WorkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/service/WorkService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/service/WorkServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/service/WorkServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +154,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Application.TaskManagementApplication">
+  <component name="RunManager" selected="Application.UserManagementApplication">
     <configuration name="NotificationManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.IIT.notification_management.NotificationManagementApplication" />
       <module name="notification-management" />
@@ -261,10 +258,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.TaskManagementApplication" />
-        <item itemvalue="Application.ProjectManagementApplication" />
-        <item itemvalue="Application.TeamManagementApplication" />
-        <item itemvalue="Application.NotificationManagementApplication" />
         <item itemvalue="Application.UserManagementApplication" />
+        <item itemvalue="Application.NotificationManagementApplication" />
+        <item itemvalue="Application.TeamManagementApplication" />
+        <item itemvalue="Application.ProjectManagementApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -556,7 +553,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741802825359</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Some updates done in user register">
+      <option name="closed" value="true" />
+      <created>1743603204569</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1743603204569</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -574,7 +579,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Collaborators can get an email after delete the task." />
     <MESSAGE value="Collaborators can get notifications in their inbox  after created, changed and deleted the task." />
     <MESSAGE value="Collaborators can get notifications in their inbox  after created, changed and deleted the project." />
     <MESSAGE value="Collaborators can get notifications in their email and inbox that all the tasks have been removed after deleted under the project." />
@@ -599,7 +603,8 @@
     <MESSAGE value="docker-compose file edit and mvn install successfully done" />
     <MESSAGE value="change the consumer dto class in notification service" />
     <MESSAGE value="docker-compose file run and build image" />
-    <option name="LAST_COMMIT_MESSAGE" value="docker-compose file run and build image" />
+    <MESSAGE value="Some updates done in user register" />
+    <option name="LAST_COMMIT_MESSAGE" value="Some updates done in user register" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Real_time_workflow_management_system$UserManagementApplication.ic" NAME="UserManagementApplication Coverage Results" MODIFIED="1742930709486" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
