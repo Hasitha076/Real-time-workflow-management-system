@@ -24,6 +24,7 @@ public class TeamController {
 
     @PutMapping("/updateTeam")
     public String updateTeam(@RequestBody TeamDTO teamDTO) {
+        System.out.println("Team updated: " + teamDTO);
         return teamService.updateTeam(teamDTO);
     }
 

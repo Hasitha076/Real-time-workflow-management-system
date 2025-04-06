@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Some updates done in user register">
+    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Task templates update feature done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/controller/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/controller/TaskController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/controller/WorkController.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/controller/WorkController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/dto/WorkStatusUpdateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/dto/WorkStatusUpdateRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/service/WorkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/service/WorkService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/service/WorkServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/service/WorkServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/team-management/src/main/java/edu/IIT/team_management/controller/TeamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/team-management/src/main/java/edu/IIT/team_management/controller/TeamController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/team-management/src/main/java/edu/IIT/team_management/service/TeamServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/team-management/src/main/java/edu/IIT/team_management/service/TeamServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,7 +151,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Application.UserManagementApplication">
+  <component name="RunManager" selected="Application.TaskManagementApplication">
     <configuration name="NotificationManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.IIT.notification_management.NotificationManagementApplication" />
       <module name="notification-management" />
@@ -257,11 +254,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TaskManagementApplication" />
-        <item itemvalue="Application.UserManagementApplication" />
-        <item itemvalue="Application.NotificationManagementApplication" />
         <item itemvalue="Application.TeamManagementApplication" />
+        <item itemvalue="Application.TaskManagementApplication" />
         <item itemvalue="Application.ProjectManagementApplication" />
+        <item itemvalue="Application.NotificationManagementApplication" />
+        <item itemvalue="Application.UserManagementApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -561,7 +558,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743603204569</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Task templates update feature done">
+      <option name="closed" value="true" />
+      <created>1743707277919</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1743707277919</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -579,7 +584,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Collaborators can get notifications in their inbox  after created, changed and deleted the task." />
     <MESSAGE value="Collaborators can get notifications in their inbox  after created, changed and deleted the project." />
     <MESSAGE value="Collaborators can get notifications in their email and inbox that all the tasks have been removed after deleted under the project." />
     <MESSAGE value="Changes are done for WebClient" />
@@ -604,7 +608,8 @@
     <MESSAGE value="change the consumer dto class in notification service" />
     <MESSAGE value="docker-compose file run and build image" />
     <MESSAGE value="Some updates done in user register" />
-    <option name="LAST_COMMIT_MESSAGE" value="Some updates done in user register" />
+    <MESSAGE value="Task templates update feature done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Task templates update feature done" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Real_time_workflow_management_system$UserManagementApplication.ic" NAME="UserManagementApplication Coverage Results" MODIFIED="1742930709486" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">

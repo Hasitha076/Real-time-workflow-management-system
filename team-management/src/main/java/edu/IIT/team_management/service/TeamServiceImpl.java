@@ -38,11 +38,17 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public String updateTeam(TeamDTO teamDTO) {
         System.out.println("Team updated");
+        System.out.println("TeamDTO: " + teamDTO);
         Optional<Team> team = teamRepository.findById(teamDTO.getTeamId());
 
         System.out.println("Team: " + team);
         if (team.isEmpty()) {
             return "Team not found";
+        }
+
+        if (teamDTO.getTeamName() != null) {
+            teamRepository.save(modelMapper.map(teamDTO, Team.class));
+            return "Collaborator IDs cannot be null or empty";
         }
 
         teamDTO.setUpdatedAt(team.get().getUpdatedAt()); // Retain the updatedAt value from the old project
