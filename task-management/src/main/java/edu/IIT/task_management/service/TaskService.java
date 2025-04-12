@@ -1,8 +1,6 @@
 package edu.IIT.task_management.service;
 
-import edu.IIT.task_management.dto.CollaboratorsBlockDTO;
-import edu.IIT.task_management.dto.TaskDTO;
-import edu.IIT.task_management.dto.TemplateDTO;
+import edu.IIT.task_management.dto.*;
 
 import java.util.List;
 
@@ -29,4 +27,17 @@ public interface TaskService {
     public void createCollaboratorsBlock(CollaboratorsBlockDTO collaboratorsBlockDTO);
     public String updateCollaboratorsBlock(CollaboratorsBlockDTO collaboratorsBlockDTO);
     public CollaboratorsBlockDTO getCollaboratorsBlockByWorkId(int workId);
+
+    public String createRule(RuleDTO ruleDTO);
+    public RuleDTO getRuleById(int id);
+    public String updateRule(RuleDTO ruleDTO);
+    public void deleteRule(int id);
+    public List<RuleDTO> getAllRules();
+    public List<RuleDTO> getRulesByProjectId(int projectId);
+
+    public String createPublishFlow(PublishFlowDTO publishFlowDTO);
+    public PublishFlowDTO getPublishFlowById(int id);
+    public String updatePublishFlow(PublishFlowDTO publishFlowDTO);
+    public void deletePublishFlow(int id);
+    public PublishFlowDTO findPublishFlowByProjectId(int projectId);
 }

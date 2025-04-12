@@ -1,18 +1,12 @@
 package edu.IIT.task_management.service;
 
 //import edu.IIT.project_management.dto.ProjectDTO;
-import edu.IIT.task_management.dto.CollaboratorsBlockDTO;
-import edu.IIT.task_management.dto.TaskDTO;
+import edu.IIT.task_management.dto.*;
 //import edu.IIT.task_management.dto.TaskTemplateDTO;
-import edu.IIT.task_management.dto.TemplateDTO;
-import edu.IIT.task_management.model.CollaboratorsBlock;
-import edu.IIT.task_management.model.Task;
-import edu.IIT.task_management.model.Template;
+import edu.IIT.task_management.model.*;
 import edu.IIT.task_management.producer.TaskProducer;
-import edu.IIT.task_management.repository.CollaboratorsBlockRepository;
-import edu.IIT.task_management.repository.TaskRepository;
+import edu.IIT.task_management.repository.*;
 //import edu.IIT.task_management.repository.TaskTemplateRepository;
-import edu.IIT.task_management.repository.TemplateRepository;
 //import edu.IIT.work_management.dto.WorkDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +18,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -35,6 +30,8 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final TemplateRepository templateRepository;
     private final CollaboratorsBlockRepository collaboratorsBlockRepository;
+    private final RuleRepository ruleRepository;
+    private final PublishFlowRepository publishFlowRepository;
     private final ModelMapper modelMapper;
     private final TaskProducer taskProducer;
     private final WebClient userWebClient;
@@ -324,6 +321,92 @@ public class TaskServiceImpl implements TaskService {
         return modelMapper.map(collaboratorsBlock, CollaboratorsBlockDTO.class);
     }
 
+    @Override
+    public String createRule(RuleDTO ruleDTO) {
+        ruleRepository.save(modelMapper.map(ruleDTO, Rule.class));
+        return "Rule created successfully";
+    }
 
+    @Override
+    public RuleDTO getRuleById(int id) {
+        return modelMapper.map(ruleRepository.findById(id), RuleDTO.class);
+    }
+
+    @Override
+    public String updateRule(RuleDTO ruleDTO) {
+        ruleRepository.save(modelMapper.map(ruleDTO, new TypeToken<Rule>(){}.getType()));
+        return "Rule updated successfully";
+    }
+
+    @Override
+    public void deleteRule(int id) {
+        ruleRepository.findById(id);
+    }
+
+    @Override
+    public List<RuleDTO> getAllRules() {
+        return modelMapper.map(ruleRepository.findAll(), new TypeToken<List<RuleDTO>>(){}.getType());
+    }
+
+    @Override
+    public List<RuleDTO> getRulesByProjectId(int projectId) {
+        return modelMapper.map(ruleRepository.findRulesByProjectId(projectId), new TypeToken<List<RuleDTO>>(){}.getType());
+    }
+
+    @Override
+    public String createPublishFlow(PublishFlowDTO publishFlowDTO) {
+        try {
+            PublishFlow publishFlow = new PublishFlow();
+            publishFlow.setRuleId(1); // Fixed ID
+            publishFlow.setRuleName(publishFlowDTO.getRuleName());
+            publishFlow.setProjectId(publishFlowDTO.getProjectId());
+            publishFlow.setTriggers(publishFlowDTO.getTriggers());
+            publishFlow.setActions(publishFlowDTO.getActions());
+            publishFlow.setUpdatedAt(LocalDateTime.now());
+
+            // Check if an entry already exists
+            Optional<PublishFlow> existing = publishFlowRepository.findById(1);
+            if (existing.isPresent()) {
+                publishFlow.setCreatedAt(existing.get().getCreatedAt()); // retain createdAt
+            } else {
+                publishFlow.setCreatedAt(LocalDateTime.now());
+            }
+
+            publishFlowRepository.save(publishFlow);
+
+            return "Publish flow created or updated successfully";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error creating or updating publish flow";
+        }
+    }
+
+
+
+    @Override
+    public PublishFlowDTO getPublishFlowById(int id) {
+        return modelMapper.map(publishFlowRepository.findById(id), PublishFlowDTO.class);
+    }
+
+    @Override
+    public String updatePublishFlow(PublishFlowDTO publishFlowDTO) {
+        publishFlowRepository.save(modelMapper.map(publishFlowDTO, new TypeToken<PublishFlow>(){}.getType()));
+        return "Publish flow updated successfully";
+    }
+
+    @Override
+    public void deletePublishFlow(int id) {
+        publishFlowRepository.deleteById(id);
+    }
+
+    @Override
+    public PublishFlowDTO findPublishFlowByProjectId(int projectId) {
+        PublishFlow publishFlow = publishFlowRepository.findPublishFlowByProjectId(projectId);
+        if (publishFlow == null) {
+            return null; // Return null instead of wrong object
+        }
+        return modelMapper.map(publishFlow, PublishFlowDTO.class);
+    }
 
 }

@@ -1,8 +1,6 @@
 package edu.IIT.task_management.controller;
 
-import edu.IIT.task_management.dto.CollaboratorsBlockDTO;
-import edu.IIT.task_management.dto.TaskDTO;
-import edu.IIT.task_management.dto.TemplateDTO;
+import edu.IIT.task_management.dto.*;
 import edu.IIT.task_management.producer.TaskProducer;
 import edu.IIT.task_management.service.TaskService;
 import lombok.RequiredArgsConstructor;
@@ -108,5 +106,64 @@ public class TaskController {
     public CollaboratorsBlockDTO getCollaboratorsBlock(@PathVariable int workId) {
         return taskService.getCollaboratorsBlockByWorkId(workId);
     }
+
+    @PostMapping("/createRule")
+    public String createRule(@RequestBody RuleDTO ruleDTO) {
+        return taskService.createRule(ruleDTO);
+    }
+
+    @PutMapping("/updateRule")
+    public String updateRule(@RequestBody RuleDTO ruleDTO) {
+        return taskService.updateRule(ruleDTO);
+    }
+
+    @DeleteMapping("/deleteRule/{id}")
+    public String deleteRule(@PathVariable int id) {
+        taskService.deleteRule(id);
+        return "Rule deleted successfully";
+    }
+
+    @GetMapping("/getRule/{id}")
+    public RuleDTO getRule(@PathVariable int id) {
+        return taskService.getRuleById(id);
+    }
+
+    @GetMapping("/getAllRules")
+    public List<RuleDTO> getAllRules() {
+        return taskService.getAllRules();
+    }
+
+    @GetMapping("/getRulesByProjectId/{projectId}")
+    public List<RuleDTO> getRulesByProjectId(@PathVariable int projectId) {
+        return taskService.getRulesByProjectId(projectId);
+    }
+
+    @PostMapping("/createPublishFlow")
+    public String createPublishFlow(@RequestBody PublishFlowDTO publishFlowDTO) {
+        return taskService.createPublishFlow(publishFlowDTO);
+    }
+
+    @PutMapping("/updatePublishFlow")
+    public String updatePublishFlow(@RequestBody PublishFlowDTO publishFlowDTO) {
+        return taskService.updatePublishFlow(publishFlowDTO);
+    }
+
+    @DeleteMapping("/deletePublishFlow/{id}")
+    public String deletePublishFlow(@PathVariable int id) {
+        taskService.deletePublishFlow(id);
+        return "Publish flow deleted successfully";
+    }
+
+    @GetMapping("/getPublishFlow/{id}")
+    public PublishFlowDTO getPublishFlow(@PathVariable int id) {
+        return taskService.getPublishFlowById(id);
+    }
+
+    @GetMapping("/getPublishFlowByProjectId/{projectId}")
+    public PublishFlowDTO getPublishFlowByProjectId(@PathVariable int projectId) {
+        return taskService.findPublishFlowByProjectId(projectId);
+    }
+
+
 
 }
