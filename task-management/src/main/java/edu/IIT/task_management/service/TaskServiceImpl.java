@@ -356,29 +356,34 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public String createPublishFlow(PublishFlowDTO publishFlowDTO) {
         try {
-            PublishFlow publishFlow = new PublishFlow();
-            publishFlow.setRuleId(1); // Fixed ID
-            publishFlow.setRuleName(publishFlowDTO.getRuleName());
-            publishFlow.setProjectId(publishFlowDTO.getProjectId());
-            publishFlow.setTriggers(publishFlowDTO.getTriggers());
-            publishFlow.setActions(publishFlowDTO.getActions());
-            publishFlow.setUpdatedAt(LocalDateTime.now());
+            List<PublishFlow> existingPublishFlows = publishFlowRepository.findAll();
 
-            // Check if an entry already exists
-            Optional<PublishFlow> existing = publishFlowRepository.findById(1);
-            if (existing.isPresent()) {
-                publishFlow.setCreatedAt(existing.get().getCreatedAt()); // retain createdAt
+            // Check if a record with the same projectId exists
+            Optional<PublishFlow> matchedFlow = existingPublishFlows.stream()
+                    .filter(flow -> flow.getProjectId() == publishFlowDTO.getProjectId())
+                    .findFirst();
+
+            if (matchedFlow.isPresent()) {
+                // Update the existing record
+                PublishFlow flowToUpdate = matchedFlow.get();
+                flowToUpdate.setRuleName(publishFlowDTO.getRuleName());
+                flowToUpdate.setTriggers(publishFlowDTO.getTriggers());
+                flowToUpdate.setActions(publishFlowDTO.getActions());
+                flowToUpdate.setUpdatedAt(LocalDateTime.now());
+
+                publishFlowRepository.save(flowToUpdate);
             } else {
-                publishFlow.setCreatedAt(LocalDateTime.now());
+                // Save as a new record
+                PublishFlow newFlow = modelMapper.map(publishFlowDTO, PublishFlow.class);
+                newFlow.setCreatedAt(LocalDateTime.now());
+                newFlow.setUpdatedAt(LocalDateTime.now());
+                publishFlowRepository.save(newFlow);
             }
 
-            publishFlowRepository.save(publishFlow);
-
             return "Publish flow created or updated successfully";
-
         } catch (Exception e) {
             e.printStackTrace();
-            return "Error creating or updating publish flow";
+            return "Error while creating or updating publish flow";
         }
     }
 
