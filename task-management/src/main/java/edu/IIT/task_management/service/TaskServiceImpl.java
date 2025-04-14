@@ -167,6 +167,7 @@ public class TaskServiceImpl implements TaskService {
                 if (!triggers.isEmpty()) {
                     TriggerDTO firstTrigger = triggers.get(0);
                     String triggerType = (String) firstTrigger.getTriggerDetails().get("triggerType");
+                    String section = (String) firstTrigger.getTriggerDetails().get("section");
                     System.out.println("Trigger Type: " + triggerType);
 
                     // Handle actions
@@ -180,7 +181,38 @@ public class TaskServiceImpl implements TaskService {
                         String actionType = (String) firstAction.getActionDetails().get("actionType");
                         System.out.println("Action Type: " + actionType);
 
-                        if ("Section changed".equals(triggerType) && "Set assignee to".equals(actionType)) {
+                        if(section != null && "Section is".equals(triggerType) && "Set assignee to".equals(actionType)) {
+                            System.out.println("Section: " + section);
+                            Object work = workWebClient.get()
+                                    .uri("/getWork/{id}", taskDTO.getWorkId()) // Correct URI usage
+                                    .retrieve()
+                                    .bodyToMono(new ParameterizedTypeReference<Object>() {})
+                                    .block();
+
+                            String workName = (String) ((Map<String, Object>) work).get("workName");
+                            System.out.println("Work Name ======> " + workName);
+                            System.out.println("Section ======> " + section);
+
+                            if(workName.equals(section)) {
+                                Map<String, Object> assignee = (Map<String, Object>) firstAction.getActionDetails().get("assignee");
+                                Integer assigneeId = (Integer) assignee.get("id");
+
+                                System.out.println("Assignee ID: " + assigneeId);
+
+                                List<Integer> updatedCollaborators = taskDTO.getCollaboratorIds() != null
+                                        ? new ArrayList<>(taskDTO.getCollaboratorIds())
+                                        : new ArrayList<>();
+
+                                if (!updatedCollaborators.contains(assigneeId)) {
+                                    updatedCollaborators.add(assigneeId);
+                                    taskDTO.setCollaboratorIds(updatedCollaborators);
+                                }
+                            }
+                        }
+
+                        else if ("Section changed".equals(triggerType) && "Set assignee to".equals(actionType)) {
+                            System.out.println("Section ======> " + section);
+
                             Map<String, Object> assignee = (Map<String, Object>) firstAction.getActionDetails().get("assignee");
                             Integer assigneeId = (Integer) assignee.get("id");
 
@@ -195,6 +227,14 @@ public class TaskServiceImpl implements TaskService {
                                 taskDTO.setCollaboratorIds(updatedCollaborators);
                             }
                         }
+
+
+
+
+                        else if ("Section changed".equals(triggerType) && "Clear assignee".equals(actionType)) {
+                            taskDTO.setCollaboratorIds(new ArrayList<>());
+                        }
+
 
                     }
                 }
