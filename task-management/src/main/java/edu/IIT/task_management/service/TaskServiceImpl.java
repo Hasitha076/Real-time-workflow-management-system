@@ -1,6 +1,8 @@
 package edu.IIT.task_management.service;
 
 //import edu.IIT.project_management.dto.ProjectDTO;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.IIT.task_management.dto.*;
 //import edu.IIT.task_management.dto.TaskTemplateDTO;
 import edu.IIT.task_management.model.*;
@@ -90,66 +92,125 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public String updateTask(TaskDTO taskDTO) {
-
         System.out.println("Task updated: " + taskDTO);
-        Optional<Task> task = (taskRepository.findById(taskDTO.getTaskId()));
-        if (task.isEmpty()) {
+
+        Optional<Task> taskOptional = taskRepository.findById(taskDTO.getTaskId());
+        if (taskOptional.isEmpty()) {
             return "Task not found";
         }
 
-        if(taskDTO.getComments() != null) {
-            List<String> comment = modelMapper.map(task.get().getComments(), new TypeToken<ArrayList<String>>(){}.getType());
-            comment.add(taskDTO.getComments().get(0));
+        Task existingTask = taskOptional.get();
 
-            taskDTO.setComments(comment);
+        // Handle comments
+        if (taskDTO.getComments() != null) {
+            List<String> commentList = new ArrayList<>(existingTask.getComments() != null ? existingTask.getComments() : new ArrayList<>());
+            commentList.addAll(taskDTO.getComments());
+            taskDTO.setComments(commentList);
         } else {
-            taskDTO.setComments(task.get().getComments());
+            taskDTO.setComments(existingTask.getComments());
         }
 
-        // Retain the createdAt value from the old task
-        taskDTO.setCreatedAt(task.get().getCreatedAt());
+        // Retain the createdAt value from the existing task
+        taskDTO.setCreatedAt(existingTask.getCreatedAt());
 
-        List<Integer> oldCollaboratorIds = task.get().getCollaboratorIds(); // Get existing collaborators
+        // Handle collaborator comparison
+        List<Integer> oldCollaboratorIds = existingTask.getCollaboratorIds() != null ? existingTask.getCollaboratorIds() : new ArrayList<>();
+        List<Integer> newCollaboratorIds = taskDTO.getCollaboratorIds() != null ? taskDTO.getCollaboratorIds() : new ArrayList<>();
 
-        // Identify new collaborators: present in new project but not in old task
-        List<Integer> newCollaborators = taskDTO.getCollaboratorIds().stream()
-                .filter(collaboratorId -> !oldCollaboratorIds.contains(collaboratorId))
+        List<Integer> newCollaborators = newCollaboratorIds.stream()
+                .filter(id -> !oldCollaboratorIds.contains(id))
                 .collect(Collectors.toList());
 
-        // Identify removed collaborators: present in old project but not in new task
         List<Integer> removedCollaborators = oldCollaboratorIds.stream()
-                .filter(collaboratorId -> !taskDTO.getCollaboratorIds().contains(collaboratorId))
+                .filter(id -> !newCollaboratorIds.contains(id))
                 .collect(Collectors.toList());
 
-        // Identify unchanged collaborators: present in both old and new task
         List<Integer> unchangedCollaborators = oldCollaboratorIds.stream()
-                .filter(taskDTO.getCollaboratorIds()::contains)
+                .filter(newCollaboratorIds::contains)
                 .collect(Collectors.toList());
 
+        // Save updated task
+        Task updatedTask = modelMapper.map(taskDTO, Task.class);
+        taskRepository.save(updatedTask);
 
-
-        taskDTO.setCreatedAt(task.get().getCreatedAt());
-        taskRepository.save(modelMapper.map(taskDTO, new TypeToken<Task>(){}.getType()));
-
-        // Handle sending collaborator changes to the producer or further actions
+        // Notify collaborator changes
         if (!newCollaborators.isEmpty()) {
-            // Send newly added collaborators
-            taskProducer.sendUpdateTaskMessage(taskDTO.getTaskName(), taskDTO.getAssignerId(),"New", newCollaborators);
+            taskProducer.sendUpdateTaskMessage(taskDTO.getTaskName(), taskDTO.getAssignerId(), "New", newCollaborators);
         }
 
         if (!removedCollaborators.isEmpty()) {
-            // Send removed collaborators
-            taskProducer.sendUpdateTaskMessage(taskDTO.getTaskName(), taskDTO.getAssignerId(),"Removed", removedCollaborators);
+            taskProducer.sendUpdateTaskMessage(taskDTO.getTaskName(), taskDTO.getAssignerId(), "Removed", removedCollaborators);
         }
 
-        // Optionally, you can also send unchanged collaborators if needed
         if (!unchangedCollaborators.isEmpty()) {
-            // Handle unchanged collaborators if necessary
-            taskProducer.sendUpdateTaskMessage(taskDTO.getTaskName(), taskDTO.getAssignerId(),"Existing", unchangedCollaborators);
+            taskProducer.sendUpdateTaskMessage(taskDTO.getTaskName(), taskDTO.getAssignerId(), "Existing", unchangedCollaborators);
         }
 
         return "Task updated successfully";
     }
+
+    @Override
+    public String movedAndUpdateTask(TaskDTO taskDTO) {
+
+        // Check publish flow triggers and actions
+        PublishFlow publishFlow = publishFlowRepository.findPublishFlowByProjectId(taskDTO.getProjectId());
+        if (publishFlow != null) {
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+
+                // Handle triggers
+                List<TriggerDTO> triggers = mapper.readValue(
+                        publishFlow.getTriggersJson(),
+                        new TypeReference<List<TriggerDTO>>() {}
+                );
+
+                if (!triggers.isEmpty()) {
+                    TriggerDTO firstTrigger = triggers.get(0);
+                    String triggerType = (String) firstTrigger.getTriggerDetails().get("triggerType");
+                    System.out.println("Trigger Type: " + triggerType);
+
+                    // Handle actions
+                    List<ActionDTO> actions = mapper.readValue(
+                            publishFlow.getActionsJson(),
+                            new TypeReference<List<ActionDTO>>() {}
+                    );
+
+                    if (!actions.isEmpty()) {
+                        ActionDTO firstAction = actions.get(0);
+                        String actionType = (String) firstAction.getActionDetails().get("actionType");
+                        System.out.println("Action Type: " + actionType);
+
+                        if ("Section changed".equals(triggerType) && "Set assignee to".equals(actionType)) {
+                            Map<String, Object> assignee = (Map<String, Object>) firstAction.getActionDetails().get("assignee");
+                            Integer assigneeId = (Integer) assignee.get("id");
+
+                            System.out.println("Assignee ID: " + assigneeId);
+
+                            List<Integer> updatedCollaborators = taskDTO.getCollaboratorIds() != null
+                                    ? new ArrayList<>(taskDTO.getCollaboratorIds())
+                                    : new ArrayList<>();
+
+                            if (!updatedCollaborators.contains(assigneeId)) {
+                                updatedCollaborators.add(assigneeId);
+                                taskDTO.setCollaboratorIds(updatedCollaborators);
+                            }
+                        }
+
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Save updated task
+        Task updatedTask = modelMapper.map(taskDTO, Task.class);
+        taskRepository.save(updatedTask);
+
+        return "Task updated successfully";
+    }
+
 
     @Override
     public void deleteTask(int id) {
@@ -252,12 +313,18 @@ public class TaskServiceImpl implements TaskService {
         System.out.println("Task index in workIds: " + taskIndex);
 
         // Update the task status
-        if (workIds.size() > taskIndex + 1) {
-            task.setWorkId(workIds.get(taskIndex + 1));
-        } else {
-            task.setStatus(true);
-        }
+//        if (workIds.size() > taskIndex + 1) {
+//            task.setWorkId(workIds.get(taskIndex + 1));
+//        } else {
+//            task.setStatus(true);
+//        }
 
+        if(task.isStatus() == false) {
+            task.setStatus(true);
+        } else {
+            task.setStatus(false);
+        }
+//        task.setStatus(true);
         // Save the updated task
         taskRepository.save(task);
     }

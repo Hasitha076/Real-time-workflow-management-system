@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Rules publish and Rules page created">
+    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Rules and Rules page changes done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/controller/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/controller/TaskController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -154,7 +156,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Application.WorkManagementApplication">
+  <component name="RunManager" selected="Application.TaskManagementApplication">
     <configuration name="NotificationManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.IIT.notification_management.NotificationManagementApplication" />
       <module name="notification-management" />
@@ -258,10 +260,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.TaskManagementApplication" />
-        <item itemvalue="Application.WorkManagementApplication" />
-        <item itemvalue="Application.UserManagementApplication" />
-        <item itemvalue="Application.NotificationManagementApplication" />
         <item itemvalue="Application.TeamManagementApplication" />
+        <item itemvalue="Application.NotificationManagementApplication" />
+        <item itemvalue="Application.UserManagementApplication" />
+        <item itemvalue="Application.WorkManagementApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -585,7 +587,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744485136012</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Rules and Rules page changes done">
+      <option name="closed" value="true" />
+      <created>1744569865702</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1744569865702</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -603,7 +613,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Changes are done for WebClient" />
     <MESSAGE value="Tried to implement using Eureka server" />
     <MESSAGE value="Team microservice CRUD is created" />
     <MESSAGE value="Work microservice CRUD is created" />
@@ -628,7 +637,8 @@
     <MESSAGE value="Task templates update feature done" />
     <MESSAGE value="Avatar icons changes done" />
     <MESSAGE value="Rules publish and Rules page created" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rules publish and Rules page created" />
+    <MESSAGE value="Rules and Rules page changes done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rules and Rules page changes done" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Real_time_workflow_management_system$UserManagementApplication.ic" NAME="UserManagementApplication Coverage Results" MODIFIED="1742930709486" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">

@@ -25,6 +25,7 @@ public class TaskController {
 
     @PutMapping("/updateTask")
     public String updateTask(@RequestBody TaskDTO taskDTO) {
+
         return taskService.updateTask(taskDTO);
     }
 
@@ -162,6 +163,11 @@ public class TaskController {
     @GetMapping("/getPublishFlowByProjectId/{projectId}")
     public PublishFlowDTO getPublishFlowByProjectId(@PathVariable int projectId) {
         return taskService.findPublishFlowByProjectId(projectId);
+    }
+
+    @PutMapping("/movedAndUpdateTask")
+    public String movedAndUpdateTask(@RequestBody TaskDTO taskDTO) {
+        return taskService.movedAndUpdateTask(taskDTO);
     }
 
 
