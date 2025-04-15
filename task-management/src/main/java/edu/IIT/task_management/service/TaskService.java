@@ -9,7 +9,7 @@ public interface TaskService {
     public String createTask(TaskDTO taskDTO);
     public TaskDTO getTaskById(int id);
     public String updateTask(TaskDTO taskDTO);
-    public void deleteTask(int id);
+    public String deleteTask(int id);
     public List<TaskDTO> getAllTasks();
     public void deleteByProjectId(int projectId);
     public void deleteByWorkId(int workId);

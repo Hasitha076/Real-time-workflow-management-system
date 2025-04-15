@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Task changed rule and assignee to.. implemented">
+    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Section change is and assignee to.. implemented">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -154,7 +155,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Application.TaskManagementApplication">
+  <component name="RunManager" selected="Application.ProjectManagementApplication">
     <configuration name="NotificationManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.IIT.notification_management.NotificationManagementApplication" />
       <module name="notification-management" />
@@ -168,12 +169,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TaskManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="edu.IIT.task_management.TaskManagementApplication" />
-      <module name="task-management" />
+    <configuration name="ProjectManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="edu.IIT.project_management.ProjectManagementApplication" />
+      <module name="project-management" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="edu.IIT.task_management.*" />
+          <option name="PATTERN" value="edu.IIT.project_management.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -250,18 +251,18 @@
     </configuration>
     <list>
       <item itemvalue="Application.NotificationManagementApplication" />
-      <item itemvalue="Application.TaskManagementApplication" />
+      <item itemvalue="Application.ProjectManagementApplication" />
       <item itemvalue="Application.WorkManagementApplication" />
       <item itemvalue="Application.TeamManagementApplication" />
       <item itemvalue="Application.UserManagementApplication" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TaskManagementApplication" />
-        <item itemvalue="Application.TeamManagementApplication" />
-        <item itemvalue="Application.NotificationManagementApplication" />
-        <item itemvalue="Application.UserManagementApplication" />
+        <item itemvalue="Application.ProjectManagementApplication" />
         <item itemvalue="Application.WorkManagementApplication" />
+        <item itemvalue="Application.UserManagementApplication" />
+        <item itemvalue="Application.NotificationManagementApplication" />
+        <item itemvalue="Application.TeamManagementApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -601,7 +602,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744618520843</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="Section change is and assignee to.. implemented">
+      <option name="closed" value="true" />
+      <created>1744627586822</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1744627586822</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -619,7 +628,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Team microservice CRUD is created" />
     <MESSAGE value="Work microservice CRUD is created" />
     <MESSAGE value="Fixed some issues and updated microservices according to the front end" />
     <MESSAGE value="Fixed some issues of work and task services according to the front end" />
@@ -644,7 +652,8 @@
     <MESSAGE value="Rules publish and Rules page created" />
     <MESSAGE value="Rules and Rules page changes done" />
     <MESSAGE value="Task changed rule and assignee to.. implemented" />
-    <option name="LAST_COMMIT_MESSAGE" value="Task changed rule and assignee to.. implemented" />
+    <MESSAGE value="Section change is and assignee to.. implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="Section change is and assignee to.. implemented" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Real_time_workflow_management_system$UserManagementApplication.ic" NAME="UserManagementApplication Coverage Results" MODIFIED="1742930709486" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
