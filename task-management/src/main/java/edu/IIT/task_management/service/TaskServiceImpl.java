@@ -20,6 +20,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -152,168 +153,297 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public String movedAndUpdateTask(TaskDTO taskDTO) {
 
-        // Check publish flow triggers and actions
-        PublishFlow publishFlow = publishFlowRepository.findPublishFlowByProjectId(taskDTO.getProjectId());
-        if (publishFlow != null) {
-            try {
-                ObjectMapper mapper = new ObjectMapper();
+        List<PublishFlow> publishFlows = publishFlowRepository.findPublishFlowsByProjectId(taskDTO.getProjectId());
 
-                // Handle triggers
-                List<TriggerDTO> triggers = mapper.readValue(
-                        publishFlow.getTriggersJson(),
-                        new TypeReference<List<TriggerDTO>>() {}
-                );
+        if (publishFlows != null && !publishFlows.isEmpty()) {
+            for (PublishFlow publishFlow : publishFlows) {
+                if (publishFlow.getStatus().equals("active")) {
+                    try {
+                        ObjectMapper mapper = new ObjectMapper();
 
-                if (!triggers.isEmpty()) {
-                    TriggerDTO firstTrigger = triggers.get(0);
-                    String triggerType = (String) firstTrigger.getTriggerDetails().get("triggerType");
+                        List<TriggerDTO> triggers = mapper.readValue(
+                                publishFlow.getTriggersJson(),
+                                new TypeReference<List<TriggerDTO>>() {}
+                        );
 
-                    System.out.println("Trigger Type: " + triggerType);
+                        List<ActionDTO> actions = mapper.readValue(
+                                publishFlow.getActionsJson(),
+                                new TypeReference<List<ActionDTO>>() {}
+                        );
 
-                    // Handle actions
-                    List<ActionDTO> actions = mapper.readValue(
-                            publishFlow.getActionsJson(),
-                            new TypeReference<List<ActionDTO>>() {}
-                    );
+                        if (!triggers.isEmpty() && !actions.isEmpty()) {
+                            TriggerDTO firstTrigger = triggers.get(0);
+                            ActionDTO firstAction = actions.get(0);
 
-                    if (!actions.isEmpty()) {
-                        ActionDTO firstAction = actions.get(0);
-                        String actionType = (String) firstAction.getActionDetails().get("actionType");
-                        System.out.println("Action Type: " + actionType);
+                            String triggerType = (String) firstTrigger.getTriggerDetails().get("triggerType");
+                            String actionType = (String) firstAction.getActionDetails().get("actionType");
 
+                            switch (triggerType + ":" + actionType) {
+                                case "Section is:Set assignee to": {
+                                    Map<String, Object> section = (Map<String, Object>) firstTrigger.getTriggerDetails().get("section");
+                                    Integer triggerWorkId = (Integer) section.get("workId");
 
-                        if("Section is".equals(triggerType) && "Set assignee to".equals(actionType)) {
-                            System.out.println("Section is ===> Set assignee to");
+                                    Object work = workWebClient.get()
+                                            .uri("/getWork/{id}", taskDTO.getWorkId())
+                                            .retrieve()
+                                            .bodyToMono(new ParameterizedTypeReference<Object>() {})
+                                            .block();
 
-                            Map<String, Object> section = (Map<String, Object>) firstTrigger.getTriggerDetails().get("section");
-                            String TriggerWorkName = (String) section.get("workName");
-                            Integer TriggerWorkId = (Integer) section.get("workId");
+                                    String workName = (String) ((Map<String, Object>) work).get("workName");
+                                    String triggerWorkName = (String) section.get("workName");
 
-                            System.out.println("Set assignee to");
-                            Object work = workWebClient.get()
-                                    .uri("/getWork/{id}", taskDTO.getWorkId()) // Correct URI usage
-                                    .retrieve()
-                                    .bodyToMono(new ParameterizedTypeReference<Object>() {})
-                                    .block();
+                                    if (workName.equals(triggerWorkName)) {
+                                        Map<String, Object> assignee = (Map<String, Object>) firstAction.getActionDetails().get("assignee");
+                                        if (assignee != null) {
+                                            Integer assigneeId = (Integer) assignee.get("id");
+                                            List<Integer> updatedCollaborators = taskDTO.getCollaboratorIds() != null
+                                                    ? new ArrayList<>(taskDTO.getCollaboratorIds())
+                                                    : new ArrayList<>();
+                                            if (!updatedCollaborators.contains(assigneeId)) {
+                                                updatedCollaborators.add(assigneeId);
+                                                taskDTO.setCollaboratorIds(updatedCollaborators);
+                                            }
+                                        }
+                                    }
+                                    break;
+                                }
+                                case "Section changed:Move task to section": {
+                                    Map<String, Object> actionMovedSection = (Map<String, Object>) firstAction.getActionDetails().get("ActionMovedSection");
+                                    Integer movedWorkId = (Integer) actionMovedSection.get("workId");
+                                    taskDTO.setWorkId(movedWorkId);
 
-                            String workName = (String) ((Map<String, Object>) work).get("workName");
-                            System.out.println("Work Name ======> " + workName);
-                            System.out.println("Section ======> " + section);
+                                    Task task = modelMapper.map(taskRepository.findById(taskDTO.getTaskId()), Task.class);
+                                    Boolean status = task.isStatus();
 
-                            if(workName.equals(TriggerWorkName)) {
-                                Map<String, Object> assignee = (Map<String, Object>) firstAction.getActionDetails().get("assignee");
-                                if(assignee != null) {
+                                    break;
+                                }
+                                case "Section is:Move task to section": {
+                                    Map<String, Object> section = (Map<String, Object>) firstTrigger.getTriggerDetails().get("section");
+                                    Integer triggerWorkId = (Integer) section.get("workId");
+                                    Map<String, Object> actionMovedSection = (Map<String, Object>) firstAction.getActionDetails().get("ActionMovedSection");
+                                    Integer movedWorkId = (Integer) actionMovedSection.get("workId");
+                                    if (triggerWorkId.equals(taskDTO.getWorkId()) && movedWorkId != taskDTO.getWorkId()) {
+                                        taskDTO.setWorkId(movedWorkId);
+                                    }
+                                    break;
+                                }
+
+                                case "Section changed:Set assignee to": {
+                                    Map<String, Object> assignee = (Map<String, Object>) firstAction.getActionDetails().get("assignee");
                                     Integer assigneeId = (Integer) assignee.get("id");
-
-                                    System.out.println("Assignee ID: " + assigneeId);
-
                                     List<Integer> updatedCollaborators = taskDTO.getCollaboratorIds() != null
                                             ? new ArrayList<>(taskDTO.getCollaboratorIds())
                                             : new ArrayList<>();
-
                                     if (!updatedCollaborators.contains(assigneeId)) {
                                         updatedCollaborators.add(assigneeId);
                                         taskDTO.setCollaboratorIds(updatedCollaborators);
                                     }
+                                    break;
+                                }
+
+                                case "Section is:Clear assignee": {
+                                    Map<String, Object> section = (Map<String, Object>) firstTrigger.getTriggerDetails().get("section");
+                                    Integer TriggerWorkId = (Integer) section.get("workId");
+
+                                    if(TriggerWorkId.equals(taskDTO.getWorkId())) {
+                                        taskDTO.setCollaboratorIds(new ArrayList<>());
+                                        taskDTO.setTeamIds(new ArrayList<>());
+                                    }
+                                    break;
+                                }
+                                case "Section changed:Clear assignee": {
+                                    taskDTO.setCollaboratorIds(new ArrayList<>());
+                                    taskDTO.setTeamIds(new ArrayList<>());
+                                    break;
+                                }
+                                case "Section is:Remove task from the project": {
+                                    Map<String, Object> section = (Map<String, Object>) firstTrigger.getTriggerDetails().get("section");
+                                    Integer triggerWorkId = (Integer) section.get("workId");
+                                    if (triggerWorkId != null && triggerWorkId.equals(taskDTO.getWorkId())) {
+                                        Task taskEntity = taskRepository.findById(taskDTO.getTaskId())
+                                                .orElseThrow(() -> new RuntimeException("Task not found"));
+                                        taskRepository.deleteById(taskEntity.getTaskId());
+                                        taskProducer.sendDeleteTaskMessage(taskEntity.getTaskName(), taskEntity.getAssignerId(), taskEntity.getCollaboratorIds());
+                                        return "Task deleted successfully";
+                                    }
+                                    break;
+                                }
+                                case "Section changed:Remove task from the project": {
+                                    Task task = modelMapper.map(taskRepository.findById(taskDTO.getTaskId()), Task.class);
+                                    if (!Objects.equals(task.getWorkId(), taskDTO.getWorkId())) {
+                                        Task taskEntity = taskRepository.findById(taskDTO.getTaskId())
+                                                .orElseThrow(() -> new RuntimeException("Task not found"));
+                                        taskRepository.deleteById(taskEntity.getTaskId());
+                                        taskProducer.sendDeleteTaskMessage(taskEntity.getTaskName(), taskEntity.getAssignerId(), taskEntity.getCollaboratorIds());
+                                        return "Task deleted successfully";
+                                    }
+                                    break;
+                                }
+                                case "Section changed:Complete task": {
+                                    taskDTO.setStatus(true);
+                                    break;
+                                }
+                                case "Section is:Complete task": {
+                                    Map<String, Object> section = (Map<String, Object>) firstTrigger.getTriggerDetails().get("section");
+                                    Integer TriggerWorkId = (Integer) section.get("workId");
+
+                                    if(TriggerWorkId.equals(taskDTO.getWorkId())) {
+                                        taskDTO.setStatus(true);
+                                    }
+                                    break;
+                                }
+
+                                case "Section changed:Incomplete task": {
+                                    taskDTO.setStatus(false);
+                                    break;
+                                }
+                                case "Section is:Incomplete task": {
+                                    Map<String, Object> section = (Map<String, Object>) firstTrigger.getTriggerDetails().get("section");
+                                    Integer TriggerWorkId = (Integer) section.get("workId");
+
+                                    if(TriggerWorkId.equals(taskDTO.getWorkId())) {
+                                        taskDTO.setStatus(false);
+                                    }
+                                    break;
+                                }
+                                case "Section changed:Set task title": {
+                                    String taskName = (String) firstAction.getActionDetails().get("taskName");
+                                    taskDTO.setTaskName(taskName);
+                                    break;
+                                }
+                                case "Section is:Set task title": {
+                                    String taskName = (String) firstAction.getActionDetails().get("taskName");
+
+                                    Map<String, Object> section = (Map<String, Object>) firstTrigger.getTriggerDetails().get("section");
+                                    Integer TriggerWorkId = (Integer) section.get("workId");
+
+                                    if(TriggerWorkId.equals(taskDTO.getWorkId())) {
+                                        taskDTO.setTaskName(taskName);
+                                    }
+                                    break;
+                                }
+                                case "Section changed:Set task description": {
+                                    String taskDescription = (String) firstAction.getActionDetails().get("taskDescription");
+                                    taskDTO.setDescription(taskDescription);
+                                    break;
+                                }
+                                case "Section is:Set task description": {
+                                    String taskDescription = (String) firstAction.getActionDetails().get("taskDescription");
+
+                                    Map<String, Object> section = (Map<String, Object>) firstTrigger.getTriggerDetails().get("section");
+                                    Integer TriggerWorkId = (Integer) section.get("workId");
+
+                                    if(TriggerWorkId.equals(taskDTO.getWorkId())) {
+                                        taskDTO.setDescription(taskDescription);
+                                    }
+                                    break;
+                                }
+                                case "Section is:Set due date to": {
+                                    String dateStr = (String) firstAction.getActionDetails().get("date");
+                                    LocalDate date = LocalDate.parse(dateStr); // Parses ISO-8601 format like "2025-04-11"
+                                    System.out.println("Task due date: " + date);
+
+                                    Map<String, Object> section = (Map<String, Object>) firstTrigger.getTriggerDetails().get("section");
+                                    Integer TriggerWorkId = (Integer) section.get("workId");
+
+                                    if(TriggerWorkId.equals(taskDTO.getWorkId())) {
+                                        taskDTO.setDueDate(date);
+                                    }
+                                    break;
+                                }
+                                case "Section changed:Set due date to": {
+                                    String dateStr = (String) firstAction.getActionDetails().get("date");
+                                    LocalDate date = LocalDate.parse(dateStr);
+                                    taskDTO.setDueDate(date);
+                                    break;
+                                }
+                                case "Section changed:Create task": {
+                                    Map<String, Object> task = (Map<String, Object>) firstAction.getActionDetails().get("task");
+                                    String taskName = (String) task.get("name");
+                                    String description = (String) task.get("description");
+                                    LocalDate dueDate = LocalDate.parse((String) task.get("dueDate"));
+                                    List<Integer> collaboratorIds = (List<Integer>) task.get("collaboratorIds");
+                                    List<Integer> teamIds = (List<Integer>) task.get("teamIds");
+//                                    String tags = (String) task.get("tags");
+                                    String priority = (String) task.get("priority");
+
+                                    System.out.println("Task: " + task);
+
+                                    Map<String, Object> whichSection = (Map<String, Object>) firstAction.getActionDetails().get("whichSection");
+                                    Integer ActionWorkId = (Integer) whichSection.get("workId");
+
+//                                    Map<String, Object> section = (Map<String, Object>) firstTrigger.getTriggerDetails().get("section");
+//                                    Integer TriggerWorkId = (Integer) section.get("workId");
+//                                    if(TriggerWorkId.equals(taskDTO.getWorkId())) {
+                                        TaskDTO newTaskDTO = new TaskDTO();
+
+//                                        List<String> tagsArray = new ArrayList<String>();
+//                                        tagsArray.add(tags);
+
+                                        newTaskDTO.setTaskName(taskName);
+                                        newTaskDTO.setDescription(description);
+                                        newTaskDTO.setDueDate(dueDate);
+                                        newTaskDTO.setCollaboratorIds(collaboratorIds);
+                                        newTaskDTO.setTeamIds(teamIds);
+                                        newTaskDTO.setTags(taskDTO.getTags());
+                                        newTaskDTO.setPriority(TaskPriorityLevel.valueOf(priority.toUpperCase()));
+                                        newTaskDTO.setProjectId(taskDTO.getProjectId());
+                                        newTaskDTO.setWorkId(ActionWorkId);
+                                        newTaskDTO.setAssignerId(taskDTO.getAssignerId());
+                                        newTaskDTO.setStatus(false);
+
+                                        taskRepository.save(modelMapper.map(newTaskDTO, Task.class));
+                                        taskProducer.sendCreateTaskMessage(newTaskDTO.getTaskName(), newTaskDTO.getAssignerId(), newTaskDTO.getCollaboratorIds());
+
+                                break;
+                                }
+
+
+                                case "Section is:Create task": {
+                                    Map<String, Object> task = (Map<String, Object>) firstAction.getActionDetails().get("task");
+                                    String taskName = (String) task.get("name");
+                                    String description = (String) task.get("description");
+                                    LocalDate dueDate = LocalDate.parse((String) task.get("dueDate"));
+                                    List<Integer> collaboratorIds = (List<Integer>) task.get("collaboratorIds");
+                                    List<Integer> teamIds = (List<Integer>) task.get("teamIds");
+                                    String priority = (String) task.get("priority");
+
+                                    System.out.println("Task: " + task);
+
+                                    Map<String, Object> whichSection = (Map<String, Object>) firstAction.getActionDetails().get("whichSection");
+                                    Integer ActionWorkId = (Integer) whichSection.get("workId");
+
+                                    Map<String, Object> section = (Map<String, Object>) firstTrigger.getTriggerDetails().get("section");
+                                    Integer TriggerWorkId = (Integer) section.get("workId");
+                                    if(TriggerWorkId.equals(taskDTO.getWorkId())) {
+                                        TaskDTO newTaskDTO = new TaskDTO();
+
+                                        newTaskDTO.setTaskName(taskName);
+                                        newTaskDTO.setDescription(description);
+                                        newTaskDTO.setDueDate(dueDate);
+                                        newTaskDTO.setCollaboratorIds(collaboratorIds);
+                                        newTaskDTO.setTeamIds(teamIds);
+                                        newTaskDTO.setTags(taskDTO.getTags());
+                                        newTaskDTO.setPriority(TaskPriorityLevel.valueOf(priority.toUpperCase()));
+                                        newTaskDTO.setProjectId(taskDTO.getProjectId());
+                                        newTaskDTO.setWorkId(ActionWorkId);
+                                        newTaskDTO.setAssignerId(taskDTO.getAssignerId());
+                                        newTaskDTO.setStatus(false);
+
+                                        taskRepository.save(modelMapper.map(newTaskDTO, Task.class));
+                                        taskProducer.sendCreateTaskMessage(newTaskDTO.getTaskName(), newTaskDTO.getAssignerId(), newTaskDTO.getCollaboratorIds());
+                                    }
+                                    break;
                                 }
                             }
                         }
-
-                        else if ("Section is".equals(triggerType) && "Move task to section".equals(actionType)) {
-                            System.out.println("Section is ===> Move task to section");
-
-                            Map<String, Object> section = (Map<String, Object>) firstTrigger.getTriggerDetails().get("section");
-                            String TriggerWorkName = (String) section.get("workName");
-                            Integer TriggerWorkId = (Integer) section.get("workId");
-
-                            System.out.println("Move task to section");
-                            System.out.println("TAskDTO ======> " + taskDTO);
-                            Map<String, Object> actionMovedSection =
-                                    (Map<String, Object>) firstAction.getActionDetails().get("ActionMovedSection");
-
-                            Integer movedWorkId = (Integer) actionMovedSection.get("workId");
-                            System.out.println("TriggerWorkId ======> " + TriggerWorkId);
-                            System.out.println("Moved Work ID ======> " + movedWorkId);
-                            System.out.println("TAskDTO WOrkId ======> " + taskDTO.getWorkId());
-
-                            if(TriggerWorkId.equals(taskDTO.getWorkId()) && movedWorkId != taskDTO.getWorkId()) {
-                                System.out.println("Action Moved Section ======> " + actionMovedSection);
-                                taskDTO.setWorkId(movedWorkId);
-                            } else {
-                                taskDTO.setWorkId(taskDTO.getWorkId());
-                            }
-                        }
-
-                        else if ("Section changed".equals(triggerType) && "Set assignee to".equals(actionType)) {
-                            System.out.println("Section changed ===> Set assignee to");
-
-                            String section = (String) firstTrigger.getTriggerDetails().get("section");
-                            Map<String, Object> assignee = (Map<String, Object>) firstAction.getActionDetails().get("assignee");
-                            Integer assigneeId = (Integer) assignee.get("id");
-
-                            System.out.println("Section: " + section);
-                            System.out.println("Assignee: " + assignee);
-                            System.out.println("Assignee ID: " + assigneeId);
-
-                            List<Integer> updatedCollaborators = taskDTO.getCollaboratorIds() != null
-                                    ? new ArrayList<>(taskDTO.getCollaboratorIds())
-                                    : new ArrayList<>();
-
-                            if (!updatedCollaborators.contains(assigneeId)) {
-                                updatedCollaborators.add(assigneeId);
-                                taskDTO.setCollaboratorIds(updatedCollaborators);
-                            }
-                        }
-
-                        else if ("Section changed".equals(triggerType) && "Clear assignee".equals(actionType)) {
-                            System.out.println("Section changed ===> Clear Assignee");
-
-                            taskDTO.setCollaboratorIds(new ArrayList<>());
-                        }
-
-                        else if ("Section is".equals(triggerType) && "Clear assignee".equals(actionType)) {
-                            System.out.println("Section is ===> Clear Assignee");
-
-                            Map<String, Object> section = (Map<String, Object>) firstTrigger.getTriggerDetails().get("section");
-                            String TriggerWorkName = (String) section.get("workName");
-                            Integer TriggerWorkId = (Integer) section.get("workId");
-
-                            if(TriggerWorkId.equals(taskDTO.getWorkId())) {
-                                taskDTO.setCollaboratorIds(new ArrayList<>());
-                            }
-
-                        }
-
-                        else if ("Section is".equals(triggerType) && "Remove task from the project".equals(actionType)) {
-                            System.out.println("Remove task from the project ===> Clear Assignee");
-
-                            Map<String, Object> section = (Map<String, Object>) firstTrigger.getTriggerDetails().get("section");
-                            if (section != null) {
-                                Integer triggerWorkId = (Integer) section.get("workId");
-
-                                if (triggerWorkId != null && triggerWorkId.equals(taskDTO.getWorkId())) {
-                                    Task taskEntity = taskRepository.findById(taskDTO.getTaskId())
-                                            .orElseThrow(() -> new RuntimeException("Task not found"));
-
-                                    taskRepository.deleteById(taskEntity.getTaskId());
-                                    taskProducer.sendDeleteTaskMessage(taskEntity.getTaskName(), taskEntity.getAssignerId(), taskEntity.getCollaboratorIds());
-
-                                    return "Task deleted successfully";
-                                }
-                            }
-
-
-                        }
-
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
-
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }
 
-        // Save updated task
         Task updatedTask = modelMapper.map(taskDTO, Task.class);
         taskRepository.save(updatedTask);
 
@@ -533,29 +663,29 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public String createPublishFlow(PublishFlowDTO publishFlowDTO) {
         try {
-            List<PublishFlow> existingPublishFlows = publishFlowRepository.findAll();
-
-            // Check if a record with the same projectId exists
-            Optional<PublishFlow> matchedFlow = existingPublishFlows.stream()
-                    .filter(flow -> flow.getProjectId() == publishFlowDTO.getProjectId())
-                    .findFirst();
-
-            if (matchedFlow.isPresent()) {
-                // Update the existing record
-                PublishFlow flowToUpdate = matchedFlow.get();
-                flowToUpdate.setRuleName(publishFlowDTO.getRuleName());
-                flowToUpdate.setTriggers(publishFlowDTO.getTriggers());
-                flowToUpdate.setActions(publishFlowDTO.getActions());
-                flowToUpdate.setUpdatedAt(LocalDateTime.now());
-
-                publishFlowRepository.save(flowToUpdate);
-            } else {
+//            List<PublishFlow> existingPublishFlows = publishFlowRepository.findAll();
+//
+//            // Check if a record with the same projectId exists
+//            Optional<PublishFlow> matchedFlow = existingPublishFlows.stream()
+//                    .filter(flow -> flow.getProjectId() == publishFlowDTO.getProjectId())
+//                    .findFirst();
+//
+//            if (matchedFlow.isPresent()) {
+//                // Update the existing record
+//                PublishFlow flowToUpdate = matchedFlow.get();
+//                flowToUpdate.setPublishFlowName(publishFlowDTO.getPublishFlowName());
+//                flowToUpdate.setTriggers(publishFlowDTO.getTriggers());
+//                flowToUpdate.setActions(publishFlowDTO.getActions());
+//                flowToUpdate.setUpdatedAt(LocalDateTime.now());
+//
+//                publishFlowRepository.save(flowToUpdate);
+//            } else {
                 // Save as a new record
                 PublishFlow newFlow = modelMapper.map(publishFlowDTO, PublishFlow.class);
                 newFlow.setCreatedAt(LocalDateTime.now());
                 newFlow.setUpdatedAt(LocalDateTime.now());
                 publishFlowRepository.save(newFlow);
-            }
+//            }
 
             return "Publish flow created or updated successfully";
         } catch (Exception e) {
@@ -563,8 +693,6 @@ public class TaskServiceImpl implements TaskService {
             return "Error while creating or updating publish flow";
         }
     }
-
-
 
     @Override
     public PublishFlowDTO getPublishFlowById(int id) {
@@ -584,7 +712,16 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public PublishFlowDTO findPublishFlowByProjectId(int projectId) {
-        PublishFlow publishFlow = publishFlowRepository.findPublishFlowByProjectId(projectId);
+        List<PublishFlow> publishFlow = publishFlowRepository.findPublishFlowsByProjectId(projectId);
+        if (publishFlow == null) {
+            return null; // Return null instead of wrong object
+        }
+        return modelMapper.map(publishFlow, PublishFlowDTO.class);
+    }
+
+    @Override
+    public PublishFlowDTO findPublishFlowByRuleId(int ruleId) {
+        PublishFlow publishFlow = publishFlowRepository.findPublishFlowByRuleId(ruleId);
         if (publishFlow == null) {
             return null; // Return null instead of wrong object
         }

@@ -4,8 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Section change is and assignee to.. implemented">
+    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Upto Action delete task function are implemented">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/controller/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/controller/TaskController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/PublishFlowDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/PublishFlowDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/RuleDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/RuleDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/model/PublishFlow.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/model/PublishFlow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/model/Rule.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/model/Rule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/repository/PublishFlowRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/repository/PublishFlowRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" afterDir="false" />
     </list>
@@ -155,7 +161,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Application.ProjectManagementApplication">
+  <component name="RunManager" selected="Application.TeamManagementApplication">
     <configuration name="NotificationManagementApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.IIT.notification_management.NotificationManagementApplication" />
       <module name="notification-management" />
@@ -258,11 +264,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ProjectManagementApplication" />
+        <item itemvalue="Application.TeamManagementApplication" />
+        <item itemvalue="Application.NotificationManagementApplication" />
         <item itemvalue="Application.WorkManagementApplication" />
         <item itemvalue="Application.UserManagementApplication" />
-        <item itemvalue="Application.NotificationManagementApplication" />
-        <item itemvalue="Application.TeamManagementApplication" />
+        <item itemvalue="Application.ProjectManagementApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -610,7 +616,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744627586822</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="Upto Action delete task function are implemented">
+      <option name="closed" value="true" />
+      <created>1744722026981</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1744722026981</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -628,7 +642,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Work microservice CRUD is created" />
     <MESSAGE value="Fixed some issues and updated microservices according to the front end" />
     <MESSAGE value="Fixed some issues of work and task services according to the front end" />
     <MESSAGE value="README file added" />
@@ -653,7 +666,8 @@
     <MESSAGE value="Rules and Rules page changes done" />
     <MESSAGE value="Task changed rule and assignee to.. implemented" />
     <MESSAGE value="Section change is and assignee to.. implemented" />
-    <option name="LAST_COMMIT_MESSAGE" value="Section change is and assignee to.. implemented" />
+    <MESSAGE value="Upto Action delete task function are implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="Upto Action delete task function are implemented" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Real_time_workflow_management_system$UserManagementApplication.ic" NAME="UserManagementApplication Coverage Results" MODIFIED="1742930709486" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">

@@ -25,11 +25,12 @@ public class PublishFlow {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ruleId;
+    private int publishFlowId;
 
-    private String ruleName;
+    private String publishFlowName;
     private int projectId;
-
+    private String status;
+    private int ruleId;
     @Lob
     private String triggersJson;
 

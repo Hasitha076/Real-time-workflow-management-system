@@ -29,6 +29,7 @@ public class Rule {
 
     private String ruleName;
     private int projectId;
+    private String status;
 
     @Lob
     private String triggersJson;

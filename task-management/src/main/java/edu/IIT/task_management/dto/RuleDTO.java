@@ -16,6 +16,7 @@ public class RuleDTO {
     private List<TriggerDTO> triggers;
     private List<ActionDTO> actions;
     private int projectId;
+    private String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

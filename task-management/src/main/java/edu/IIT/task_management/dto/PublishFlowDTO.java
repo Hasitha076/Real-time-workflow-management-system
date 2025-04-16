@@ -11,11 +11,13 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class PublishFlowDTO {
-    private int ruleId;
-    private String ruleName;
+    private int publishFlowId;
+    private String publishFlowName;
     private List<TriggerDTO> triggers;
     private List<ActionDTO> actions;
     private int projectId;
+    private int ruleId;
+    private String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

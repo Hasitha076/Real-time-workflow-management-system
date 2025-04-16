@@ -170,6 +170,10 @@ public class TaskController {
         return taskService.movedAndUpdateTask(taskDTO);
     }
 
+    @GetMapping("/getPublishFlowByRuleId/{ruleId}")
+    public PublishFlowDTO getPublishFlowByRuleId(@PathVariable int ruleId) {
+        return taskService.findPublishFlowByRuleId(ruleId);
+    }
 
 
 }
