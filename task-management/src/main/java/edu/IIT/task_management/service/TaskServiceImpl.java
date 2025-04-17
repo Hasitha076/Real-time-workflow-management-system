@@ -80,6 +80,141 @@ public class TaskServiceImpl implements TaskService {
         // Set the member icons in the project
         taskDTO.setMemberIcons(memberIcons);
 
+        List<PublishFlow> publishFlows = publishFlowRepository.findPublishFlowsByProjectId(taskDTO.getProjectId());
+
+        if (publishFlows != null && !publishFlows.isEmpty()) {
+            for (PublishFlow publishFlow : publishFlows) {
+                if (publishFlow.getStatus().equals("active")) {
+                    try {
+                        ObjectMapper mapper = new ObjectMapper();
+
+                        List<TriggerDTO> triggers = mapper.readValue(
+                                publishFlow.getTriggersJson(),
+                                new TypeReference<List<TriggerDTO>>() {}
+                        );
+
+                        List<ActionDTO> actions = mapper.readValue(
+                                publishFlow.getActionsJson(),
+                                new TypeReference<List<ActionDTO>>() {}
+                        );
+
+                        if (!triggers.isEmpty() && !actions.isEmpty()) {
+                            TriggerDTO firstTrigger = triggers.get(0);
+                            ActionDTO firstAction = actions.get(0);
+
+                            String triggerType = (String) firstTrigger.getTriggerDetails().get("triggerType");
+                            String actionType = (String) firstAction.getActionDetails().get("actionType");
+
+                            switch (triggerType + ":" + actionType) {
+                                case "Task is add from:Set assignee to": {
+
+                                        Map<String, Object> assignee = (Map<String, Object>) firstAction.getActionDetails().get("assignee");
+                                        if (assignee != null) {
+                                            Integer assigneeId = (Integer) assignee.get("id");
+                                            List<Integer> updatedCollaborators = taskDTO.getCollaboratorIds() != null
+                                                    ? new ArrayList<>(taskDTO.getCollaboratorIds())
+                                                    : new ArrayList<>();
+                                            if (!updatedCollaborators.contains(assigneeId)) {
+                                                updatedCollaborators.add(assigneeId);
+                                                taskDTO.setCollaboratorIds(updatedCollaborators);
+                                            }
+                                    }
+                                    break;
+                                }
+
+                                case "Task is add from:Move task to section": {
+
+                                Map<String, Object> ActionMovedSection = (Map<String, Object>) firstAction.getActionDetails().get("ActionMovedSection");
+                                if (ActionMovedSection != null) {
+                                    Integer workId = (Integer) ActionMovedSection.get("workId");
+                                    taskDTO.setWorkId(workId);
+                                }
+
+                                    break;
+                                }
+
+                                case "Task is add from:Clear assignee": {
+                                    taskDTO.setCollaboratorIds(new ArrayList<>());
+                                    taskDTO.setTeamIds(new ArrayList<>());
+                                    break;
+                                }
+
+                                case "Task is add from:Complete task": {
+                                    taskDTO.setStatus(true);
+                                    break;
+                                }
+
+                                case "Task is add from:Incomplete task": {
+                                    taskDTO.setStatus(false);
+                                    break;
+                                }
+
+                                case "Task is add from:Set task title": {
+                                    String taskName = (String) firstAction.getActionDetails().get("taskName");
+                                    taskDTO.setTaskName(taskName);
+                                    break;
+                                }
+
+                                case "Task is add from:Set task description": {
+                                    String taskDescription = (String) firstAction.getActionDetails().get("taskDescription");
+                                    taskDTO.setDescription(taskDescription);
+                                    break;
+                                }
+
+                                case "Task is add from:Set due date to": {
+                                    String dateStr = (String) firstAction.getActionDetails().get("date");
+                                    LocalDate date = LocalDate.parse(dateStr);
+                                    taskDTO.setDueDate(date);
+                                    break;
+                                }
+                                case "Task is add from:Clear due date": {
+
+                                    taskDTO.setDueDate(null);
+                                    break;
+                                }
+                                case "Task is add from:Create task": {
+                                    Map<String, Object> task = (Map<String, Object>) firstAction.getActionDetails().get("task");
+                                    String taskName = (String) task.get("name");
+                                    String description = (String) task.get("description");
+                                    LocalDate dueDate = LocalDate.parse((String) task.get("dueDate"));
+                                    List<Integer> collaboratorIds = (List<Integer>) task.get("collaboratorIds");
+                                    List<Integer> teamIds = (List<Integer>) task.get("teamIds");
+                                    String priority = (String) task.get("priority");
+
+                                    System.out.println("Task: " + task);
+
+                                    Map<String, Object> whichSection = (Map<String, Object>) firstAction.getActionDetails().get("whichSection");
+                                    Integer ActionWorkId = (Integer) whichSection.get("workId");
+
+                                    TaskDTO newTaskDTO = new TaskDTO();
+
+                                    newTaskDTO.setTaskName(taskName);
+                                    newTaskDTO.setDescription(description);
+                                    newTaskDTO.setDueDate(dueDate);
+                                    newTaskDTO.setCollaboratorIds(collaboratorIds);
+                                    newTaskDTO.setTeamIds(teamIds);
+                                    newTaskDTO.setTags(taskDTO.getTags());
+                                    newTaskDTO.setPriority(TaskPriorityLevel.valueOf(priority.toUpperCase()));
+                                    newTaskDTO.setProjectId(taskDTO.getProjectId());
+                                    newTaskDTO.setWorkId(ActionWorkId);
+                                    newTaskDTO.setAssignerId(taskDTO.getAssignerId());
+                                    newTaskDTO.setStatus(false);
+
+                                    taskRepository.save(modelMapper.map(newTaskDTO, Task.class));
+                                    taskProducer.sendCreateTaskMessage(newTaskDTO.getTaskName(), newTaskDTO.getAssignerId(), newTaskDTO.getCollaboratorIds());
+
+                                    break;
+                                }
+
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
 
         taskRepository.save(modelMapper.map(taskDTO, Task.class));
         taskProducer.sendCreateTaskMessage(taskDTO.getTaskName(), taskDTO.getAssignerId(), taskDTO.getCollaboratorIds());
@@ -129,6 +264,484 @@ public class TaskServiceImpl implements TaskService {
         List<Integer> unchangedCollaborators = oldCollaboratorIds.stream()
                 .filter(newCollaboratorIds::contains)
                 .collect(Collectors.toList());
+
+
+        List<PublishFlow> publishFlows = publishFlowRepository.findPublishFlowsByProjectId(taskDTO.getProjectId());
+
+        if (publishFlows != null && !publishFlows.isEmpty()) {
+            for (PublishFlow publishFlow : publishFlows) {
+                if (publishFlow.getStatus().equals("active")) {
+                    try {
+                        ObjectMapper mapper = new ObjectMapper();
+
+                        List<TriggerDTO> triggers = mapper.readValue(
+                                publishFlow.getTriggersJson(),
+                                new TypeReference<List<TriggerDTO>>() {}
+                        );
+
+                        List<ActionDTO> actions = mapper.readValue(
+                                publishFlow.getActionsJson(),
+                                new TypeReference<List<ActionDTO>>() {}
+                        );
+
+                        if (!triggers.isEmpty() && !actions.isEmpty()) {
+                            TriggerDTO firstTrigger = triggers.get(0);
+                            ActionDTO firstAction = actions.get(0);
+
+                            String triggerType = (String) firstTrigger.getTriggerDetails().get("triggerType");
+                            String actionType = (String) firstAction.getActionDetails().get("actionType");
+
+                            switch (triggerType + ":" + actionType) {
+
+                                case "Assignee is changed:Move task to section": {
+
+                                    if(!newCollaborators.isEmpty()) {
+                                        Map<String, Object> ActionMovedSection = (Map<String, Object>) firstAction.getActionDetails().get("ActionMovedSection");
+                                        if (ActionMovedSection != null) {
+                                            Integer workId = (Integer) ActionMovedSection.get("workId");
+                                            taskDTO.setWorkId(workId);
+                                        }
+                                    }
+
+                                    break;
+                                }
+
+                                case "Assignee is changed:Remove task from the project": {
+
+                                    if(!newCollaborators.isEmpty()) {
+                                        taskRepository.deleteById(taskDTO.getTaskId());
+                                    }
+
+                                    break;
+                                }
+
+                                case "Assignee is changed:Complete task": {
+
+                                    if(!newCollaborators.isEmpty()) {
+                                        taskDTO.setStatus(true);
+                                    }
+
+                                    break;
+                                }
+
+                                case "Assignee is changed:Incomplete task": {
+
+                                    if(!newCollaborators.isEmpty()) {
+                                        taskDTO.setStatus(false);
+                                    }
+
+                                    break;
+                                }
+
+                                case "Assignee is empty:Move task to section": {
+
+                                    if(newCollaboratorIds.isEmpty()) {
+                                        Map<String, Object> ActionMovedSection = (Map<String, Object>) firstAction.getActionDetails().get("ActionMovedSection");
+                                        if (ActionMovedSection != null) {
+                                            Integer workId = (Integer) ActionMovedSection.get("workId");
+                                            taskDTO.setWorkId(workId);
+                                        }
+                                    }
+
+                                    break;
+                                }
+
+                                case "Assignee is empty:Remove task from the project": {
+
+                                    if(newCollaboratorIds.isEmpty()) {
+                                        taskRepository.deleteById(taskDTO.getTaskId());
+                                    }
+
+                                    break;
+                                }
+
+                                case "Assignee is empty:Complete task": {
+
+                                    if(newCollaboratorIds.isEmpty()) {
+                                        taskDTO.setStatus(true);
+                                    }
+
+                                    break;
+                                }
+
+                                case "Assignee is empty:Incomplete task": {
+
+                                    if(newCollaboratorIds.isEmpty()) {
+                                        taskDTO.setStatus(false);
+                                    }
+
+                                    break;
+                                }
+
+                                case "Assignee is...:Move task to section": {
+
+                                    Map<String, Object> assignee = (Map<String, Object>) firstTrigger.getTriggerDetails().get("assignee");
+                                    Integer triggerMemberId = (Integer) assignee.get("id");
+
+                                    newCollaboratorIds.stream().filter(id -> id.equals(triggerMemberId)).findFirst().ifPresent(id -> {
+                                        Map<String, Object> ActionMovedSection = (Map<String, Object>) firstAction.getActionDetails().get("ActionMovedSection");
+                                        if (ActionMovedSection != null) {
+                                            Integer workId = (Integer) ActionMovedSection.get("workId");
+                                            taskDTO.setWorkId(workId);
+                                        }
+                                    });
+
+                                    break;
+                                }
+
+                                case "Assignee is...:Remove task from the project": {
+
+                                    Map<String, Object> assignee = (Map<String, Object>) firstTrigger.getTriggerDetails().get("assignee");
+                                    Integer triggerMemberId = (Integer) assignee.get("id");
+
+                                    newCollaboratorIds.stream().filter(id -> id.equals(triggerMemberId)).findFirst().ifPresent(id -> {
+                                        taskRepository.deleteById(taskDTO.getTaskId());
+                                    });
+
+                                    break;
+                                }
+
+                                case "Assignee is...:Complete task": {
+
+                                    Map<String, Object> assignee = (Map<String, Object>) firstTrigger.getTriggerDetails().get("assignee");
+                                    Integer triggerMemberId = (Integer) assignee.get("id");
+
+                                    newCollaboratorIds.stream().filter(id -> id.equals(triggerMemberId)).findFirst().ifPresent(id -> {
+                                        taskDTO.setStatus(true);
+                                    });
+
+                                    break;
+                                }
+
+                                case "Assignee is...:Incomplete task": {
+
+                                    Map<String, Object> assignee = (Map<String, Object>) firstTrigger.getTriggerDetails().get("assignee");
+                                    Integer triggerMemberId = (Integer) assignee.get("id");
+
+                                    newCollaboratorIds.stream().filter(id -> id.equals(triggerMemberId)).findFirst().ifPresent(id -> {
+                                        taskDTO.setStatus(false);
+                                    });
+
+                                    break;
+                                }
+
+                                case "Assignee is changed:Set assignee to": {
+
+                                    if(!newCollaborators.isEmpty()) {
+                                        Map<String, Object> assignee = (Map<String, Object>) firstAction.getActionDetails().get("assignee");
+                                        if (assignee != null) {
+                                            Integer assigneeId = (Integer) assignee.get("id");
+                                            List<Integer> updatedCollaborators = taskDTO.getCollaboratorIds() != null
+                                                    ? new ArrayList<>(taskDTO.getCollaboratorIds())
+                                                    : new ArrayList<>();
+                                            if (!updatedCollaborators.contains(assigneeId)) {
+                                                updatedCollaborators.add(assigneeId);
+                                                taskDTO.setCollaboratorIds(updatedCollaborators);
+                                            }
+                                        }
+                                    }
+
+                                    break;
+                                }
+
+                                case "Assignee is empty:Set assignee to": {
+
+                                    if(newCollaboratorIds.isEmpty()) {
+                                        Map<String, Object> assignee = (Map<String, Object>) firstAction.getActionDetails().get("assignee");
+                                        if (assignee != null) {
+                                            Integer assigneeId = (Integer) assignee.get("id");
+                                            List<Integer> updatedCollaborators = taskDTO.getCollaboratorIds() != null
+                                                    ? new ArrayList<>(taskDTO.getCollaboratorIds())
+                                                    : new ArrayList<>();
+                                            if (!updatedCollaborators.contains(assigneeId)) {
+                                                updatedCollaborators.add(assigneeId);
+                                                taskDTO.setCollaboratorIds(updatedCollaborators);
+                                            }
+                                        }
+                                    }
+                                    break;
+                                }
+
+                                case "Assignee is...:Set assignee to": {
+
+                                    Map<String, Object> triggerAssignee = (Map<String, Object>) firstTrigger.getTriggerDetails().get("assignee");
+                                    Integer triggerMemberId = (Integer) triggerAssignee.get("id");
+
+                                    Map<String, Object> actionAssignee = (Map<String, Object>) firstAction.getActionDetails().get("assignee");
+                                    Integer actionMemberId = (Integer) actionAssignee.get("id");
+
+                                    newCollaboratorIds.stream().filter(id -> id.equals(triggerMemberId)).findFirst().ifPresent(id -> {
+                                        newCollaboratorIds.add(actionMemberId);
+                                        taskDTO.setCollaboratorIds(newCollaboratorIds);
+                                    });
+
+                                    break;
+                                }
+
+                                case "Assignee is changed:Clear assignee": {
+
+                                    if(!newCollaborators.isEmpty()) {
+                                        taskDTO.setCollaboratorIds(new ArrayList<>());
+                                        taskDTO.setTeamIds(new ArrayList<>());
+                                    }
+
+                                    break;
+                                }
+
+                                case "Assignee is...:Clear assignee": {
+
+                                    Map<String, Object> triggerAssignee = (Map<String, Object>) firstTrigger.getTriggerDetails().get("assignee");
+                                    Integer triggerMemberId = (Integer) triggerAssignee.get("id");
+
+                                    newCollaboratorIds.stream().filter(id -> id.equals(triggerMemberId)).findFirst().ifPresent(id -> {
+                                        taskDTO.setCollaboratorIds(new ArrayList<>());
+                                        taskDTO.setTeamIds(new ArrayList<>());
+                                    });
+
+                                    break;
+                                }
+
+                                case "Assignee is changed:Set task title": {
+
+                                    if(!newCollaborators.isEmpty()) {
+                                        String taskName = (String) firstAction.getActionDetails().get("taskName");
+                                        taskDTO.setTaskName(taskName);
+                                    }
+                                    break;
+                                }
+
+                                case "Assignee is empty:Set task title": {
+
+                                    if(newCollaborators.isEmpty()) {
+                                        String taskName = (String) firstAction.getActionDetails().get("taskName");
+                                        taskDTO.setTaskName(taskName);
+                                    }
+                                    break;
+                                }
+
+                                case "Assignee is...:Set task title": {
+
+                                    Map<String, Object> triggerAssignee = (Map<String, Object>) firstTrigger.getTriggerDetails().get("assignee");
+                                    Integer triggerMemberId = (Integer) triggerAssignee.get("id");
+
+                                    newCollaboratorIds.stream().filter(id -> id.equals(triggerMemberId)).findFirst().ifPresent(id -> {
+                                        String taskName = (String) firstAction.getActionDetails().get("taskName");
+                                        taskDTO.setTaskName(taskName);
+                                    });
+                                    break;
+                                }
+
+                                case "Assignee is changed:Set task description": {
+
+                                    if(!newCollaborators.isEmpty()) {
+                                        String taskDescription = (String) firstAction.getActionDetails().get("taskDescription");
+                                        taskDTO.setDescription(taskDescription);
+                                    }
+                                    break;
+                                }
+
+                                case "Assignee is empty:Set task description": {
+
+                                    if(newCollaborators.isEmpty()) {
+                                        String taskDescription = (String) firstAction.getActionDetails().get("taskDescription");
+                                        taskDTO.setDescription(taskDescription);
+                                    }
+                                    break;
+                                }
+
+                                case "Assignee is...:Set task description": {
+
+                                    Map<String, Object> triggerAssignee = (Map<String, Object>) firstTrigger.getTriggerDetails().get("assignee");
+                                    Integer triggerMemberId = (Integer) triggerAssignee.get("id");
+
+                                    newCollaboratorIds.stream().filter(id -> id.equals(triggerMemberId)).findFirst().ifPresent(id -> {
+                                        String taskDescription = (String) firstAction.getActionDetails().get("taskDescription");
+                                        taskDTO.setDescription(taskDescription);
+                                    });
+                                    break;
+                                }
+
+                                case "Assignee is changed:Set due date to": {
+
+                                    if(!newCollaborators.isEmpty()) {
+                                        String dateStr = (String) firstAction.getActionDetails().get("date");
+                                        LocalDate date = LocalDate.parse(dateStr);
+                                        taskDTO.setDueDate(date);
+                                    }
+
+                                    break;
+                                }
+
+                                case "Assignee is empty:Set due date to": {
+
+                                    if(newCollaborators.isEmpty()) {
+                                        String dateStr = (String) firstAction.getActionDetails().get("date");
+                                        LocalDate date = LocalDate.parse(dateStr);
+                                        taskDTO.setDueDate(date);
+                                    }
+                                    break;
+                                }
+
+                                case "Assignee is...:Set due date to": {
+
+                                    Map<String, Object> triggerAssignee = (Map<String, Object>) firstTrigger.getTriggerDetails().get("assignee");
+                                    Integer triggerMemberId = (Integer) triggerAssignee.get("id");
+
+                                    newCollaboratorIds.stream().filter(id -> id.equals(triggerMemberId)).findFirst().ifPresent(id -> {
+                                        String dateStr = (String) firstAction.getActionDetails().get("date");
+                                        LocalDate date = LocalDate.parse(dateStr);
+                                        taskDTO.setDueDate(date);
+                                    });
+                                    break;
+                                }
+
+
+                                case "Task is add from:Clear due date": {
+
+                                    taskDTO.setDueDate(null);
+                                    break;
+                                }
+
+                                case "Assignee is changed:Create task": {
+
+                                    if(!newCollaborators.isEmpty()) {
+                                        Map<String, Object> task = (Map<String, Object>) firstAction.getActionDetails().get("task");
+                                        String taskName = (String) task.get("name");
+                                        String description = (String) task.get("description");
+                                        LocalDate dueDate = LocalDate.parse((String) task.get("dueDate"));
+                                        List<Integer> collaboratorIds = (List<Integer>) task.get("collaboratorIds");
+                                        List<Integer> teamIds = (List<Integer>) task.get("teamIds");
+                                        String priority = (String) task.get("priority");
+
+                                        System.out.println("Task: " + task);
+
+                                        Map<String, Object> whichSection = (Map<String, Object>) firstAction.getActionDetails().get("whichSection");
+                                        Integer ActionWorkId = (Integer) whichSection.get("workId");
+
+                                        TaskDTO newTaskDTO = new TaskDTO();
+
+                                        newTaskDTO.setTaskName(taskName);
+                                        newTaskDTO.setDescription(description);
+                                        newTaskDTO.setDueDate(dueDate);
+                                        newTaskDTO.setCollaboratorIds(collaboratorIds);
+                                        newTaskDTO.setTeamIds(teamIds);
+                                        newTaskDTO.setTags(taskDTO.getTags());
+                                        newTaskDTO.setPriority(TaskPriorityLevel.valueOf(priority.toUpperCase()));
+                                        newTaskDTO.setProjectId(taskDTO.getProjectId());
+                                        newTaskDTO.setWorkId(ActionWorkId);
+                                        newTaskDTO.setAssignerId(taskDTO.getAssignerId());
+                                        newTaskDTO.setStatus(false);
+
+                                        taskRepository.save(modelMapper.map(newTaskDTO, Task.class));
+                                        taskProducer.sendCreateTaskMessage(newTaskDTO.getTaskName(), newTaskDTO.getAssignerId(), newTaskDTO.getCollaboratorIds());
+                                    }
+
+                                    break;
+                                }
+
+                                case "Assignee is empty:Create task": {
+
+                                    if(newCollaborators.isEmpty()) {
+                                        Map<String, Object> task = (Map<String, Object>) firstAction.getActionDetails().get("task");
+                                        String taskName = (String) task.get("name");
+                                        String description = (String) task.get("description");
+                                        LocalDate dueDate = LocalDate.parse((String) task.get("dueDate"));
+                                        List<Integer> collaboratorIds = (List<Integer>) task.get("collaboratorIds");
+                                        List<Integer> teamIds = (List<Integer>) task.get("teamIds");
+                                        String priority = (String) task.get("priority");
+
+                                        System.out.println("Task: " + task);
+
+                                        Map<String, Object> whichSection = (Map<String, Object>) firstAction.getActionDetails().get("whichSection");
+                                        Integer ActionWorkId = (Integer) whichSection.get("workId");
+
+                                        TaskDTO newTaskDTO = new TaskDTO();
+
+                                        newTaskDTO.setTaskName(taskName);
+                                        newTaskDTO.setDescription(description);
+                                        newTaskDTO.setDueDate(dueDate);
+                                        newTaskDTO.setCollaboratorIds(collaboratorIds);
+                                        newTaskDTO.setTeamIds(teamIds);
+                                        newTaskDTO.setTags(taskDTO.getTags());
+                                        newTaskDTO.setPriority(TaskPriorityLevel.valueOf(priority.toUpperCase()));
+                                        newTaskDTO.setProjectId(taskDTO.getProjectId());
+                                        newTaskDTO.setWorkId(ActionWorkId);
+                                        newTaskDTO.setAssignerId(taskDTO.getAssignerId());
+                                        newTaskDTO.setStatus(false);
+
+                                        taskRepository.save(modelMapper.map(newTaskDTO, Task.class));
+                                        taskProducer.sendCreateTaskMessage(newTaskDTO.getTaskName(), newTaskDTO.getAssignerId(), newTaskDTO.getCollaboratorIds());
+                                    }
+                                    break;
+                                }
+
+                                case "Assignee is...:Create task": {
+
+                                    Map<String, Object> triggerAssignee = (Map<String, Object>) firstTrigger.getTriggerDetails().get("assignee");
+                                    Integer triggerMemberId = (Integer) triggerAssignee.get("id");
+
+                                    newCollaboratorIds.stream().filter(id -> id.equals(triggerMemberId)).findFirst().ifPresent(id -> {
+
+
+                                        Map<String, Object> task = (Map<String, Object>) firstAction.getActionDetails().get("task");
+                                        String taskName = (String) task.get("name");
+                                        String description = (String) task.get("description");
+                                        LocalDate dueDate = LocalDate.parse((String) task.get("dueDate"));
+                                        List<Integer> collaboratorIds = (List<Integer>) task.get("collaboratorIds");
+                                        List<Integer> teamIds = (List<Integer>) task.get("teamIds");
+                                        String priority = (String) task.get("priority");
+
+                                        System.out.println("Task: " + task);
+
+                                        Map<String, Object> whichSection = (Map<String, Object>) firstAction.getActionDetails().get("whichSection");
+                                        Integer ActionWorkId = (Integer) whichSection.get("workId");
+
+                                        TaskDTO newTaskDTO = new TaskDTO();
+
+                                        newTaskDTO.setTaskName(taskName);
+                                        newTaskDTO.setDescription(description);
+                                        newTaskDTO.setDueDate(dueDate);
+                                        newTaskDTO.setCollaboratorIds(collaboratorIds);
+                                        newTaskDTO.setTeamIds(teamIds);
+                                        newTaskDTO.setTags(taskDTO.getTags());
+                                        newTaskDTO.setPriority(TaskPriorityLevel.valueOf(priority.toUpperCase()));
+                                        newTaskDTO.setProjectId(taskDTO.getProjectId());
+                                        newTaskDTO.setWorkId(ActionWorkId);
+                                        newTaskDTO.setAssignerId(taskDTO.getAssignerId());
+                                        newTaskDTO.setStatus(false);
+
+                                        taskRepository.save(modelMapper.map(newTaskDTO, Task.class));
+                                        taskProducer.sendCreateTaskMessage(newTaskDTO.getTaskName(), newTaskDTO.getAssignerId(), newTaskDTO.getCollaboratorIds());
+                                    });
+                                    break;
+                                }
+
+                                case "Duedate is changed:Move task to section": {
+                                    System.out.println("Due date changed ===> Move task to section");
+
+                                    Task task = modelMapper.map(taskRepository.findById(taskDTO.getTaskId()), Task.class);
+
+                                    if(!task.getDueDate().isEqual(taskDTO.getDueDate())) {
+
+                                        Map<String, Object> ActionMovedSection = (Map<String, Object>) firstAction.getActionDetails().get("ActionMovedSection");
+                                        if (ActionMovedSection != null) {
+                                            Integer workId = (Integer) ActionMovedSection.get("workId");
+                                            taskDTO.setWorkId(workId);
+                                        }
+                                    }
+
+                                    break;
+                                }
+
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
 
         // Save updated task
         Task updatedTask = modelMapper.map(taskDTO, Task.class);
@@ -372,13 +985,7 @@ public class TaskServiceImpl implements TaskService {
                                     Map<String, Object> whichSection = (Map<String, Object>) firstAction.getActionDetails().get("whichSection");
                                     Integer ActionWorkId = (Integer) whichSection.get("workId");
 
-//                                    Map<String, Object> section = (Map<String, Object>) firstTrigger.getTriggerDetails().get("section");
-//                                    Integer TriggerWorkId = (Integer) section.get("workId");
-//                                    if(TriggerWorkId.equals(taskDTO.getWorkId())) {
                                         TaskDTO newTaskDTO = new TaskDTO();
-
-//                                        List<String> tagsArray = new ArrayList<String>();
-//                                        tagsArray.add(tags);
 
                                         newTaskDTO.setTaskName(taskName);
                                         newTaskDTO.setDescription(description);
@@ -559,13 +1166,96 @@ public class TaskServiceImpl implements TaskService {
 //            task.setStatus(true);
 //        }
 
+        // task.setStatus(true);
+        // Save the updated task
+
+        List<PublishFlow> publishFlows = publishFlowRepository.findPublishFlowsByProjectId(task.getProjectId());
+
+        if (publishFlows != null && !publishFlows.isEmpty()) {
+            for (PublishFlow publishFlow : publishFlows) {
+                if (publishFlow.getStatus().equals("active")) {
+                    try {
+                        ObjectMapper mapper = new ObjectMapper();
+
+                        List<TriggerDTO> triggers = mapper.readValue(
+                                publishFlow.getTriggersJson(),
+                                new TypeReference<List<TriggerDTO>>() {
+                                }
+                        );
+
+                        List<ActionDTO> actions = mapper.readValue(
+                                publishFlow.getActionsJson(),
+                                new TypeReference<List<ActionDTO>>() {
+                                }
+                        );
+
+                        if (!triggers.isEmpty() && !actions.isEmpty()) {
+                            TriggerDTO firstTrigger = triggers.get(0);
+                            ActionDTO firstAction = actions.get(0);
+
+                            String triggerType = (String) firstTrigger.getTriggerDetails().get("triggerType");
+                            String actionType = (String) firstAction.getActionDetails().get("actionType");
+
+                            switch (triggerType + ":" + actionType) {
+                                case "Status is changed:Move task to section": {
+
+                                    if(task.isStatus()) {
+                                        Map<String, Object> ActionMovedSection = (Map<String, Object>) firstAction.getActionDetails().get("ActionMovedSection");
+                                        if (ActionMovedSection != null) {
+                                            Integer workId = (Integer) ActionMovedSection.get("workId");
+                                            task.setWorkId(workId);
+                                        }
+                                    }
+
+                                     else {
+                                        Map<String, Object> ActionMovedSection = (Map<String, Object>) firstAction.getActionDetails().get("ActionMovedSection");
+                                        if (ActionMovedSection != null) {
+                                            Integer workId = (Integer) ActionMovedSection.get("workId");
+                                            task.setWorkId(workId);
+                                        }
+                                    }
+                                     break;
+                                }
+
+                                case "Status is incomplete:Move task to section": {
+
+                                    if(task.isStatus()) {
+                                        Map<String, Object> ActionMovedSection = (Map<String, Object>) firstAction.getActionDetails().get("ActionMovedSection");
+                                        if (ActionMovedSection != null) {
+                                            Integer workId = (Integer) ActionMovedSection.get("workId");
+                                            task.setWorkId(workId);
+                                        }
+                                    }
+                                    break;
+                                }
+
+                                case "Status is complete:Move task to section": {
+
+                                    if(!task.isStatus()) {
+                                        Map<String, Object> ActionMovedSection = (Map<String, Object>) firstAction.getActionDetails().get("ActionMovedSection");
+                                        if (ActionMovedSection != null) {
+                                            Integer workId = (Integer) ActionMovedSection.get("workId");
+                                            task.setWorkId(workId);
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
         if(task.isStatus() == false) {
             task.setStatus(true);
         } else {
             task.setStatus(false);
         }
-//        task.setStatus(true);
-        // Save the updated task
+
         taskRepository.save(task);
     }
 
@@ -647,7 +1337,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void deleteRule(int id) {
-        ruleRepository.findById(id);
+        System.out.println("Delete rule id: " + id);
+        ruleRepository.deleteById(id);
+
     }
 
     @Override
@@ -714,7 +1406,7 @@ public class TaskServiceImpl implements TaskService {
     public PublishFlowDTO findPublishFlowByProjectId(int projectId) {
         List<PublishFlow> publishFlow = publishFlowRepository.findPublishFlowsByProjectId(projectId);
         if (publishFlow == null) {
-            return null; // Return null instead of wrong object
+            return null;
         }
         return modelMapper.map(publishFlow, PublishFlowDTO.class);
     }
@@ -723,9 +1415,14 @@ public class TaskServiceImpl implements TaskService {
     public PublishFlowDTO findPublishFlowByRuleId(int ruleId) {
         PublishFlow publishFlow = publishFlowRepository.findPublishFlowByRuleId(ruleId);
         if (publishFlow == null) {
-            return null; // Return null instead of wrong object
+            return null;
         }
         return modelMapper.map(publishFlow, PublishFlowDTO.class);
+    }
+
+    @Override
+    public void deletePublishFlowByRuleId(int ruleId) {
+        publishFlowRepository.deletePublishFlowByRuleId(ruleId);
     }
 
 }

@@ -62,6 +62,11 @@ public class ProjectController {
         return projectService.getProjectsByTeamId(teamId);
     }
 
+    @QueryMapping
+    public List<ProjectDTO> getProjectsByCollaboratorId(@Argument int collaboratorId) {
+        return projectService.getProjectsByCollaboratorId(collaboratorId);
+    }
+
     @MutationMapping
     public String updateProjectStatus(@Argument int projectId,  @Argument("input") ProjectUpdateStatus projectUpdateStatus) {
         System.out.println(projectUpdateStatus);

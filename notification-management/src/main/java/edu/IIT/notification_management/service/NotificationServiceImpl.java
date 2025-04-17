@@ -3,6 +3,7 @@ package edu.IIT.notification_management.service;
 import edu.IIT.notification_management.dto.*;
 import edu.IIT.notification_management.model.Notification;
 import edu.IIT.notification_management.repository.NotificationRepository;
+import edu.IIT.user_management.dto.OTPRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,17 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
+    public void sendOTP(OTPRequest otpRequest) {
+
+        System.out.println("#### -> Sending OTP -> " + otpRequest.getOTP());
+        System.out.println("#### -> Sending email -> " + otpRequest.getEmail());
+
+        String subject = "OTP for Verification";
+        String body = "Your OTP is: " + otpRequest.getOTP();
+        sendMail(List.of(otpRequest.getEmail()), subject, body);
+    }
+
+    @Override
     public void sendEmails(ProjectCreateEventDTO projectCreateEventDTO) {
         List<Integer> ids = projectCreateEventDTO.getCollaboratorIds();
 
@@ -49,7 +61,7 @@ public class NotificationServiceImpl implements NotificationService {
         String body = "You have been added as a collaborator to the project: " + projectCreateEventDTO.getProjectName();
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -79,7 +91,7 @@ public class NotificationServiceImpl implements NotificationService {
         }
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -100,7 +112,7 @@ public class NotificationServiceImpl implements NotificationService {
         String body = projectDeleteEventDTO.getProjectName() + " project is already deleted";
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
 
@@ -123,7 +135,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
     String body = "You have been added as a collaborator to the task: " + taskCreateEventDTO.getTaskName();
 
     assert recipients != null;
-//    sendMail(recipients, subject, body);
+    sendMail(recipients, subject, body);
 }
 
     @Override
@@ -153,7 +165,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         }
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -174,7 +186,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         String body = taskDeleteEventDTO.getTaskName() + " task is already deleted";
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
 
@@ -343,24 +355,31 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
     public void createTaskNotification(TaskCreateEventDTO taskCreateEventDTO, String subject, String type) {
         System.out.println("#### -> Creating notification -> " + taskCreateEventDTO);
         subject = subject == null ? "task-created" : subject;
+        String body = "You have been added as a collaborator to the new task: " + taskCreateEventDTO.getTaskName();
         NotificationEventDTO notificationEventDTO = new NotificationEventDTO();
         notificationEventDTO.setNotificationName(taskCreateEventDTO.getTaskName());
         notificationEventDTO.setAssignerId(taskCreateEventDTO.getAssignerId());
         notificationEventDTO.setCollaboratorIds(taskCreateEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
+        notificationEventDTO.setBody(body);
         notificationEventDTO.setNotificationType(NotificationType.TASK);
-//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
     @Override
     public void updateTaskNotification(TaskUpdateEventDTO taskUpdateEventDTO, String subject, String type) {
         System.out.println("#### -> Creating notification -> " + taskUpdateEventDTO);
+
+        String body = null;
         if(taskUpdateEventDTO.getCollaboratorAssignmentType().equals("New")) {
             subject = subject == null ? "task-created" : subject;
+            body = "You have been added as a collaborator to the task: " + taskUpdateEventDTO.getTaskName();
         } else if(taskUpdateEventDTO.getCollaboratorAssignmentType().equals("Removed")) {
             subject = subject == null ? "removed-from-task" : subject;
+            body = "You have been removed from the task: " + taskUpdateEventDTO.getTaskName();
         } else if(taskUpdateEventDTO.getCollaboratorAssignmentType().equals("Existing")) {
             subject = subject == null ? "task-changed" : subject;
+            body = "Task has been changed as: " + taskUpdateEventDTO.getTaskName();
         }
 
         NotificationEventDTO notificationEventDTO = new NotificationEventDTO();
@@ -368,21 +387,24 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         notificationEventDTO.setAssignerId(taskUpdateEventDTO.getAssignerId());
         notificationEventDTO.setCollaboratorIds(taskUpdateEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
+        notificationEventDTO.setBody(body);
         notificationEventDTO.setNotificationType(NotificationType.TASK);
-//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
     @Override
     public void deleteTaskNotification(TaskDeleteEventDTO taskDeleteEventDTO, String subject, String type) {
         System.out.println("#### -> Creating notification -> " + taskDeleteEventDTO);
         subject = subject == null ? "task-removed" : subject;
+        String body = taskDeleteEventDTO.getTaskName() + " task is already deleted";
         NotificationEventDTO notificationEventDTO = new NotificationEventDTO();
         notificationEventDTO.setNotificationName(taskDeleteEventDTO.getTaskName());
         notificationEventDTO.setAssignerId(taskDeleteEventDTO.getAssignerId());
         notificationEventDTO.setCollaboratorIds(taskDeleteEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
+        notificationEventDTO.setBody(body);
         notificationEventDTO.setNotificationType(NotificationType.TASK);
-//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
 
@@ -391,24 +413,30 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
     public void createProjectNotification(ProjectCreateEventDTO projectCreateEventDTO, String subject, String type) {
         System.out.println("#### -> Creating notification -> " + projectCreateEventDTO);
         subject = subject == null ? "project-created" : subject;
+        String body = "You have been added as a collaborator to the project: " + projectCreateEventDTO.getProjectName();
         NotificationEventDTO notificationEventDTO = new NotificationEventDTO();
         notificationEventDTO.setNotificationName(projectCreateEventDTO.getProjectName());
         notificationEventDTO.setAssignerId(projectCreateEventDTO.getAssignerId());
         notificationEventDTO.setCollaboratorIds(projectCreateEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
+        notificationEventDTO.setBody(body);
         notificationEventDTO.setNotificationType(NotificationType.PROJECT);
-//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
     @Override
     public void updateProjectNotification(ProjectUpdateEventDTO projectUpdateEventDTO, String subject, String type) {
         System.out.println("#### -> Creating notification -> " + projectUpdateEventDTO);
+        String body = null;
         if(projectUpdateEventDTO.getCollaboratorAssignmentType().equals("New")) {
             subject = subject == null ? "project-created" : subject;
+            body = "You have been added as a collaborator to the project: " + projectUpdateEventDTO.getProjectName();
         } else if(projectUpdateEventDTO.getCollaboratorAssignmentType().equals("Removed")) {
             subject = subject == null ? "removed-from-project" : subject;
+            body = "You have been removed from the project: " + projectUpdateEventDTO.getProjectName();
         } else if(projectUpdateEventDTO.getCollaboratorAssignmentType().equals("Existing")) {
             subject = subject == null ? "project-changed" : subject;
+            body = "Project has been changed as: " + projectUpdateEventDTO.getProjectName();
         }
 
         NotificationEventDTO notificationEventDTO = new NotificationEventDTO();
@@ -416,21 +444,24 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         notificationEventDTO.setAssignerId(projectUpdateEventDTO.getAssignerId());
         notificationEventDTO.setCollaboratorIds(projectUpdateEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
+        notificationEventDTO.setBody(body);
         notificationEventDTO.setNotificationType(NotificationType.PROJECT);
-//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
     @Override
     public void deleteProjectNotification(ProjectDeleteEventDTO projectDeleteEventDTO, String subject, String type) {
         System.out.println("#### -> Creating notification -> " + projectDeleteEventDTO);
         subject = subject == null ? "project-removed" : subject;
+        String body = projectDeleteEventDTO.getProjectName() + " project is already deleted";
         NotificationEventDTO notificationEventDTO = new NotificationEventDTO();
         notificationEventDTO.setNotificationName(projectDeleteEventDTO.getProjectName());
         notificationEventDTO.setAssignerId(projectDeleteEventDTO.getAssignerId());
         notificationEventDTO.setCollaboratorIds(projectDeleteEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
+        notificationEventDTO.setBody(body);
         notificationEventDTO.setNotificationType(NotificationType.PROJECT);
-//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
 
@@ -439,24 +470,30 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
     public void createTeamNotification(TeamCreateEventDTO teamCreateEventDTO, String subject, String type) {
         System.out.println("#### -> Creating notification to db -> " + teamCreateEventDTO);
         subject = subject == null ? "team-created" : subject;
+        String body = "You have been added as a collaborator to the team: " + teamCreateEventDTO.getTeamName();
         NotificationEventDTO notificationEventDTO = new NotificationEventDTO();
         notificationEventDTO.setNotificationName(teamCreateEventDTO.getTeamName());
         notificationEventDTO.setAssignerId(teamCreateEventDTO.getAssignerId());
         notificationEventDTO.setCollaboratorIds(teamCreateEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
+        notificationEventDTO.setBody(body);
         notificationEventDTO.setNotificationType(NotificationType.TEAM);
-//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
     @Override
     public void updateTeamNotification(TeamUpdateEventDTO teamUpdateEventDTO, String subject, String type) {
         System.out.println("#### -> Creating notification -> " + teamUpdateEventDTO);
+        String body = null;
         if(teamUpdateEventDTO.getCollaboratorAssignmentType().equals("New")) {
             subject = subject == null ? "team-created" : subject;
+            body = "You have been added as a collaborator to the team: " + teamUpdateEventDTO.getTeamName();
         } else if(teamUpdateEventDTO.getCollaboratorAssignmentType().equals("Removed")) {
             subject = subject == null ? "removed-from-team" : subject;
+            body = "You have been removed from the team: " + teamUpdateEventDTO.getTeamName();
         } else if(teamUpdateEventDTO.getCollaboratorAssignmentType().equals("Existing")) {
             subject = subject == null ? "team-changed" : subject;
+            body = "Team has been changed as: " + teamUpdateEventDTO.getTeamName();
         }
 
         NotificationEventDTO notificationEventDTO = new NotificationEventDTO();
@@ -464,21 +501,24 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         notificationEventDTO.setAssignerId(teamUpdateEventDTO.getAssignerId());
         notificationEventDTO.setCollaboratorIds(teamUpdateEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
+        notificationEventDTO.setBody(body);
         notificationEventDTO.setNotificationType(NotificationType.TEAM);
-//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
     @Override
     public void deleteTeamNotification(TeamDeleteEventDTO teamDeleteEventDTO, String subject, String type) {
         System.out.println("#### -> Creating notification -> " + teamDeleteEventDTO);
         subject = subject == null ? "team-removed" : subject;
+        String body = teamDeleteEventDTO.getTeamName() + " team is already deleted";
         NotificationEventDTO notificationEventDTO = new NotificationEventDTO();
         notificationEventDTO.setNotificationName(teamDeleteEventDTO.getTeamName());
         notificationEventDTO.setAssignerId(teamDeleteEventDTO.getAssignerId());
         notificationEventDTO.setCollaboratorIds(teamDeleteEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
+        notificationEventDTO.setBody(body);
         notificationEventDTO.setNotificationType(NotificationType.TEAM);
-//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
 
@@ -487,24 +527,30 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
     public void createWorkNotification(WorkCreateEventDTO workCreateEventDTO, String subject, String type) {
         System.out.println("#### -> Creating notification to db -> " + workCreateEventDTO);
         subject = subject == null ? "work-created" : subject;
+        String body = "You have been added as a collaborator to the work: " + workCreateEventDTO.getWorkName();
         NotificationEventDTO notificationEventDTO = new NotificationEventDTO();
         notificationEventDTO.setNotificationName(workCreateEventDTO.getWorkName());
         notificationEventDTO.setAssignerId(workCreateEventDTO.getAssignerId());
         notificationEventDTO.setCollaboratorIds(workCreateEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
+        notificationEventDTO.setBody(body);
         notificationEventDTO.setNotificationType(NotificationType.WORK);
-//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
     @Override
     public void updateWorkNotification(WorkUpdateEventDTO workUpdateEventDTO, String subject, String type) {
         System.out.println("#### -> update work notification -> " + workUpdateEventDTO);
+        String body = null;
         if(workUpdateEventDTO.getCollaboratorAssignmentType().equals("New")) {
             subject = subject == null ? "work-created" : subject;
+            body = "You have been added as a collaborator to the work: " + workUpdateEventDTO.getWorkName();
         } else if(workUpdateEventDTO.getCollaboratorAssignmentType().equals("Removed")) {
             subject = subject == null ? "removed-from-work" : subject;
+            body = "You have been removed from the work: " + workUpdateEventDTO.getWorkName();
         } else if(workUpdateEventDTO.getCollaboratorAssignmentType().equals("Existing")) {
             subject = subject == null ? "work-changed" : subject;
+            body = "Work has been changed as: " + workUpdateEventDTO.getWorkName();
         }
 
         NotificationEventDTO notificationEventDTO = new NotificationEventDTO();
@@ -512,21 +558,24 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         notificationEventDTO.setAssignerId(workUpdateEventDTO.getAssignerId());
         notificationEventDTO.setCollaboratorIds(workUpdateEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
+        notificationEventDTO.setBody(body);
         notificationEventDTO.setNotificationType(NotificationType.WORK);
-//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
     @Override
     public void deleteWorkNotification(WorkDeleteEventDTO workDeleteEventDTO, String subject, String type) {
         System.out.println("#### -> Creating notification -> " + workDeleteEventDTO);
         subject = subject == null ? "team-removed" : subject;
+        String body = workDeleteEventDTO.getWorkName() + " work is already deleted";
         NotificationEventDTO notificationEventDTO = new NotificationEventDTO();
         notificationEventDTO.setNotificationName(workDeleteEventDTO.getWorkName());
         notificationEventDTO.setAssignerId(workDeleteEventDTO.getAssignerId());
         notificationEventDTO.setCollaboratorIds(workDeleteEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
+        notificationEventDTO.setBody(body);
         notificationEventDTO.setNotificationType(NotificationType.WORK);
-//        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
     }
 
 }

@@ -8,4 +8,5 @@ import java.util.List;
 public interface PublishFlowRepository extends JpaRepository<PublishFlow, Integer> {
     List<PublishFlow> findPublishFlowsByProjectId(int projectId);
     PublishFlow findPublishFlowByRuleId(int ruleId);
+    void deletePublishFlowByRuleId(int ruleId);
 }

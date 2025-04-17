@@ -2,6 +2,7 @@ package edu.IIT.notification_management.dto;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -16,4 +17,7 @@ public class NotificationEventDTO {
     private int assignerId;
     private List<Integer> collaboratorIds;
     private String subject;
+    private String body;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

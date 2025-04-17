@@ -21,6 +21,7 @@ type Query {
     getAllProjects: [ProjectDTO]
     getProject(id: Int!): ProjectDTO
     getProjectsByTeamId(teamId: Int!): [ProjectDTO]
+    getProjectsByCollaboratorId(collaboratorId: Int!): [ProjectDTO]
 }
 
 type Mutation {

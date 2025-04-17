@@ -175,5 +175,10 @@ public class TaskController {
         return taskService.findPublishFlowByRuleId(ruleId);
     }
 
+    @DeleteMapping("/deletePublishFlowByRuleId/{ruleId}")
+    public void deletePublishFlowByRuleId(@PathVariable int ruleId) {
+        taskService.deletePublishFlowByRuleId(ruleId);
+    }
+
 
 }

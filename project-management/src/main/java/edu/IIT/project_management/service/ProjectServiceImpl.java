@@ -208,6 +208,17 @@ public class ProjectServiceImpl implements ProjectService {
         return "Project updated successfully";
     }
 
+    @Override
+    public List<ProjectDTO> getProjectsByCollaboratorId(int collaboratorId) {
+        List<Project> projects = projectRepository.findByCollaboratorIds(collaboratorId);
+
+        System.out.println("Projects: " + projects);
+        if (projects.isEmpty()) {
+            throw new ResourceNotFoundException("No projects found for user ID: " + collaboratorId);
+        }
+
+        return modelMapper.map(projects, new TypeToken<List<ProjectDTO>>(){}.getType());
+    }
 
     @Override
     public void deleteProject(int id) {

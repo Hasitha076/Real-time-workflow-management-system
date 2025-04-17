@@ -10,4 +10,5 @@ import java.util.List;
 public interface ProjectRepository extends JpaRepository<Project, Integer> {
 
     public List<Project> findByTeamIds(int teamId);
+    public List<Project> findByCollaboratorIds(int collaboratorId);
 }

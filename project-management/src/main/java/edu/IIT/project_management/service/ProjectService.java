@@ -15,5 +15,6 @@ public interface ProjectService {
     public List<ProjectDTO> getAllProjects();
     public void updateCollaborators(int projectId, CollaboratorsRequest collaboratorsRequest);
     public List<ProjectDTO> getProjectsByTeamId(int teamId);
+    public List<ProjectDTO> getProjectsByCollaboratorId(int collaboratorId);
     public void updateProjectStatus(int projectId, ProjectUpdateStatus projectUpdateStatus);
 }

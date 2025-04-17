@@ -41,6 +41,7 @@ public interface TaskService {
     public void deletePublishFlow(int id);
     public PublishFlowDTO findPublishFlowByProjectId(int projectId);
     public PublishFlowDTO findPublishFlowByRuleId(int ruleId);
+    public void deletePublishFlowByRuleId(int ruleId);
 
     public String movedAndUpdateTask(TaskDTO taskDTO);
 }

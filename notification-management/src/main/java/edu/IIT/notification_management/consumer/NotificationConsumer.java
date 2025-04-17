@@ -3,6 +3,7 @@ package edu.IIT.notification_management.consumer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.IIT.notification_management.dto.*;
 import edu.IIT.notification_management.service.NotificationService;
+import edu.IIT.user_management.dto.OTPRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -397,6 +398,19 @@ public class NotificationConsumer {
 
             notificationService.sendWorkDeleteEmails(workDeleteEventDTO);
             notificationService.deleteWorkNotification(workDeleteEventDTO, null, "work");
+
+        } catch (Exception e) {
+            log.error("Error consuming message", e);
+        }
+    }
+
+
+    @KafkaListener(topics = "OTP-events", groupId = "notification-management")
+    public void consumeOTP(OTPRequest otpRequest) {
+        try {
+            System.out.println("email: " + otpRequest.getEmail());
+            System.out.println("OTP: " + otpRequest.getOTP());
+            notificationService.sendOTP(otpRequest);
 
         } catch (Exception e) {
             log.error("Error consuming message", e);

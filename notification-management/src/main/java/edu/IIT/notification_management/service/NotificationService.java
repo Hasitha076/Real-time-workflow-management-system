@@ -1,6 +1,7 @@
 package edu.IIT.notification_management.service;
 
 import edu.IIT.notification_management.dto.*;
+import edu.IIT.user_management.dto.OTPRequest;
 
 import java.util.List;
 
@@ -47,4 +48,6 @@ public interface NotificationService {
     public void createWorkNotification(WorkCreateEventDTO workCreateEventDTO, String subject, String type);
     public void updateWorkNotification(WorkUpdateEventDTO workUpdateEventDTO, String subject, String type);
     public void deleteWorkNotification(WorkDeleteEventDTO workDeleteEventDTO, String subject, String type);
+
+    public void sendOTP(OTPRequest otpRequest);
 }
