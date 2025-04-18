@@ -38,7 +38,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String registerUser(UserDTO user) {
-        System.out.println("User: " + user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(modelMapper.map(user, User.class));
         return "User created successfully";

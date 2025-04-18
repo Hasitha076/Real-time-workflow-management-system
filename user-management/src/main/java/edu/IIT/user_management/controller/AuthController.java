@@ -32,28 +32,29 @@ public class AuthController {
 
         UserDTO user = userService.findByEmail(authRequest.getEmail());
 
-        System.out.println("Auth request: " + authRequest);
-        System.out.println("User: " + user);
-
         if (user != null && !userService.checkPassword(authRequest.getPassword(), user.getPassword())) {
             return ResponseEntity.status(401).body(new AuthResponse("Invalid credentials", null));
         }
-
         String token = jwtUtil.generateToken(user.getUserName());
-
         return ResponseEntity.ok(new AuthResponse(token, user));
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody UserDTO user) {
-        System.out.println("User ===> " + user);
-        UserDTO existingUser = userService.findByEmail(user.getEmail());
 
-        if (existingUser != null) {
-            return ResponseEntity.status(400).body("Username already exists");
+        List<User> userList = modelMapper.map(userService.getAllUsers(), new TypeToken<List<User>>() {}.getType());
+        Boolean checkUser = userList.stream().filter(ele -> ele.getEmail().equals(user.getEmail()))
+                .anyMatch(ele -> ele.getEmail().equals(user.getEmail()));
+
+        if (checkUser) {
+            System.out.println("User already exists");
+            return ResponseEntity.ok("Username already exists");
+        } else {
+
+            userService.registerUser(user);
+            return ResponseEntity.ok("User created successfully");
         }
-        userService.registerUser(user);
-        return ResponseEntity.ok("User created successfully");
+
     }
 
     @PostMapping("/logout")

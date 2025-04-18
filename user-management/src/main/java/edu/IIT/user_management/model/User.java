@@ -23,7 +23,7 @@ public class User {
 
     private String password;
 
-    private UserRole role;
+    private UserRole role = UserRole.USER;
 
     private boolean status;
 

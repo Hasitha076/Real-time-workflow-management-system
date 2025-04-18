@@ -15,7 +15,7 @@ import java.util.Set;
 public class JwtUtil {
 
     private final Key key;
-    private final long EXPIRATION_TIME = 86400000; // 24 hours
+    private final long EXPIRATION_TIME = 1000 * 60 * 2;
 
     public JwtUtil(@Value("${jwt.secret}") String secretKey) {
         byte[] decodedKey = Base64.getDecoder().decode(secretKey);

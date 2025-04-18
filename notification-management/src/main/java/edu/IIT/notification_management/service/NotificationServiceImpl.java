@@ -566,7 +566,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
     @Override
     public void deleteWorkNotification(WorkDeleteEventDTO workDeleteEventDTO, String subject, String type) {
         System.out.println("#### -> Creating notification -> " + workDeleteEventDTO);
-        subject = subject == null ? "team-removed" : subject;
+        subject = subject == null ? "work-removed" : subject;
         String body = workDeleteEventDTO.getWorkName() + " work is already deleted";
         NotificationEventDTO notificationEventDTO = new NotificationEventDTO();
         notificationEventDTO.setNotificationName(workDeleteEventDTO.getWorkName());
