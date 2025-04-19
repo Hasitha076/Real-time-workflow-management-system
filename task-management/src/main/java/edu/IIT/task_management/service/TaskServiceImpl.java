@@ -582,8 +582,8 @@ public class TaskServiceImpl implements TaskService {
                                 taskDTO.setDueDate(null);
                             }
 
-                            if (key.equals("Assignee is changed:Create tas")) {
-                                System.out.println("Assignee is changed ===> Create tas");
+                            if (key.equals("Assignee is changed:Create task")) {
+                                System.out.println("Assignee is changed ===> Create task");
 
                                 if (!newCollaborators.isEmpty()) {
                                     Map<String, Object> task = (Map<String, Object>) action.getActionDetails().get("task");
@@ -1265,8 +1265,11 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TemplateDTO getTaskTemplateById(int id) {
-        return modelMapper.map(templateRepository.findById(id), TemplateDTO.class);
+        Template template = templateRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Template not found"));
+        return modelMapper.map(template, TemplateDTO.class);
     }
+
 
     @Override
     public List<TemplateDTO> getTaskTemplatesByProjectId(int projectId) {
@@ -1384,7 +1387,10 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public PublishFlowDTO getPublishFlowById(int id) {
-        return modelMapper.map(publishFlowRepository.findById(id), PublishFlowDTO.class);
+        PublishFlow publishFlow = publishFlowRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("PublishFlow not found with id: " + id));
+
+        return modelMapper.map(publishFlow, PublishFlowDTO.class);
     }
 
     @Override

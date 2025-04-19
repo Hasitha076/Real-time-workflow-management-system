@@ -1,16 +1,20 @@
 package edu.IIT.user_management.service;
 
-import edu.IIT.user_management.dto.UserDTO;
+import edu.IIT.user_management.dto.*;
 import edu.IIT.user_management.model.User;
+import edu.IIT.user_management.producer.UserProducer;
 import edu.IIT.user_management.repository.UserRepository;
+import edu.IIT.user_management.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +26,9 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
+    private final SecureRandom random = new SecureRandom();
+    private final UserProducer userProducer;
 
     @Override
     public UserDTO findByEmail(String email) {
@@ -37,15 +44,84 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String registerUser(UserDTO user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(modelMapper.map(user, User.class));
-        return "User created successfully";
+    public String register(UserDTO user) {
+
+        List<User> userList = modelMapper.map(userRepository.findAll(), new TypeToken<List<User>>() {}.getType());
+        Boolean checkUser = userList.stream().filter(ele -> ele.getEmail().equals(user.getEmail()))
+                .anyMatch(ele -> ele.getEmail().equals(user.getEmail()));
+
+        if (checkUser) {
+            System.out.println("User already exists");
+            return "Username already exists";
+        } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userRepository.save(modelMapper.map(user, User.class));
+            return "User created successfully";
+        }
+
+    }
+
+    @Override
+    public ResponseEntity<?> login(AuthRequest authRequest) {
+
+        UserDTO user = modelMapper.map(userRepository.findByEmail(authRequest.getEmail()), UserDTO.class);
+
+        if (user != null && !checkPassword(authRequest.getPassword(), user.getPassword())) {
+            return ResponseEntity.ok("Invalid credentials");
+        }
+        else {
+            String token = jwtUtil.generateToken(user.getUserName());
+            return ResponseEntity.ok(new AuthResponse(token, user));
+        }
     }
 
     @Override
     public boolean checkPassword(String rawPassword, String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
+    }
+
+    @Override
+    public String logout(String token) {
+        if (token == null || !token.startsWith("Bearer ")) {
+            return "Invalid token format";
+        }
+        String jwt = token.substring(7);
+        jwtUtil.blacklistToken(jwt);
+
+        return "Logged out successfully";
+    }
+
+    @Override
+    public ResponseEntity<?> generateOTP(EmailRequest emailRequest) {
+        String email = emailRequest.getEmail();
+        List<User> userList = modelMapper.map(userRepository.findAll(), new TypeToken<List<User>>() {}.getType());
+        Boolean checkUser = userList.stream().filter(user -> user.getEmail().equals(email)).anyMatch(user -> user.getEmail().equals(email));
+
+        if (!checkUser) {
+            System.out.println("User not found");
+            return ResponseEntity.ok("User not found");
+        } else {
+            int otp = 10000 + random.nextInt(90000);
+
+            System.out.println("Generated OTP for: " + otp);
+            System.out.println(emailRequest.getEmail());
+
+            OTPRequest otpRequest = new OTPRequest(emailRequest.getEmail(), otp);
+
+            userProducer.sendOTPMessage(otpRequest);
+            return ResponseEntity.ok(otp);
+        }
+    }
+
+    @Override
+    public String resetPassword(ResetPasswordRequestDTO resetPasswordRequestDTO) {
+        String email = resetPasswordRequestDTO.getEmail();
+        String password = resetPasswordRequestDTO.getPassword();
+
+        User user = userRepository.findByEmail(email);
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+        return "Password reset successfully";
     }
 
     @Override

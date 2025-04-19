@@ -4,6 +4,7 @@ import edu.IIT.task_management.dto.*;
 import edu.IIT.task_management.producer.TaskProducer;
 import edu.IIT.task_management.service.TaskService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,9 +19,10 @@ public class TaskController {
     private final TaskProducer taskProducer;
 
     @PostMapping("/createTask")
-    public String addTask(@RequestBody TaskDTO taskDTO) {
-    taskProducer.sendMessage(taskDTO);
-        return taskService.createTask(taskDTO);
+    public ResponseEntity<String> addTask(@RequestBody TaskDTO taskDTO) {
+        taskProducer.sendMessage(taskDTO);
+        String result = taskService.createTask(taskDTO);
+        return ResponseEntity.ok(result);
     }
 
     @PutMapping("/updateTask")
