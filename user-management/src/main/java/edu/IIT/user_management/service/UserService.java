@@ -13,7 +13,7 @@ public interface UserService {
     public ResponseEntity<?> login(AuthRequest authRequest);
     public String logout(String token);
     public ResponseEntity<?> generateOTP(EmailRequest emailRequest);
-    public String resetPassword(ResetPasswordRequestDTO resetPasswordRequestDTO);
+    public ResponseEntity<?> resetPassword(ResetPasswordRequestDTO resetPasswordRequestDTO);
     public UserDTO getUserById(int id);
     public String updateUser(UserDTO user);
     public void deleteUser(int id);
@@ -23,5 +23,5 @@ public interface UserService {
     public List<String> filterUserNames(List<Integer> userIds);
     public UserDTO findByEmail(String email);
     public boolean checkPassword(String rawPassword, String encodedPassword);
-    public void resetPassword(UserDTO userDTO);
+//    public void resetPassword(UserDTO userDTO);
 }

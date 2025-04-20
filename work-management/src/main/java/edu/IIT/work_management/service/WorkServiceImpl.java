@@ -76,8 +76,16 @@ public class WorkServiceImpl implements WorkService {
 
     @Override
     public WorkDTO getWorkById(int id) {
-        return modelMapper.map(workRepository.findById(id), WorkDTO.class);
+
+        Optional<Work> workOptional = workRepository.findById(id);
+
+        if (workOptional.isPresent()) {
+            return modelMapper.map(workOptional.get(), WorkDTO.class);
+        } else {
+            return null;
+        }
     }
+
 
     @Override
     public String updateWork(WorkDTO workDTO) {

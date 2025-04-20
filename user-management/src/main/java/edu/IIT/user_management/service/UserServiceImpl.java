@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
-    private final SecureRandom random = new SecureRandom();
+    private final SecureRandom random;
     private final UserProducer userProducer;
 
     @Override
@@ -94,34 +94,34 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<?> generateOTP(EmailRequest emailRequest) {
         String email = emailRequest.getEmail();
-        List<User> userList = modelMapper.map(userRepository.findAll(), new TypeToken<List<User>>() {}.getType());
-        Boolean checkUser = userList.stream().filter(user -> user.getEmail().equals(email)).anyMatch(user -> user.getEmail().equals(email));
+        List<User> userList = userRepository.findAll();  // Directly using findAll() without mapping
+
+        if (userList == null || userList.isEmpty()) {
+            return ResponseEntity.ok("User not found");
+        }
+
+        Boolean checkUser = userList.stream().anyMatch(user -> user.getEmail().equals(email));
 
         if (!checkUser) {
-            System.out.println("User not found");
             return ResponseEntity.ok("User not found");
         } else {
             int otp = 10000 + random.nextInt(90000);
-
-            System.out.println("Generated OTP for: " + otp);
-            System.out.println(emailRequest.getEmail());
-
             OTPRequest otpRequest = new OTPRequest(emailRequest.getEmail(), otp);
-
             userProducer.sendOTPMessage(otpRequest);
             return ResponseEntity.ok(otp);
         }
     }
 
+
     @Override
-    public String resetPassword(ResetPasswordRequestDTO resetPasswordRequestDTO) {
+    public ResponseEntity<?> resetPassword(ResetPasswordRequestDTO resetPasswordRequestDTO) {
         String email = resetPasswordRequestDTO.getEmail();
         String password = resetPasswordRequestDTO.getPassword();
 
         User user = userRepository.findByEmail(email);
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
-        return "Password reset successfully";
+        return ResponseEntity.ok("Password reset successfully");
     }
 
     @Override
@@ -142,10 +142,10 @@ public class UserServiceImpl implements UserService {
         return "User updated successfully";
     }
 
-    @Override
-    public void resetPassword(UserDTO userDTO) {
-        userRepository.save(modelMapper.map(userDTO, new TypeToken<User>(){}.getType()));
-    }
+//    @Override
+//    public void resetPassword(UserDTO userDTO) {
+//        userRepository.save(modelMapper.map(userDTO, new TypeToken<User>(){}.getType()));
+//    }
 
     @Override
     public void deleteUser(int id) {

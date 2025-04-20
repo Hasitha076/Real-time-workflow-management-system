@@ -21,11 +21,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class AuthController {
 
-    private final ModelMapper modelMapper;
     private final UserService userService;
-    private final JwtUtil jwtUtil;
-    private final UserProducer userProducer;
-    private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
@@ -47,7 +43,6 @@ public class AuthController {
     public ResponseEntity<?> generateOTP(@RequestBody EmailRequest emailRequest) {
         return ResponseEntity.ok(userService.generateOTP(emailRequest));
     }
-
 
     @PostMapping("/resetPassword")
     public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequestDTO resetPasswordRequestDTO) {

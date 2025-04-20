@@ -33,44 +33,6 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public String createProject(ProjectDTO projectDTO) {
 
-        List<String> users = userWebClient.get()
-                .uri(uriBuilder -> uriBuilder.path("/filterUserNames") // Ensure path matches the controller
-                        .queryParam("ids", projectDTO.getCollaboratorIds()) // Ensure param name matches the controller
-                        .build())
-                .retrieve()
-                .bodyToMono(List.class)
-                .block();
-
-        List<String> teams = teamWebClient.get()
-                .uri(uriBuilder -> uriBuilder.path("/filterTeams") // Ensure path matches the controller
-                        .queryParam("ids", projectDTO.getTeamIds()) // Ensure param name matches the controller
-                        .build())
-                .retrieve()
-                .bodyToMono(List.class)
-                .block();
-
-        System.out.println("Users: " + users);
-        System.out.println("Teams: " + teams);
-
-        List<String> userInitials = users.stream()
-                .map(name -> name.substring(0, 1).toUpperCase())
-                .collect(Collectors.toList());
-
-        List<String> teamsInitials = teams.stream()
-                .map(name -> name.substring(0, 1).toUpperCase())
-                .collect(Collectors.toList());
-
-        // Combine initials
-        List<String> memberIcons = new ArrayList<>();
-        memberIcons.addAll(userInitials);
-        memberIcons.addAll(teamsInitials);
-
-
-
-        // Set the member icons in the project
-        projectDTO.setMemberIcons(memberIcons);
-
-
         projectRepository.save(modelMapper.map(projectDTO, Project.class));
         projectProducer.sendCreatedProjectMessage(projectDTO.getProjectName(), projectDTO.getAssignerId(), projectDTO.getCollaboratorIds());
         return "Project created successfully";
@@ -78,8 +40,11 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectDTO getProjectById(int id) {
-        return modelMapper.map(projectRepository.findById(id), ProjectDTO.class);
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Project not found with id: " + id));
+        return modelMapper.map(project, ProjectDTO.class);
     }
+
 
     @Override
     public void updateCollaborators(int projectId, CollaboratorsRequest collaboratorsRequest) {
