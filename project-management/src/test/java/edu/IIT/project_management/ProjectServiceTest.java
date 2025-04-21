@@ -10,7 +10,6 @@ import edu.IIT.project_management.service.ProjectServiceImpl;
 import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
@@ -91,6 +90,68 @@ public class ProjectServiceTest {
         verify(projectRepository).save(project);
         verify(projectProducer).sendCreatedProjectMessage("Test Project", 1, Arrays.asList(2, 3));
     }
+
+    @Test
+    void testUpdateProject() {
+        // Arrange: Existing project in repository
+        Project existingProject = new Project();
+        existingProject.setProjectId(1);
+        existingProject.setProjectName("Old Project");
+        existingProject.setAssignerId(1);
+        existingProject.setCollaboratorIds(Arrays.asList(5, 6));
+        existingProject.setTeamIds(Arrays.asList(100, 101));
+
+        // New data to update
+        ProjectDTO updatedDTO = new ProjectDTO();
+        updatedDTO.setProjectId(1);
+        updatedDTO.setProjectName("Updated Project");
+        updatedDTO.setAssignerId(1);
+        updatedDTO.setCollaboratorIds(Arrays.asList(10, 11));
+        updatedDTO.setTeamIds(Arrays.asList(200, 201));
+        updatedDTO.setStatus(ProjectStatus.PENDING);
+
+        // Mock repository behavior
+        when(projectRepository.findById(1)).thenReturn(Optional.of(existingProject));
+        when(projectRepository.save(any(Project.class))).thenReturn(existingProject);
+
+        // Mock WebClient for user initials
+        WebClient.RequestHeadersUriSpec uriSpecMock = mock(WebClient.RequestHeadersUriSpec.class);
+        WebClient.RequestHeadersSpec headersSpecMock = mock(WebClient.RequestHeadersSpec.class);
+        WebClient.ResponseSpec responseSpecMock = mock(WebClient.ResponseSpec.class);
+
+        when(userWebClient.get()).thenReturn(uriSpecMock);
+        when(uriSpecMock.uri(anyString())).thenReturn(headersSpecMock);
+        when(headersSpecMock.retrieve()).thenReturn(responseSpecMock);
+        when(responseSpecMock.bodyToMono(String.class)).thenReturn(Mono.just("U1, U2")); // mock user initials
+
+        // Mock WebClient for team initials if applicable
+        WebClient.RequestHeadersUriSpec teamUriSpecMock = mock(WebClient.RequestHeadersUriSpec.class);
+        WebClient.RequestHeadersSpec teamHeadersSpecMock = mock(WebClient.RequestHeadersSpec.class);
+        WebClient.ResponseSpec teamResponseSpecMock = mock(WebClient.ResponseSpec.class);
+
+        when(teamWebClient.get()).thenReturn(teamUriSpecMock);
+        when(teamUriSpecMock.uri(anyString())).thenReturn(teamHeadersSpecMock);
+        when(teamHeadersSpecMock.retrieve()).thenReturn(teamResponseSpecMock);
+        when(teamResponseSpecMock.bodyToMono(String.class)).thenReturn(Mono.just("T1, T2")); // mock team initials
+
+        // Act
+        String result = projectService.updateProject(updatedDTO);
+
+        // Assert
+        assertEquals("Project updated successfully", result);
+        assertEquals("Updated Project", existingProject.getProjectName());
+        assertEquals(Arrays.asList(10, 11), existingProject.getCollaboratorIds());
+        assertEquals(Arrays.asList(200, 201), existingProject.getTeamIds());
+        assertEquals(ProjectStatus.COMPLETED, existingProject.getStatus());
+
+        // Verify behavior
+        verify(projectRepository).findById(1);
+        verify(projectRepository).save(existingProject);
+        verify(projectProducer).sendUpdateProjectMessage(eq("Updated Project"), eq(1),
+                eq("New"), argThat(list -> list.containsAll(Arrays.asList(10, 11))));
+    }
+
+
 
     @Test
     void testGetProjectById() {

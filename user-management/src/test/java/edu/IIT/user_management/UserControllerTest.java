@@ -43,7 +43,7 @@ public class UserControllerTest {
     public void testAddUser() throws Exception {
         UserDTO userDTO = new UserDTO();
         userDTO.setUserName("John Doe");
-        userDTO.setEmail("john@example.com");
+        userDTO.setEmail("john@gmail.com");
 
         when(userService.createUser(any(UserDTO.class))).thenReturn("User created");
 
@@ -96,7 +96,7 @@ public class UserControllerTest {
 
     @Test
     public void testGetAllUsers() throws Exception {
-        List<UserDTO> users = Collections.singletonList(new UserDTO(1, "Alice", "alice@example.com", null, null, true, null, null));
+        List<UserDTO> users = Collections.singletonList(new UserDTO(1, "Alice", "alice@gmail.com", null, null, true, null, null));
 
         when(userService.getAllUsers()).thenReturn(users);
 
@@ -108,7 +108,7 @@ public class UserControllerTest {
 
     @Test
     public void testFilterUsersDetails() throws Exception {
-        List<UserDTO> filtered = Collections.singletonList(new UserDTO(1, "Bob", "bob@example.com", null, null, true, null, null));
+        List<UserDTO> filtered = Collections.singletonList(new UserDTO(1, "Bob", "bob@gmail.com", null, null, true, null, null));
 
         when(userService.filterUsersDetails(Arrays.asList(1, 2))).thenReturn(filtered);
 

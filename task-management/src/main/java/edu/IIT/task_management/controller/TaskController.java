@@ -27,7 +27,6 @@ public class TaskController {
 
     @PutMapping("/updateTask")
     public String updateTask(@RequestBody TaskDTO taskDTO) {
-
         return taskService.updateTask(taskDTO);
     }
 
@@ -76,8 +75,7 @@ public class TaskController {
 
     @DeleteMapping("/deleteTaskTemplate/{id}")
     public String deleteTaskTemplate(@PathVariable int id) {
-        taskService.deleteTaskTemplate(id);
-        return "Task deleted successfully";
+        return taskService.deleteTaskTemplate(id);
     }
 
     @GetMapping("/getTaskTemplate/{id}")
@@ -122,8 +120,7 @@ public class TaskController {
 
     @DeleteMapping("/deleteRule/{id}")
     public String deleteRule(@PathVariable int id) {
-        taskService.deleteRule(id);
-        return "Rule deleted successfully";
+        return taskService.deleteRule(id);
     }
 
     @GetMapping("/getRule/{id}")
@@ -153,8 +150,7 @@ public class TaskController {
 
     @DeleteMapping("/deletePublishFlow/{id}")
     public String deletePublishFlow(@PathVariable int id) {
-        taskService.deletePublishFlow(id);
-        return "Publish flow deleted successfully";
+        return taskService.deletePublishFlow(id);
     }
 
     @GetMapping("/getPublishFlow/{id}")

@@ -4,10 +4,7 @@ import edu.IIT.task_management.dto.*;
 import edu.IIT.task_management.model.*;
 import edu.IIT.task_management.producer.TaskProducer;
 import edu.IIT.task_management.repository.*;
-import edu.IIT.task_management.service.TaskService;
 import edu.IIT.task_management.service.TaskServiceImpl;
-import org.apache.kafka.common.errors.ResourceNotFoundException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -84,7 +81,6 @@ public class TaskServiceTest {
         taskDTO.setWorkId(1);
         taskDTO.setCollaboratorIds(List.of(1, 2, 3));
         taskDTO.setTeamIds(List.of(1, 4, 5));
-        taskDTO.setMemberIcons(List.of("icon1.png", "icon2.png"));
         taskDTO.setTags(List.of("urgent", "feature"));
         taskDTO.setComments(List.of("Initial comment"));
         taskDTO.setCreatedAt(LocalDateTime.of(2021, 9, 1, 0, 0));
@@ -102,7 +98,6 @@ public class TaskServiceTest {
         task.setWorkId(taskDTO.getWorkId());
         task.setCollaboratorIds(taskDTO.getCollaboratorIds());
         task.setTeamIds(taskDTO.getTeamIds());
-        task.setMemberIcons(taskDTO.getMemberIcons());
         task.setTags(taskDTO.getTags());
         task.setComments(taskDTO.getComments());
         task.setCreatedAt(taskDTO.getCreatedAt());
@@ -151,6 +146,60 @@ public class TaskServiceTest {
         verify(publishFlowRepository, times(1)).findPublishFlowsByProjectId(projectId);
         verify(modelMapper, times(1)).map(any(PublishFlow.class), eq(PublishFlowDTO.class));
     }
+
+    @Test
+    public void testUpdateTask() {
+        // Given: An updated TaskDTO
+        TaskDTO taskDTO = new TaskDTO();
+        taskDTO.setTaskId(1);
+        taskDTO.setTaskName("Updated Task");
+        taskDTO.setDescription("Updated Description");
+        taskDTO.setStatus(true);
+        taskDTO.setAssignerId(2);
+        taskDTO.setDueDate(LocalDate.of(2024, 5, 10));
+        taskDTO.setPriority(TaskPriorityLevel.MEDIUM);
+        taskDTO.setProjectId(2);
+        taskDTO.setWorkId(3);
+        taskDTO.setCollaboratorIds(List.of(4, 5));
+        taskDTO.setTeamIds(List.of(2, 6));
+        taskDTO.setTags(List.of("updated", "backend"));
+        taskDTO.setComments(List.of("Updated comment"));
+        taskDTO.setCreatedAt(LocalDateTime.of(2021, 9, 1, 0, 0));
+        taskDTO.setUpdatedAt(LocalDateTime.of(2021, 9, 15, 0, 0));
+
+        Task existingTask = new Task(); // Simulate an existing task from DB
+        existingTask.setTaskId(1);
+
+        Task updatedTask = new Task(); // Simulate mapped and updated task entity
+        updatedTask.setTaskId(taskDTO.getTaskId());
+        updatedTask.setTaskName(taskDTO.getTaskName());
+        updatedTask.setDescription(taskDTO.getDescription());
+        updatedTask.setStatus(taskDTO.isStatus());
+        updatedTask.setAssignerId(taskDTO.getAssignerId());
+        updatedTask.setDueDate(taskDTO.getDueDate());
+        updatedTask.setPriority(taskDTO.getPriority());
+        updatedTask.setProjectId(taskDTO.getProjectId());
+        updatedTask.setWorkId(taskDTO.getWorkId());
+        updatedTask.setCollaboratorIds(taskDTO.getCollaboratorIds());
+        updatedTask.setTeamIds(taskDTO.getTeamIds());
+        updatedTask.setTags(taskDTO.getTags());
+        updatedTask.setComments(taskDTO.getComments());
+        updatedTask.setCreatedAt(taskDTO.getCreatedAt());
+        updatedTask.setUpdatedAt(taskDTO.getUpdatedAt());
+
+        // Stub repository findById and save
+        when(taskRepository.findById(1)).thenReturn(Optional.of(existingTask));
+        when(modelMapper.map(taskDTO, Task.class)).thenReturn(updatedTask);
+        when(taskRepository.save(any(Task.class))).thenReturn(updatedTask);
+
+        // When: Calling updateTask
+        taskService.updateTask(taskDTO);
+
+        // Then: Verify findById and save methods
+        verify(taskRepository, times(1)).findById(1);
+        verify(taskRepository, times(1)).save(any(Task.class));
+    }
+
 
     @Test
     public void testGetTaskById() {
@@ -395,63 +444,63 @@ public class TaskServiceTest {
         verify(modelMapper, times(1)).map(eq(emptyTaskList), any(Type.class));
     }
 
-//    @SuppressWarnings("unchecked")
-//    @Test
-//    public void testChangeTaskStatus() {
-//        int taskId = 1;
-//        int projectId = 100;
-//        int workId = 200;
-//
-//        // Mock Task
-//        Task mockTask = new Task();
-//        mockTask.setTaskId(taskId);
-//        mockTask.setProjectId(projectId);
-//        mockTask.setWorkId(workId);
-//        mockTask.setStatus(false);
-//
-//        when(taskRepository.findById(taskId)).thenReturn(Optional.of(mockTask));
-//
-//        // WebClient mocking
-//        WebClient.RequestHeadersUriSpec<?> uriSpecMock = mock(WebClient.RequestHeadersUriSpec.class);
-//        WebClient.RequestHeadersSpec<?> headersSpecMock = mock(WebClient.RequestHeadersSpec.class);
-//        WebClient.ResponseSpec responseSpecMock = mock(WebClient.ResponseSpec.class);
-//
-//        // Proper return chaining
-//        when(workWebClient.get()).thenReturn(uriSpecMock);
-//        when(uriSpecMock.uri(eq("/getWorksByProjectId/{id}"), eq(projectId))).thenReturn(headersSpecMock);
-//        when(headersSpecMock.retrieve()).thenReturn(responseSpecMock);
-//
-//        // Prepare mocked body
-//        List<Map<String, Object>> mockWorkList = List.of(
-//                Map.of("workId", 200),
-//                Map.of("workId", 201),
-//                Map.of("workId", 202)
-//        );
-//
-//        // Handle bodyToMono generic issue safely
-//        when(responseSpecMock.bodyToMono(any(ParameterizedTypeReference.class)))
-//                .thenReturn(Mono.just(mockWorkList));
-//
-//        // Mock publish flow
-//        PublishFlow mockPublishFlow = new PublishFlow();
-//        mockPublishFlow.setStatus("active");
-//        mockPublishFlow.setTriggersJson("""
-//        [{"triggerDetails": {"triggerType": "Status is changed"}}]
-//    """);
-//        mockPublishFlow.setActionsJson("""
-//        [{"actionDetails": {"actionType": "Move task to section", "ActionMovedSection": {"workId": 205}}}]
-//    """);
-//
-//        when(publishFlowRepository.findPublishFlowsByProjectId(projectId)).thenReturn(List.of(mockPublishFlow));
-//
-//        // Act
-//        taskService.changeTaskStatus(taskId);
-//
-//        // Assert
-//        verify(taskRepository).save(any(Task.class));
-//        assertTrue(mockTask.isStatus());
-//        assertEquals(205, mockTask.getWorkId());
-//    }
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testChangeTaskStatus() {
+        int taskId = 1;
+        int projectId = 100;
+        int workId = 200;
+
+        // Mock Task
+        Task mockTask = new Task();
+        mockTask.setTaskId(taskId);
+        mockTask.setProjectId(projectId);
+        mockTask.setWorkId(workId);
+        mockTask.setStatus(false);
+
+        when(taskRepository.findById(taskId)).thenReturn(Optional.of(mockTask));
+
+        // WebClient mocking
+        WebClient.RequestHeadersUriSpec uriSpecMock = mock(WebClient.RequestHeadersUriSpec.class);
+        WebClient.RequestHeadersSpec headersSpecMock = mock(WebClient.RequestHeadersSpec.class);
+        WebClient.ResponseSpec responseSpecMock = mock(WebClient.ResponseSpec.class);
+
+        // Proper return chaining
+        when(workWebClient.get()).thenReturn(uriSpecMock);
+        when(uriSpecMock.uri(eq("/getWorksByProjectId/{id}"), eq(projectId))).thenReturn(headersSpecMock);
+        when(headersSpecMock.retrieve()).thenReturn(responseSpecMock);
+
+        // Prepare mocked body
+        List<Map<String, Object>> mockWorkList = List.of(
+                Map.of("workId", 200),
+                Map.of("workId", 201),
+                Map.of("workId", 202)
+        );
+
+        // Handle bodyToMono generic issue safely
+        when(responseSpecMock.bodyToMono(any(ParameterizedTypeReference.class)))
+                .thenReturn(Mono.just(mockWorkList));
+
+        // Mock publish flow
+        PublishFlow mockPublishFlow = new PublishFlow();
+        mockPublishFlow.setStatus("active");
+        mockPublishFlow.setTriggersJson("""
+        [{"triggerDetails": {"triggerType": "Status is changed"}}]
+    """);
+        mockPublishFlow.setActionsJson("""
+        [{"actionDetails": {"actionType": "Move task to section", "ActionMovedSection": {"workId": 205}}}]
+    """);
+
+        when(publishFlowRepository.findPublishFlowsByProjectId(projectId)).thenReturn(List.of(mockPublishFlow));
+
+        // Act
+        taskService.changeTaskStatus(taskId);
+
+        // Assert
+        verify(taskRepository).save(any(Task.class));
+        assertTrue(mockTask.isStatus());
+        assertEquals(205, mockTask.getWorkId());
+    }
 
     @Test
     public void testCreateTaskTemplate() {

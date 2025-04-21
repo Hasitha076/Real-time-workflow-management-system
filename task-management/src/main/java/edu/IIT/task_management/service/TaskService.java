@@ -20,7 +20,7 @@ public interface TaskService {
     public String createTaskTemplate(TemplateDTO taskTemplateDTO);
     public TemplateDTO getTaskTemplateById(int id);
     public String updateTaskTemplate(TemplateDTO taskTemplateDTO);
-    public void deleteTaskTemplate(int id);
+    public String deleteTaskTemplate(int id);
     public List<TemplateDTO> getAllTaskTemplates();
     public List<TemplateDTO> getTaskTemplatesByProjectId(int projectId);
 
@@ -31,14 +31,14 @@ public interface TaskService {
     public String createRule(RuleDTO ruleDTO);
     public RuleDTO getRuleById(int id);
     public String updateRule(RuleDTO ruleDTO);
-    public void deleteRule(int id);
+    public String deleteRule(int id);
     public List<RuleDTO> getAllRules();
     public List<RuleDTO> getRulesByProjectId(int projectId);
 
     public String createPublishFlow(PublishFlowDTO publishFlowDTO);
     public PublishFlowDTO getPublishFlowById(int id);
     public String updatePublishFlow(PublishFlowDTO publishFlowDTO);
-    public void deletePublishFlow(int id);
+    public String deletePublishFlow(int id);
     public PublishFlowDTO findPublishFlowByProjectId(int projectId);
     public PublishFlowDTO findPublishFlowByRuleId(int ruleId);
     public void deletePublishFlowByRuleId(int ruleId);

@@ -22,12 +22,12 @@ public class NotificationServiceImpl implements NotificationService {
     private final WebClient userWebClient;
 
     @Autowired
-    private JavaMailSender javaMailSender;
+    public JavaMailSender javaMailSender;
 
     @Autowired
-    private NotificationRepository notificationRepository;
+    public NotificationRepository notificationRepository;
 
-    NotificationServiceImpl(WebClient userWebClient, ModelMapper modelMapper) {
+    public NotificationServiceImpl(WebClient userWebClient, ModelMapper modelMapper) {
         this.userWebClient = userWebClient;
         this.modelMapper = modelMapper;
     }
@@ -112,7 +112,7 @@ public class NotificationServiceImpl implements NotificationService {
         String body = projectDeleteEventDTO.getProjectName() + " project is already deleted";
 
         assert recipients != null;
-        sendMail(recipients, subject, body);
+//        sendMail(recipients, subject, body);
     }
 
 

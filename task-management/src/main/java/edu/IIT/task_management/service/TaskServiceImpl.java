@@ -1,15 +1,11 @@
 package edu.IIT.task_management.service;
 
-//import edu.IIT.project_management.dto.ProjectDTO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.IIT.task_management.dto.*;
-//import edu.IIT.task_management.dto.TaskTemplateDTO;
 import edu.IIT.task_management.model.*;
 import edu.IIT.task_management.producer.TaskProducer;
 import edu.IIT.task_management.repository.*;
-//import edu.IIT.task_management.repository.TaskTemplateRepository;
-//import edu.IIT.work_management.dto.WorkDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -1283,8 +1279,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteTaskTemplate(int id) {
+    public String deleteTaskTemplate(int id) {
         templateRepository.deleteById(id);
+        return "Task deleted successfully";
     }
 
     @Override
@@ -1335,9 +1332,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteRule(int id) {
-        System.out.println("Delete rule id: " + id);
+    public String deleteRule(int id) {
         ruleRepository.deleteById(id);
+        return "Rule deleted successfully";
 
     }
 
@@ -1400,8 +1397,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deletePublishFlow(int id) {
+    public String deletePublishFlow(int id) {
         publishFlowRepository.deleteById(id);
+        return "Publish flow deleted successfully";
     }
 
     @Override

@@ -14,7 +14,7 @@ public class UserDTO {
     private String userName;
     private String email;
     private String password;
-    private UserRole role;
+    private UserRole role = UserRole.GUEST;
     private boolean status = true;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
