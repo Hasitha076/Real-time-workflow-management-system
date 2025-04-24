@@ -73,118 +73,715 @@ public class TaskServiceImpl implements TaskService {
                             ActionDTO action = actions.get(i);
 
                             String triggerType = (String) trigger.getTriggerDetails().get("triggerType");
+                            Map<String, Object> triggerSection = (Map<String, Object>) trigger.getTriggerDetails().get("section");
                             String actionType = (String) action.getActionDetails().get("actionType");
                             String key = triggerType + ":" + actionType;
 
                             System.out.println("Key: " + key);
 
-                            if (key.equals("Task is add from:Set assignee to")) {
+                            if (key.equals("All tasks:Set assignee to")) {
+
+                                if (triggerSection.get("workName").equals("Any Work")) {
+                                    System.out.println("All tasks (Any Work) ===> Set assignee to");
+
+                                    Map<String, Object> assignee = (Map<String, Object>) action.getActionDetails().get("assignee");
+                                    if (assignee != null) {
+                                        Integer assigneeId = (Integer) assignee.get("id");
+                                        List<Integer> updatedCollaborators = taskDTO.getCollaboratorIds() != null
+                                                ? new ArrayList<>(taskDTO.getCollaboratorIds())
+                                                : new ArrayList<>();
+                                        if (!updatedCollaborators.contains(assigneeId)) {
+                                            updatedCollaborators.add(assigneeId);
+                                            taskDTO.setCollaboratorIds(updatedCollaborators);
+                                        }
+                                    }
+                                } else {
+                                    System.out.println("All tasks (Specific Work) ===> Set assignee to");
+                                    Integer workId = (Integer) triggerSection.get("workId");
+
+                                   if(taskDTO.getWorkId() == workId) {
+                                        String templateName = (String) trigger.getTriggerDetails().get("taskTemplateName");
+
+                                        Map<String, Object> assignee = (Map<String, Object>) action.getActionDetails().get("assignee");
+                                        if (assignee != null) {
+                                            Integer assigneeId = (Integer) assignee.get("id");
+                                            List<Integer> updatedCollaborators = taskDTO.getCollaboratorIds() != null
+                                                    ? new ArrayList<>(taskDTO.getCollaboratorIds())
+                                                    : new ArrayList<>();
+                                            if (!updatedCollaborators.contains(assigneeId)) {
+                                                updatedCollaborators.add(assigneeId);
+                                                taskDTO.setCollaboratorIds(updatedCollaborators);
+                                            }
+                                        }
+                                   }
+                                }
+                            }
+
+                            if (key.equals("Task is added from:Set assignee to")) {
                                 System.out.println("Task is add from ===> Set assignee to");
 
-                                Map<String, Object> assignee = (Map<String, Object>) action.getActionDetails().get("assignee");
-                                if (assignee != null) {
-                                    Integer assigneeId = (Integer) assignee.get("id");
-                                    List<Integer> updatedCollaborators = taskDTO.getCollaboratorIds() != null
-                                            ? new ArrayList<>(taskDTO.getCollaboratorIds())
-                                            : new ArrayList<>();
-                                    if (!updatedCollaborators.contains(assigneeId)) {
-                                        updatedCollaborators.add(assigneeId);
-                                        taskDTO.setCollaboratorIds(updatedCollaborators);
+                                Map<String, Object> template = (Map<String, Object>) trigger.getTriggerDetails().get("taskTemplate");
+                                String templateName = (String) template.get("taskTemplateName");
+
+                                if (triggerSection.get("workName").equals("Any Work")) {
+                                    System.out.println("Task is added from (Any Work) ===> Set assignee to");
+
+                                    System.out.println("DTO task Name: " + taskDTO.getTaskName());
+                                    System.out.println("Template Name: " + templateName);
+
+                                    if(taskDTO.getTaskName().equals(templateName)) {
+                                        Map<String, Object> assignee = (Map<String, Object>) action.getActionDetails().get("assignee");
+                                        if (assignee != null) {
+                                            Integer assigneeId = (Integer) assignee.get("id");
+                                            List<Integer> updatedCollaborators = taskDTO.getCollaboratorIds() != null
+                                                    ? new ArrayList<>(taskDTO.getCollaboratorIds())
+                                                    : new ArrayList<>();
+                                            if (!updatedCollaborators.contains(assigneeId)) {
+                                                updatedCollaborators.add(assigneeId);
+                                                taskDTO.setCollaboratorIds(updatedCollaborators);
+                                            }
+                                        }
+                                    }
+                                }
+
+                                else {
+                                    System.out.println("Task is added from (Specific Work) ===> Set assignee to");
+                                    Integer workId = (Integer) triggerSection.get("workId");
+
+                                    if(taskDTO.getTaskName().equals(templateName)) {
+                                        System.out.println("DTO task Name: " + taskDTO.getTaskName());
+                                        System.out.println("Template Name: " + templateName);
+
+                                        if(taskDTO.getWorkId() == workId) {
+                                            Map<String, Object> assignee = (Map<String, Object>) action.getActionDetails().get("assignee");
+                                            if (assignee != null) {
+                                                Integer assigneeId = (Integer) assignee.get("id");
+                                                List<Integer> updatedCollaborators = taskDTO.getCollaboratorIds() != null
+                                                        ? new ArrayList<>(taskDTO.getCollaboratorIds())
+                                                        : new ArrayList<>();
+                                                if (!updatedCollaborators.contains(assigneeId)) {
+                                                    updatedCollaborators.add(assigneeId);
+                                                    taskDTO.setCollaboratorIds(updatedCollaborators);
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
 
-                            if (key.equals("Task is add from:Move task to section")) {
-                                System.out.println("Task is add from ===> Move task to section");
 
-                                Map<String, Object> ActionMovedSection = (Map<String, Object>) action.getActionDetails().get("ActionMovedSection");
-                                if (ActionMovedSection != null) {
-                                    Integer workId = (Integer) ActionMovedSection.get("workId");
-                                    taskDTO.setWorkId(workId);
+                            if (key.equals("All tasks:Move task to section")) {
+
+                                if (triggerSection.get("workName").equals("Any Work")) {
+                                    System.out.println("All tasks (Any Work) ===> Move task to section");
+
+                                    Map<String, Object> ActionMovedSection = (Map<String, Object>) action.getActionDetails().get("ActionMovedSection");
+                                    if (ActionMovedSection != null) {
+                                        Integer workId = (Integer) ActionMovedSection.get("workId");
+                                        taskDTO.setWorkId(workId);
+                                    }
+
+                                } else {
+                                    System.out.println("All tasks (Specific Work) ===> Move task to section");
+                                    Integer workId = (Integer) triggerSection.get("workId");
+
+                                    if(taskDTO.getWorkId() == workId) {
+                                        String templateName = (String) trigger.getTriggerDetails().get("taskTemplateName");
+
+                                        Map<String, Object> ActionMovedSection = (Map<String, Object>) action.getActionDetails().get("ActionMovedSection");
+                                        if (ActionMovedSection != null) {
+                                            Integer workid = (Integer) ActionMovedSection.get("workId");
+                                            taskDTO.setWorkId(workid);
+                                        }
+                                    }
                                 }
                             }
 
-                            if (key.equals("Task is add from:Clear assignee")) {
+                            if (key.equals("Task is added from:Move task to section")) {
+                                System.out.println("Task is add from ===> Move task to section");
+
+                                Map<String, Object> template = (Map<String, Object>) trigger.getTriggerDetails().get("taskTemplate");
+                                String templateName = (String) template.get("taskTemplateName");
+
+                                if (triggerSection.get("workName").equals("Any Work")) {
+                                    System.out.println("Task is added from (Any Work) ===> Move task to section");
+
+                                    System.out.println("DTO task Name: " + taskDTO.getTaskName());
+                                    System.out.println("Template Name: " + templateName);
+
+                                    if(taskDTO.getTaskName().equals(templateName)) {
+                                        Map<String, Object> ActionMovedSection = (Map<String, Object>) action.getActionDetails().get("ActionMovedSection");
+                                        if (ActionMovedSection != null) {
+                                            Integer workId = (Integer) ActionMovedSection.get("workId");
+                                            taskDTO.setWorkId(workId);
+                                        }
+                                    }
+                                }
+
+                                else {
+                                    System.out.println("Task is added from (Specific Work) ===> SMove task to section");
+                                    Integer workId = (Integer) triggerSection.get("workId");
+
+                                    if(taskDTO.getTaskName().equals(templateName)) {
+                                        System.out.println("DTO task Name: " + taskDTO.getTaskName());
+                                        System.out.println("Template Name: " + templateName);
+
+                                        if(taskDTO.getWorkId() == workId) {
+                                            Map<String, Object> ActionMovedSection = (Map<String, Object>) action.getActionDetails().get("ActionMovedSection");
+                                            if (ActionMovedSection != null) {
+                                                Integer workid = (Integer) ActionMovedSection.get("workId");
+                                                taskDTO.setWorkId(workid);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+
+                            if (key.equals("All tasks:Clear assignee")) {
+
+                                if (triggerSection.get("workName").equals("Any Work")) {
+                                    System.out.println("All tasks (Any Work) ===> Clear assignee");
+
+                                    taskDTO.setCollaboratorIds(new ArrayList<>());
+                                    taskDTO.setTeamIds(new ArrayList<>());
+
+                                } else {
+                                    System.out.println("All tasks (Specific Work) ===> Clear assignee");
+                                    Integer workId = (Integer) triggerSection.get("workId");
+
+                                    if(taskDTO.getWorkId() == workId) {
+                                        String templateName = (String) trigger.getTriggerDetails().get("taskTemplateName");
+
+                                        taskDTO.setCollaboratorIds(new ArrayList<>());
+                                        taskDTO.setTeamIds(new ArrayList<>());
+                                    }
+                                }
+                            }
+
+                            if (key.equals("Task is added from:Clear assignee")) {
                                 System.out.println("Task is add from ===> Clear assignee");
 
-                                taskDTO.setCollaboratorIds(new ArrayList<>());
-                                taskDTO.setTeamIds(new ArrayList<>());
+                                Map<String, Object> template = (Map<String, Object>) trigger.getTriggerDetails().get("taskTemplate");
+                                String templateName = (String) template.get("taskTemplateName");
+
+                                if (triggerSection.get("workName").equals("Any Work")) {
+                                    System.out.println("Task is added from (Any Work) ===> Clear assignee");
+
+                                    System.out.println("DTO task Name: " + taskDTO.getTaskName());
+                                    System.out.println("Template Name: " + templateName);
+
+                                    if(taskDTO.getTaskName().equals(templateName)) {
+                                        taskDTO.setCollaboratorIds(new ArrayList<>());
+                                        taskDTO.setTeamIds(new ArrayList<>());
+                                    }
+                                }
+
+                                else {
+                                    System.out.println("Task is added from (Specific Work) ===> Clear assignee");
+                                    Integer workId = (Integer) triggerSection.get("workId");
+
+                                    if(taskDTO.getTaskName().equals(templateName)) {
+                                        System.out.println("DTO task Name: " + taskDTO.getTaskName());
+                                        System.out.println("Template Name: " + templateName);
+
+                                        if(taskDTO.getWorkId() == workId) {
+                                            taskDTO.setCollaboratorIds(new ArrayList<>());
+                                            taskDTO.setTeamIds(new ArrayList<>());
+                                        }
+                                    }
+                                }
                             }
 
-                            if (key.equals("Task is add from:Complete task")) {
+
+                            if (key.equals("All tasks:Complete task")) {
+
+                                if (triggerSection.get("workName").equals("Any Work")) {
+                                    System.out.println("All tasks (Any Work) ===> Complete task");
+
+                                    taskDTO.setStatus(true);
+
+                                } else {
+                                    System.out.println("All tasks (Specific Work) ===> Complete task");
+                                    Integer workId = (Integer) triggerSection.get("workId");
+
+                                    if(taskDTO.getWorkId() == workId) {
+                                        String templateName = (String) trigger.getTriggerDetails().get("taskTemplateName");
+
+                                        taskDTO.setStatus(true);
+                                    }
+                                }
+                            }
+
+                            if (key.equals("Task is added from:Complete task")) {
                                 System.out.println("Task is add from ===> Complete task");
 
-                                taskDTO.setStatus(true);
+                                Map<String, Object> template = (Map<String, Object>) trigger.getTriggerDetails().get("taskTemplate");
+                                String templateName = (String) template.get("taskTemplateName");
+
+                                if (triggerSection.get("workName").equals("Any Work")) {
+                                    System.out.println("Task is added from (Any Work) ===> Complete task");
+
+                                    System.out.println("DTO task Name: " + taskDTO.getTaskName());
+                                    System.out.println("Template Name: " + templateName);
+
+                                    if(taskDTO.getTaskName().equals(templateName)) {
+                                        taskDTO.setStatus(true);
+                                    }
+                                }
+
+                                else {
+                                    System.out.println("Task is added from (Specific Work) ===> Complete task");
+                                    Integer workId = (Integer) triggerSection.get("workId");
+
+                                    if(taskDTO.getTaskName().equals(templateName)) {
+                                        System.out.println("DTO task Name: " + taskDTO.getTaskName());
+                                        System.out.println("Template Name: " + templateName);
+
+                                        if(taskDTO.getWorkId() == workId) {
+                                            taskDTO.setStatus(true);
+                                        }
+                                    }
+                                }
                             }
 
-                            if (key.equals("Task is add from:Incomplete task")) {
+
+                            if (key.equals("All tasks:Incomplete task")) {
+
+                                if (triggerSection.get("workName").equals("Any Work")) {
+                                    System.out.println("All tasks (Any Work) ===> Incomplete task");
+
+                                    taskDTO.setStatus(false);
+
+                                } else {
+                                    System.out.println("All tasks (Specific Work) ===> Complete task");
+                                    Integer workId = (Integer) triggerSection.get("workId");
+
+                                    if(taskDTO.getWorkId() == workId) {
+                                        String templateName = (String) trigger.getTriggerDetails().get("taskTemplateName");
+
+                                        taskDTO.setStatus(false);
+                                    }
+                                }
+                            }
+
+                            if (key.equals("Task is added from:Incomplete task")) {
                                 System.out.println("Task is add from ===> Incomplete task");
 
-                                taskDTO.setStatus(false);
+                                Map<String, Object> template = (Map<String, Object>) trigger.getTriggerDetails().get("taskTemplate");
+                                String templateName = (String) template.get("taskTemplateName");
+
+                                if (triggerSection.get("workName").equals("Any Work")) {
+                                    System.out.println("Task is added from (Any Work) ===> Incomplete task");
+
+                                    System.out.println("DTO task Name: " + taskDTO.getTaskName());
+                                    System.out.println("Template Name: " + templateName);
+
+                                    if(taskDTO.getTaskName().equals(templateName)) {
+                                        taskDTO.setStatus(false);
+                                    }
+                                }
+
+                                else {
+                                    System.out.println("Task is added from (Specific Work) ===> Incomplete task");
+                                    Integer workId = (Integer) triggerSection.get("workId");
+
+                                    if(taskDTO.getTaskName().equals(templateName)) {
+                                        System.out.println("DTO task Name: " + taskDTO.getTaskName());
+                                        System.out.println("Template Name: " + templateName);
+
+                                        if(taskDTO.getWorkId() == workId) {
+                                            taskDTO.setStatus(false);
+                                        }
+                                    }
+                                }
                             }
 
-                            if (key.equals("Task is add from:Set task title")) {
+
+                            if (key.equals("All tasks:Set task title")) {
+
+                                if (triggerSection.get("workName").equals("Any Work")) {
+                                    System.out.println("All tasks (Any Work) ===> Set task title");
+
+                                    String taskName = (String) action.getActionDetails().get("taskName");
+                                    taskDTO.setTaskName(taskName);
+
+                                } else {
+                                    System.out.println("All tasks (Specific Work) ===> Set task title");
+                                    Integer workId = (Integer) triggerSection.get("workId");
+
+                                    if(taskDTO.getWorkId() == workId) {
+                                        String templateName = (String) trigger.getTriggerDetails().get("taskTemplateName");
+
+                                        String taskName = (String) action.getActionDetails().get("taskName");
+                                        taskDTO.setTaskName(taskName);
+                                    }
+                                }
+                            }
+
+                            if (key.equals("Task is added from:Set task title")) {
                                 System.out.println("Task is add from ===> Set task title");
 
-                                String taskName = (String) action.getActionDetails().get("taskName");
-                                taskDTO.setTaskName(taskName);
+                                Map<String, Object> template = (Map<String, Object>) trigger.getTriggerDetails().get("taskTemplate");
+                                String templateName = (String) template.get("taskTemplateName");
+
+                                if (triggerSection.get("workName").equals("Any Work")) {
+                                    System.out.println("Task is added from (Any Work) ===> Set task title");
+
+                                    System.out.println("DTO task Name: " + taskDTO.getTaskName());
+                                    System.out.println("Template Name: " + templateName);
+
+                                    if(taskDTO.getTaskName().equals(templateName)) {
+                                        String taskName = (String) action.getActionDetails().get("taskName");
+                                        taskDTO.setTaskName(taskName);
+                                    }
+                                }
+
+                                else {
+                                    System.out.println("Task is added from (Specific Work) ===> Set task title");
+                                    Integer workId = (Integer) triggerSection.get("workId");
+
+                                    if(taskDTO.getTaskName().equals(templateName)) {
+                                        System.out.println("DTO task Name: " + taskDTO.getTaskName());
+                                        System.out.println("Template Name: " + templateName);
+
+                                        if(taskDTO.getWorkId() == workId) {
+                                            String taskName = (String) action.getActionDetails().get("taskName");
+                                            taskDTO.setTaskName(taskName);
+                                        }
+                                    }
+                                }
                             }
 
-                            if (key.equals("Task is add from:Set task description")) {
+
+                            if (key.equals("All tasks:Set task description")) {
+
+                                if (triggerSection.get("workName").equals("Any Work")) {
+                                    System.out.println("All tasks (Any Work) ===> Set task description");
+
+                                    String taskDescription = (String) action.getActionDetails().get("taskDescription");
+                                    taskDTO.setDescription(taskDescription);
+
+                                } else {
+                                    System.out.println("All tasks (Specific Work) ===> Set task description");
+                                    Integer workId = (Integer) triggerSection.get("workId");
+
+                                    if(taskDTO.getWorkId() == workId) {
+                                        String templateName = (String) trigger.getTriggerDetails().get("taskTemplateName");
+
+                                        String taskDescription = (String) action.getActionDetails().get("taskDescription");
+                                        taskDTO.setDescription(taskDescription);
+                                    }
+                                }
+                            }
+
+                            if (key.equals("Task is added from:Set task description")) {
                                 System.out.println("Task is add from ===> Set task description");
 
-                                String taskDescription = (String) action.getActionDetails().get("taskDescription");
-                                taskDTO.setDescription(taskDescription);
+                                Map<String, Object> template = (Map<String, Object>) trigger.getTriggerDetails().get("taskTemplate");
+                                String templateName = (String) template.get("taskTemplateName");
+
+                                if (triggerSection.get("workName").equals("Any Work")) {
+                                    System.out.println("Task is added from (Any Work) ===> Set task description");
+
+                                    System.out.println("DTO task Name: " + taskDTO.getTaskName());
+                                    System.out.println("Template Name: " + templateName);
+
+                                    if(taskDTO.getTaskName().equals(templateName)) {
+                                        String taskDescription = (String) action.getActionDetails().get("taskDescription");
+                                        taskDTO.setDescription(taskDescription);
+                                    }
+                                }
+
+                                else {
+                                    System.out.println("Task is added from (Specific Work) ===> Set task description");
+                                    Integer workId = (Integer) triggerSection.get("workId");
+
+                                    if(taskDTO.getTaskName().equals(templateName)) {
+                                        System.out.println("DTO task Name: " + taskDTO.getTaskName());
+                                        System.out.println("Template Name: " + templateName);
+
+                                        if(taskDTO.getWorkId() == workId) {
+                                            String taskDescription = (String) action.getActionDetails().get("taskDescription");
+                                            taskDTO.setDescription(taskDescription);
+                                        }
+                                    }
+                                }
                             }
 
-                            if (key.equals("Task is add from:Set due date to")) {
+
+                            if (key.equals("All tasks:Set due date to")) {
+
+                                if (triggerSection.get("workName").equals("Any Work")) {
+                                    System.out.println("All tasks (Any Work) ===> Set due date to");
+
+                                    String dateStr = (String) action.getActionDetails().get("date");
+                                    LocalDate date = LocalDate.parse(dateStr);
+                                    taskDTO.setDueDate(date);
+
+                                } else {
+                                    System.out.println("All tasks (Specific Work) ===> Set due date to");
+                                    Integer workId = (Integer) triggerSection.get("workId");
+
+                                    if(taskDTO.getWorkId() == workId) {
+                                        String templateName = (String) trigger.getTriggerDetails().get("taskTemplateName");
+
+                                        String dateStr = (String) action.getActionDetails().get("date");
+                                        LocalDate date = LocalDate.parse(dateStr);
+                                        taskDTO.setDueDate(date);
+                                    }
+                                }
+                            }
+
+                            if (key.equals("Task is added from:Set due date to")) {
                                 System.out.println("Task is add from ===> Set due date to");
 
-                                String dateStr = (String) action.getActionDetails().get("date");
-                                LocalDate date = LocalDate.parse(dateStr);
-                                taskDTO.setDueDate(date);
+                                Map<String, Object> template = (Map<String, Object>) trigger.getTriggerDetails().get("taskTemplate");
+                                String templateName = (String) template.get("taskTemplateName");
+
+                                if (triggerSection.get("workName").equals("Any Work")) {
+                                    System.out.println("Task is added from (Any Work) ===> Set due date to");
+
+                                    System.out.println("DTO task Name: " + taskDTO.getTaskName());
+                                    System.out.println("Template Name: " + templateName);
+
+                                    if(taskDTO.getTaskName().equals(templateName)) {
+                                        String dateStr = (String) action.getActionDetails().get("date");
+                                        LocalDate date = LocalDate.parse(dateStr);
+                                        taskDTO.setDueDate(date);
+                                    }
+                                }
+
+                                else {
+                                    System.out.println("Task is added from (Specific Work) ===> Set due date to");
+                                    Integer workId = (Integer) triggerSection.get("workId");
+
+                                    if(taskDTO.getTaskName().equals(templateName)) {
+                                        System.out.println("DTO task Name: " + taskDTO.getTaskName());
+                                        System.out.println("Template Name: " + templateName);
+
+                                        if(taskDTO.getWorkId() == workId) {
+                                            String dateStr = (String) action.getActionDetails().get("date");
+                                            LocalDate date = LocalDate.parse(dateStr);
+                                            taskDTO.setDueDate(date);
+                                        }
+                                    }
+                                }
                             }
 
-                            if (key.equals("Task is add from:Clear due date")) {
+
+                            if (key.equals("All tasks:Clear due date")) {
+
+                                if (triggerSection.get("workName").equals("Any Work")) {
+                                    System.out.println("All tasks (Any Work) ===> Clear due date");
+
+                                    taskDTO.setDueDate(null);
+
+                                } else {
+                                    System.out.println("All tasks (Specific Work) ===> Clear due date");
+                                    Integer workId = (Integer) triggerSection.get("workId");
+
+                                    if(taskDTO.getWorkId() == workId) {
+                                        String templateName = (String) trigger.getTriggerDetails().get("taskTemplateName");
+
+                                        taskDTO.setDueDate(null);
+                                    }
+                                }
+                            }
+
+                            if (key.equals("Task is added from:Clear due date")) {
                                 System.out.println("Task is add from ===> Clear due date");
 
-                                taskDTO.setDueDate(null);
+                                Map<String, Object> template = (Map<String, Object>) trigger.getTriggerDetails().get("taskTemplate");
+                                String templateName = (String) template.get("taskTemplateName");
+
+                                if (triggerSection.get("workName").equals("Any Work")) {
+                                    System.out.println("Task is added from (Any Work) ===> Clear due date");
+
+                                    System.out.println("DTO task Name: " + taskDTO.getTaskName());
+                                    System.out.println("Template Name: " + templateName);
+
+                                    if(taskDTO.getTaskName().equals(templateName)) {
+                                        taskDTO.setDueDate(null);
+                                    }
+                                }
+
+                                else {
+                                    System.out.println("Task is added from (Specific Work) ===> Clear due date");
+                                    Integer workId = (Integer) triggerSection.get("workId");
+
+                                    if(taskDTO.getTaskName().equals(templateName)) {
+                                        System.out.println("DTO task Name: " + taskDTO.getTaskName());
+                                        System.out.println("Template Name: " + templateName);
+
+                                        if(taskDTO.getWorkId() == workId) {
+                                            taskDTO.setDueDate(null);
+                                        }
+                                    }
+                                }
                             }
 
-                            if (key.equals("Task is add from:Create task")) {
+                            if (key.equals("All tasks:Create task")) {
+
+                                if (triggerSection.get("workName").equals("Any Work")) {
+                                    System.out.println("All tasks (Any Work) ===> Create task");
+
+                                    Map<String, Object> task = (Map<String, Object>) action.getActionDetails().get("task");
+                                    String taskName = (String) task.get("name");
+                                    String description = (String) task.get("description");
+                                    LocalDate dueDate = LocalDate.parse((String) task.get("dueDate"));
+                                    List<Integer> collaboratorIds = (List<Integer>) task.get("collaboratorIds");
+                                    List<Integer> teamIds = (List<Integer>) task.get("teamIds");
+                                    String priority = (String) task.get("priority");
+
+                                    System.out.println("Task: " + task);
+
+                                    Map<String, Object> whichSection = (Map<String, Object>) action.getActionDetails().get("whichSection");
+                                    Integer ActionWorkId = (Integer) whichSection.get("workId");
+
+                                    TaskDTO newTaskDTO = new TaskDTO();
+
+                                    newTaskDTO.setTaskName(taskName);
+                                    newTaskDTO.setDescription(description);
+                                    newTaskDTO.setDueDate(dueDate);
+                                    newTaskDTO.setCollaboratorIds(collaboratorIds);
+                                    newTaskDTO.setTeamIds(teamIds);
+                                    newTaskDTO.setTags(taskDTO.getTags());
+                                    newTaskDTO.setPriority(TaskPriorityLevel.valueOf(priority.toUpperCase()));
+                                    newTaskDTO.setProjectId(taskDTO.getProjectId());
+                                    newTaskDTO.setWorkId(ActionWorkId);
+                                    newTaskDTO.setAssignerId(taskDTO.getAssignerId());
+                                    newTaskDTO.setStatus(false);
+
+                                    taskRepository.save(modelMapper.map(newTaskDTO, Task.class));
+                                    taskProducer.sendCreateTaskMessage(newTaskDTO.getTaskName(), newTaskDTO.getAssignerId(), newTaskDTO.getCollaboratorIds());
+
+                                } else {
+                                    System.out.println("All tasks (Specific Work) ===> Create task");
+                                    Integer workId = (Integer) triggerSection.get("workId");
+
+                                    if(taskDTO.getWorkId() == workId) {
+                                        String templateName = (String) trigger.getTriggerDetails().get("taskTemplateName");
+
+                                        Map<String, Object> task = (Map<String, Object>) action.getActionDetails().get("task");
+                                        String taskName = (String) task.get("name");
+                                        String description = (String) task.get("description");
+                                        LocalDate dueDate = LocalDate.parse((String) task.get("dueDate"));
+                                        List<Integer> collaboratorIds = (List<Integer>) task.get("collaboratorIds");
+                                        List<Integer> teamIds = (List<Integer>) task.get("teamIds");
+                                        String priority = (String) task.get("priority");
+
+                                        System.out.println("Task: " + task);
+
+                                        Map<String, Object> whichSection = (Map<String, Object>) action.getActionDetails().get("whichSection");
+                                        Integer ActionWorkId = (Integer) whichSection.get("workId");
+
+                                        TaskDTO newTaskDTO = new TaskDTO();
+
+                                        newTaskDTO.setTaskName(taskName);
+                                        newTaskDTO.setDescription(description);
+                                        newTaskDTO.setDueDate(dueDate);
+                                        newTaskDTO.setCollaboratorIds(collaboratorIds);
+                                        newTaskDTO.setTeamIds(teamIds);
+                                        newTaskDTO.setTags(taskDTO.getTags());
+                                        newTaskDTO.setPriority(TaskPriorityLevel.valueOf(priority.toUpperCase()));
+                                        newTaskDTO.setProjectId(taskDTO.getProjectId());
+                                        newTaskDTO.setWorkId(ActionWorkId);
+                                        newTaskDTO.setAssignerId(taskDTO.getAssignerId());
+                                        newTaskDTO.setStatus(false);
+
+                                        taskRepository.save(modelMapper.map(newTaskDTO, Task.class));
+                                        taskProducer.sendCreateTaskMessage(newTaskDTO.getTaskName(), newTaskDTO.getAssignerId(), newTaskDTO.getCollaboratorIds());
+                                    }
+                                }
+                            }
+
+                            if (key.equals("Task is added from:Create task")) {
                                 System.out.println("Task is add from ===> Create task");
 
-                                Map<String, Object> task = (Map<String, Object>) action.getActionDetails().get("task");
-                                String taskName = (String) task.get("name");
-                                String description = (String) task.get("description");
-                                LocalDate dueDate = LocalDate.parse((String) task.get("dueDate"));
-                                List<Integer> collaboratorIds = (List<Integer>) task.get("collaboratorIds");
-                                List<Integer> teamIds = (List<Integer>) task.get("teamIds");
-                                String priority = (String) task.get("priority");
+                                Map<String, Object> template = (Map<String, Object>) trigger.getTriggerDetails().get("taskTemplate");
+                                String templateName = (String) template.get("taskTemplateName");
 
-                                System.out.println("Task: " + task);
+                                if (triggerSection.get("workName").equals("Any Work")) {
+                                    System.out.println("Task is added from (Any Work) ===> Create task");
 
-                                Map<String, Object> whichSection = (Map<String, Object>) action.getActionDetails().get("whichSection");
-                                Integer ActionWorkId = (Integer) whichSection.get("workId");
+                                    System.out.println("DTO task Name: " + taskDTO.getTaskName());
+                                    System.out.println("Template Name: " + templateName);
 
-                                TaskDTO newTaskDTO = new TaskDTO();
+                                    if(taskDTO.getTaskName().equals(templateName)) {
+                                        Map<String, Object> task = (Map<String, Object>) action.getActionDetails().get("task");
+                                        String taskName = (String) task.get("name");
+                                        String description = (String) task.get("description");
+                                        LocalDate dueDate = LocalDate.parse((String) task.get("dueDate"));
+                                        List<Integer> collaboratorIds = (List<Integer>) task.get("collaboratorIds");
+                                        List<Integer> teamIds = (List<Integer>) task.get("teamIds");
+                                        String priority = (String) task.get("priority");
 
-                                newTaskDTO.setTaskName(taskName);
-                                newTaskDTO.setDescription(description);
-                                newTaskDTO.setDueDate(dueDate);
-                                newTaskDTO.setCollaboratorIds(collaboratorIds);
-                                newTaskDTO.setTeamIds(teamIds);
-                                newTaskDTO.setTags(taskDTO.getTags());
-                                newTaskDTO.setPriority(TaskPriorityLevel.valueOf(priority.toUpperCase()));
-                                newTaskDTO.setProjectId(taskDTO.getProjectId());
-                                newTaskDTO.setWorkId(ActionWorkId);
-                                newTaskDTO.setAssignerId(taskDTO.getAssignerId());
-                                newTaskDTO.setStatus(false);
+                                        System.out.println("Task: " + task);
 
-                                taskRepository.save(modelMapper.map(newTaskDTO, Task.class));
-                                taskProducer.sendCreateTaskMessage(newTaskDTO.getTaskName(), newTaskDTO.getAssignerId(), newTaskDTO.getCollaboratorIds());
+                                        Map<String, Object> whichSection = (Map<String, Object>) action.getActionDetails().get("whichSection");
+                                        Integer ActionWorkId = (Integer) whichSection.get("workId");
 
+                                        TaskDTO newTaskDTO = new TaskDTO();
 
+                                        newTaskDTO.setTaskName(taskName);
+                                        newTaskDTO.setDescription(description);
+                                        newTaskDTO.setDueDate(dueDate);
+                                        newTaskDTO.setCollaboratorIds(collaboratorIds);
+                                        newTaskDTO.setTeamIds(teamIds);
+                                        newTaskDTO.setTags(taskDTO.getTags());
+                                        newTaskDTO.setPriority(TaskPriorityLevel.valueOf(priority.toUpperCase()));
+                                        newTaskDTO.setProjectId(taskDTO.getProjectId());
+                                        newTaskDTO.setWorkId(ActionWorkId);
+                                        newTaskDTO.setAssignerId(taskDTO.getAssignerId());
+                                        newTaskDTO.setStatus(false);
+
+                                        taskRepository.save(modelMapper.map(newTaskDTO, Task.class));
+                                        taskProducer.sendCreateTaskMessage(newTaskDTO.getTaskName(), newTaskDTO.getAssignerId(), newTaskDTO.getCollaboratorIds());
+                                    }
+                                }
+
+                                else {
+                                    System.out.println("Task is added from (Specific Work) ===> Create task");
+                                    Integer workId = (Integer) triggerSection.get("workId");
+
+                                    if(taskDTO.getTaskName().equals(templateName)) {
+                                        System.out.println("DTO task Name: " + taskDTO.getTaskName());
+                                        System.out.println("Template Name: " + templateName);
+
+                                        if(taskDTO.getWorkId() == workId) {
+                                            Map<String, Object> task = (Map<String, Object>) action.getActionDetails().get("task");
+                                            String taskName = (String) task.get("name");
+                                            String description = (String) task.get("description");
+                                            LocalDate dueDate = LocalDate.parse((String) task.get("dueDate"));
+                                            List<Integer> collaboratorIds = (List<Integer>) task.get("collaboratorIds");
+                                            List<Integer> teamIds = (List<Integer>) task.get("teamIds");
+                                            String priority = (String) task.get("priority");
+
+                                            System.out.println("Task: " + task);
+
+                                            Map<String, Object> whichSection = (Map<String, Object>) action.getActionDetails().get("whichSection");
+                                            Integer ActionWorkId = (Integer) whichSection.get("workId");
+
+                                            TaskDTO newTaskDTO = new TaskDTO();
+
+                                            newTaskDTO.setTaskName(taskName);
+                                            newTaskDTO.setDescription(description);
+                                            newTaskDTO.setDueDate(dueDate);
+                                            newTaskDTO.setCollaboratorIds(collaboratorIds);
+                                            newTaskDTO.setTeamIds(teamIds);
+                                            newTaskDTO.setTags(taskDTO.getTags());
+                                            newTaskDTO.setPriority(TaskPriorityLevel.valueOf(priority.toUpperCase()));
+                                            newTaskDTO.setProjectId(taskDTO.getProjectId());
+                                            newTaskDTO.setWorkId(ActionWorkId);
+                                            newTaskDTO.setAssignerId(taskDTO.getAssignerId());
+                                            newTaskDTO.setStatus(false);
+
+                                            taskRepository.save(modelMapper.map(newTaskDTO, Task.class));
+                                            taskProducer.sendCreateTaskMessage(newTaskDTO.getTaskName(), newTaskDTO.getAssignerId(), newTaskDTO.getCollaboratorIds());
+                                        }
+                                    }
+                                }
                             }
 
                         }
@@ -572,7 +1169,7 @@ public class TaskServiceImpl implements TaskService {
                                 });
                             }
 
-                            if (key.equals("Task is add from:Clear due date")) {
+                            if (key.equals("Assignee is...:Clear due date")) {
                                 System.out.println("Task is add from ===> Clear due date");
 
                                 taskDTO.setDueDate(null);
@@ -710,6 +1307,23 @@ public class TaskServiceImpl implements TaskService {
                                 }
                             }
 
+                            if (key.equals("Duedate is changed:Set task title")) {
+                                System.out.println("Duedate is changed ===> Set task title");
+
+                                Task task = modelMapper.map(taskRepository.findById(taskDTO.getTaskId()), Task.class);
+
+                                if(!task.getDueDate().isEqual(taskDTO.getDueDate())) {
+
+                                    String taskName = (String) action.getActionDetails().get("taskName");
+
+                                    System.out.println("Due date changed ===> Set task title");
+                                    System.out.println("taskDescription: " + taskName);
+                                    if (taskName != null) {
+                                        taskDTO.setTaskName(taskName);
+                                    }
+                                }
+                            }
+
                             if (key.equals("Duedate is changed:Set task description")) {
                                 System.out.println("Duedate is changed ===> Set task description");
 
@@ -724,6 +1338,98 @@ public class TaskServiceImpl implements TaskService {
                                     if (taskDescription != null) {
                                         taskDTO.setDescription(taskDescription);
                                     }
+                                }
+                            }
+
+                            if (key.equals("Duedate is changed:Complete task")) {
+                                System.out.println("Duedate is changed ===> Complete task");
+
+                                Task task = modelMapper.map(taskRepository.findById(taskDTO.getTaskId()), Task.class);
+
+                                if(!task.getDueDate().isEqual(taskDTO.getDueDate())) {
+                                    taskDTO.setStatus(true);
+                                }
+                            }
+
+                            if (key.equals("Duedate is changed:Incomplete task")) {
+                                System.out.println("Duedate is changed ===> Incomplete task");
+
+                                Task task = modelMapper.map(taskRepository.findById(taskDTO.getTaskId()), Task.class);
+
+                                if(!task.getDueDate().isEqual(taskDTO.getDueDate())) {
+                                    taskDTO.setStatus(false);
+                                }
+                            }
+
+                            if (key.equals("Duedate is changed:Create task")) {
+                                System.out.println("Duedate is changed ===> Create task");
+
+                                Map<String, Object> triggerAssignee = (Map<String, Object>) trigger.getTriggerDetails().get("assignee");
+                                Integer triggerMemberId = (Integer) triggerAssignee.get("id");
+
+                                newCollaboratorIds.stream().filter(id -> id.equals(triggerMemberId)).findFirst().ifPresent(id -> {
+
+
+                                    Map<String, Object> task = (Map<String, Object>) action.getActionDetails().get("task");
+                                    String taskName = (String) task.get("name");
+                                    String description = (String) task.get("description");
+                                    LocalDate dueDate = LocalDate.parse((String) task.get("dueDate"));
+                                    List<Integer> collaboratorIds = (List<Integer>) task.get("collaboratorIds");
+                                    List<Integer> teamIds = (List<Integer>) task.get("teamIds");
+                                    String priority = (String) task.get("priority");
+
+                                    System.out.println("Task: " + task);
+
+                                    Map<String, Object> whichSection = (Map<String, Object>) action.getActionDetails().get("whichSection");
+                                    Integer ActionWorkId = (Integer) whichSection.get("workId");
+
+                                    TaskDTO newTaskDTO = new TaskDTO();
+
+                                    newTaskDTO.setTaskName(taskName);
+                                    newTaskDTO.setDescription(description);
+                                    newTaskDTO.setDueDate(dueDate);
+                                    newTaskDTO.setCollaboratorIds(collaboratorIds);
+                                    newTaskDTO.setTeamIds(teamIds);
+                                    newTaskDTO.setTags(taskDTO.getTags());
+                                    newTaskDTO.setPriority(TaskPriorityLevel.valueOf(priority.toUpperCase()));
+                                    newTaskDTO.setProjectId(taskDTO.getProjectId());
+                                    newTaskDTO.setWorkId(ActionWorkId);
+                                    newTaskDTO.setAssignerId(taskDTO.getAssignerId());
+                                    newTaskDTO.setStatus(false);
+
+                                    taskRepository.save(modelMapper.map(newTaskDTO, Task.class));
+                                    taskProducer.sendCreateTaskMessage(newTaskDTO.getTaskName(), newTaskDTO.getAssignerId(), newTaskDTO.getCollaboratorIds());
+                                });
+                            }
+
+                            if (key.equals("Duedate is changed:Set assignee to")) {
+                                System.out.println("Duedate is changed ===> Set assignee to");
+
+                                Map<String, Object> triggerAssignee = (Map<String, Object>) trigger.getTriggerDetails().get("assignee");
+                                Integer triggerMemberId = (Integer) triggerAssignee.get("id");
+
+                                Map<String, Object> actionAssignee = (Map<String, Object>) action.getActionDetails().get("assignee");
+                                Integer actionMemberId = (Integer) actionAssignee.get("id");
+
+                                newCollaboratorIds.stream().filter(id -> id.equals(triggerMemberId)).findFirst().ifPresent(id -> {
+                                    newCollaboratorIds.add(actionMemberId);
+                                    taskDTO.setCollaboratorIds(newCollaboratorIds);
+                                });
+                            }
+
+                            if (key.equals("Duedate is changed:Clear assignee")) {
+                                System.out.println("Duedate is changed ===> Clear assignee");
+
+                                    taskDTO.setCollaboratorIds(new ArrayList<>());
+                                    taskDTO.setTeamIds(new ArrayList<>());
+
+                            }
+
+                            if (key.equals("Duedate is changed:Remove task from the project")) {
+                                System.out.println("Duedate is changed ===> Remove task from the project");
+
+                                if(!newCollaborators.isEmpty()) {
+                                    taskRepository.deleteById(taskDTO.getTaskId());
                                 }
                             }
 
