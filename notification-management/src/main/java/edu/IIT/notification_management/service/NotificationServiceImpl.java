@@ -12,7 +12,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -91,7 +94,7 @@ public class NotificationServiceImpl implements NotificationService {
         }
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -112,7 +115,7 @@ public class NotificationServiceImpl implements NotificationService {
         String body = projectDeleteEventDTO.getProjectName() + " project is already deleted";
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
 
@@ -135,7 +138,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
     String body = "You have been added as a collaborator to the task: " + taskCreateEventDTO.getTaskName();
 
     assert recipients != null;
-//    sendMail(recipients, subject, body);
+    sendMail(recipients, subject, body);
 }
 
     @Override
@@ -165,7 +168,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         }
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -186,7 +189,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         String body = taskDeleteEventDTO.getTaskName() + " task is already deleted";
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
 
@@ -209,7 +212,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         String body = "You have been added as a collaborator to the team: " + teamCreateEventDTO.getTeamName();
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -239,7 +242,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         }
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -260,7 +263,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         String body = teamDeleteEventDTO.getTeamName() + " team is already deleted";
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
 
@@ -283,7 +286,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         String body = "You have been added as a collaborator to the work: " + workCreateEventDTO.getWorkName();
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -313,7 +316,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         }
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
     @Override
@@ -334,7 +337,7 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         String body = workDeleteEventDTO.getWorkName() + " work is already deleted";
 
         assert recipients != null;
-//        sendMail(recipients, subject, body);
+        sendMail(recipients, subject, body);
     }
 
 
@@ -576,6 +579,22 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         notificationEventDTO.setBody(body);
         notificationEventDTO.setNotificationType(NotificationType.WORK);
         notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+    }
+
+    public void clearAll(int id) {
+        System.out.println("id: " + id);
+
+        List<Notification> notifications = notificationRepository.findAll().stream()
+                .filter(notification -> notification.getCollaboratorIds().contains(id))
+                .collect(Collectors.toList());
+
+        // Remove the id from collaboratorIds and update the notification
+        notifications.forEach(notification -> {
+            notification.getCollaboratorIds().removeIf(collaboratorId -> collaboratorId == id);
+            notificationRepository.save(notification); // Save updated notification
+        });
+
+        System.out.println("Collaborator ID " + id + " removed from all relevant notifications.");
     }
 
 }

@@ -64,14 +64,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<?> login(AuthRequest authRequest) {
 
+        Boolean checkUser = userRepository.findAll().stream()
+                .anyMatch(ele -> ele.getEmail().equals(authRequest.getEmail()));
+
+        if (!checkUser) {
+            return ResponseEntity.ok("User not found");
+        }
+
         UserDTO user = modelMapper.map(userRepository.findByEmail(authRequest.getEmail()), UserDTO.class);
 
-        if (user != null && !checkPassword(authRequest.getPassword(), user.getPassword())) {
-            return ResponseEntity.ok("Invalid credentials");
-        }
-        else {
+        if (checkPassword(authRequest.getPassword(), user.getPassword())) {
             String token = jwtUtil.generateToken(user.getUserName());
             return ResponseEntity.ok(new AuthResponse(token, user));
+        }
+        else {
+            return ResponseEntity.ok("Invalid credentials");
         }
     }
 

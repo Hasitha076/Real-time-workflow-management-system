@@ -50,4 +50,6 @@ public interface NotificationService {
     public void deleteWorkNotification(WorkDeleteEventDTO workDeleteEventDTO, String subject, String type);
 
     public void sendOTP(OTPRequest otpRequest);
+
+    public void clearAll(int id);
 }

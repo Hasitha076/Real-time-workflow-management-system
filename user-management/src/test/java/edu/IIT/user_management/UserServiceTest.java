@@ -121,6 +121,8 @@ public class UserServiceTest {
         mockUser.setPassword("encoded-password");
         mockUser.setUserName("Hasitha");
 
+        List<User> allUsers = List.of(mockUser);
+        when(userRepository.findAll()).thenReturn(allUsers);
         when(userRepository.findByEmail("hasitha@gmail.com")).thenReturn(mockUser);
 
         // Map User to UserDTO
@@ -146,9 +148,11 @@ public class UserServiceTest {
         assertThat(((AuthResponse) response.getBody()).getUser().getEmail()).isEqualTo("hasitha@gmail.com");
 
         // Verify interactions
+        verify(userRepository).findAll();
         verify(userRepository).findByEmail("hasitha@gmail.com");
         verify(jwtUtil).generateToken("Hasitha");
     }
+
 
     @Test
     public void testLogin_InvalidCredentials() {
@@ -161,17 +165,21 @@ public class UserServiceTest {
         authRequest.setEmail(email);
         authRequest.setPassword(rawPassword);
 
-        User mockUserEntity = new User();
-        mockUserEntity.setEmail(email);
-        mockUserEntity.setPassword(encodedPassword);
+        User mockUser = new User();
+        mockUser.setEmail(email);
+        mockUser.setPassword(encodedPassword);
+        mockUser.setUserName("Hasitha");
+
+        List<User> allUsers = List.of(mockUser);
+        when(userRepository.findAll()).thenReturn(allUsers);
+        when(userRepository.findByEmail(email)).thenReturn(mockUser);
 
         UserDTO mockUserDTO = new UserDTO();
         mockUserDTO.setEmail(email);
         mockUserDTO.setPassword(encodedPassword);
+        mockUserDTO.setUserName("Hasitha");
 
-        // Mocks
-        when(userRepository.findByEmail(email)).thenReturn(mockUserEntity);
-        when(modelMapper.map(mockUserEntity, UserDTO.class)).thenReturn(mockUserDTO);
+        when(modelMapper.map(mockUser, UserDTO.class)).thenReturn(mockUserDTO);
         when(userService.checkPassword(rawPassword, encodedPassword)).thenReturn(false);
 
         // Act
@@ -180,7 +188,12 @@ public class UserServiceTest {
         // Assert
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assertions.assertEquals("Invalid credentials", response.getBody());
+
+        // Verify interactions
+        verify(userRepository).findAll();
+        verify(userRepository).findByEmail(email);
     }
+
 
 
     @Test

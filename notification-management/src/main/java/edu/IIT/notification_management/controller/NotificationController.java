@@ -27,4 +27,10 @@ public class NotificationController {
         return notificationServiceQuery.getNotificationById(id);
     }
 
+    @DeleteMapping("/clearNotificationById/{id}")
+    public String clearAll(@PathVariable int id) {
+        notificationService.clearAll(id);
+        return "Clear All Notifications";
+    }
+
 }

@@ -4,21 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Test case created">
-      <change afterPath="$PROJECT_DIR$/notification-management/src/test/java/edu/IIT/notification_management/NotificationControllerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-management/src/test/java/edu/IIT/notification_management/NotificationServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task-management/src/test/java/edu/IIT/task_management/TaskControllerTest.java" afterDir="false" />
+    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Full updated implementations">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/controller/NotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/controller/NotificationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-management/src/test/java/edu/IIT/notification_management/TaskManagementApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/test/java/edu/IIT/notification_management/NotificationManagementApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project-management/src/test/java/edu/IIT/project_management/ProjectServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/test/java/edu/IIT/project_management/ProjectServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/controller/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/controller/TaskController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/test/java/edu/IIT/task_management/TaskServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/test/java/edu/IIT/task_management/TaskServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/dto/UserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-management/src/test/java/edu/IIT/user_management/UserControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/test/java/edu/IIT/user_management/UserControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/service/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management/src/test/java/edu/IIT/user_management/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/test/java/edu/IIT/user_management/UserServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,28 +80,28 @@
     "JUnit.AuthControllerTest.testLogin_ValidCredentials.executor": "Debug",
     "JUnit.NotificationControllerTest.executor": "Debug",
     "JUnit.NotificationManagementApplicationTests.executor": "Debug",
-    "JUnit.NotificationServiceTest.executor": "Debug",
+    "JUnit.NotificationServiceTest.executor": "Run",
     "JUnit.NotificationServiceTest.testCreateTaskNotification.executor": "Debug",
     "JUnit.NotificationServiceTest.testSendEmails.executor": "Debug",
     "JUnit.NotificationServiceTest.testSendTaskCreateEmails.executor": "Debug",
     "JUnit.ProjectControllerTest.executor": "Debug",
-    "JUnit.ProjectServiceTest.executor": "Debug",
+    "JUnit.ProjectServiceTest.executor": "Run",
     "JUnit.ProjectServiceTest.testUpdateProject.executor": "Debug",
     "JUnit.TaskControllerTest.executor": "Debug",
     "JUnit.TaskControllerTest.testDeleteTaskTemplate.executor": "Debug",
     "JUnit.TaskControllerTest.testUpdateTask.executor": "Debug",
     "JUnit.TaskManagementApplicationTests.executor": "Run",
-    "JUnit.TaskServiceTest.executor": "Debug",
+    "JUnit.TaskServiceTest.executor": "Run",
     "JUnit.TaskServiceTest.testChangeTaskStatus.executor": "Debug",
     "JUnit.TeamControllerTest.executor": "Debug",
-    "JUnit.TeamServiceTest.executor": "Debug",
+    "JUnit.TeamServiceTest.executor": "Run",
     "JUnit.UserControllerTest (1).executor": "Debug",
     "JUnit.UserControllerTest.executor": "Debug",
-    "JUnit.UserServiceTest.executor": "Debug",
+    "JUnit.UserServiceTest.executor": "Run",
     "JUnit.WorkControllerTest.executor": "Debug",
     "JUnit.WorkControllerTest.testCreateWork.executor": "Debug",
     "JUnit.WorkControllerTest.testCreateWork_controllerLayer.executor": "Debug",
-    "JUnit.WorkServiceTest.executor": "Debug",
+    "JUnit.WorkServiceTest.executor": "Run",
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
     "Maven.Real-time-workflow-management-system [clean...].executor": "Run",
     "Maven.Real-time-workflow-management-system [clean].executor": "Run",
@@ -281,31 +273,46 @@
       <toRun name="WorkManagementApplication" type="Application" />
       <method v="2" />
     </configuration>
-    <configuration name="TeamControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="team-management" />
+    <configuration name="NotificationServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="notification-management" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="edu.IIT.team_management.*" />
+          <option name="PATTERN" value="edu.IIT.notification_management.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="edu.IIT.team_management" />
-      <option name="MAIN_CLASS_NAME" value="edu.IIT.team_management.TeamControllerTest" />
+      <option name="PACKAGE_NAME" value="edu.IIT.notification_management" />
+      <option name="MAIN_CLASS_NAME" value="edu.IIT.notification_management.NotificationServiceTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="user-management" />
+    <configuration name="ProjectServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="project-management" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="edu.IIT.user_management.*" />
+          <option name="PATTERN" value="edu.IIT.project_management.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="edu.IIT.user_management" />
-      <option name="MAIN_CLASS_NAME" value="edu.IIT.user_management.UserControllerTest" />
+      <option name="PACKAGE_NAME" value="edu.IIT.project_management" />
+      <option name="MAIN_CLASS_NAME" value="edu.IIT.project_management.ProjectServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TaskServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="task-management" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="edu.IIT.task_management.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="edu.IIT.task_management" />
+      <option name="MAIN_CLASS_NAME" value="edu.IIT.task_management.TaskServiceTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -321,21 +328,6 @@
       </extension>
       <option name="PACKAGE_NAME" value="edu.IIT.user_management" />
       <option name="MAIN_CLASS_NAME" value="edu.IIT.user_management.UserServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="WorkControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="work-management" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="edu.IIT.work_management.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="edu.IIT.work_management" />
-      <option name="MAIN_CLASS_NAME" value="edu.IIT.work_management.WorkControllerTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -392,19 +384,19 @@
       <item itemvalue="Application.UserManagementApplication" />
       <item itemvalue="Application.TeamManagementApplication" />
       <item itemvalue="Compound.Real-time workflow application" />
-      <item itemvalue="JUnit.TeamControllerTest" />
-      <item itemvalue="JUnit.UserControllerTest" />
+      <item itemvalue="JUnit.NotificationServiceTest" />
+      <item itemvalue="JUnit.ProjectServiceTest" />
+      <item itemvalue="JUnit.TaskServiceTest" />
       <item itemvalue="JUnit.UserServiceTest" />
-      <item itemvalue="JUnit.WorkControllerTest" />
       <item itemvalue="JUnit.WorkServiceTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.WorkServiceTest" />
-        <item itemvalue="JUnit.WorkControllerTest" />
+        <item itemvalue="JUnit.TaskServiceTest" />
         <item itemvalue="JUnit.UserServiceTest" />
-        <item itemvalue="JUnit.UserControllerTest" />
-        <item itemvalue="JUnit.TeamControllerTest" />
+        <item itemvalue="JUnit.NotificationServiceTest" />
+        <item itemvalue="JUnit.ProjectServiceTest" />
+        <item itemvalue="JUnit.WorkServiceTest" />
       </list>
     </recent_temporary>
   </component>
@@ -800,7 +792,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745129372917</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="Full updated implementations">
+      <option name="closed" value="true" />
+      <created>1745213878706</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1745213878706</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -818,7 +818,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Template task and task assignees of work in workflow implementation is done" />
     <MESSAGE value="Team service changes done" />
     <MESSAGE value="Changes done" />
     <MESSAGE value="Project service Changes done" />
@@ -843,7 +842,8 @@
     <MESSAGE value="Upto TaskService Test cases implemented and workflow implemented" />
     <MESSAGE value="Login function implemented" />
     <MESSAGE value="Test case created" />
-    <option name="LAST_COMMIT_MESSAGE" value="Test case created" />
+    <MESSAGE value="Full updated implementations" />
+    <option name="LAST_COMMIT_MESSAGE" value="Full updated implementations" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Real_time_workflow_management_system$UserManagementApplication.ic" NAME="UserManagementApplication Coverage Results" MODIFIED="1742930709486" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
