@@ -1978,6 +1978,7 @@ public class TaskServiceImpl implements TaskService {
         }
 
         taskRepository.save(task);
+        taskProducer.sendUpdateStatusTaskMessage(task.getTaskName(), task.getAssignerId(), "Status changed", task.getCollaboratorIds());
     }
 
 

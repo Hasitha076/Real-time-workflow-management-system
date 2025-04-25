@@ -17,20 +17,9 @@ import java.util.List;
 @Slf4j
 public class ProjectProducer {
 
-//    private final KafkaTemplate<ProjectDTO, ProjectCreateEventDTO> kafkaTemplateCreate;
-//    private final KafkaTemplate<ProjectDTO, ProjectUpdateEventDTO> kafkaTemplateUpdate;
-//    private final KafkaTemplate<Integer, Integer> kafkaTemplateDelete;
-
     private final KafkaTemplate<String, String> kafkaTemplateCreate;
     private final KafkaTemplate<String, String> kafkaTemplateUpdate;
     private final KafkaTemplate<String, String> kafkaTemplateDelete;
-
-//    public void sendCreatedProjectMessage(String projectName, int assignerId, List<Integer> collaboratorIds) {
-//        log.info(String.format("#### -> Producing message -> %s", projectName, assignerId, collaboratorIds));
-//
-//        ProjectCreateEventDTO projectCreateEventDTO = new ProjectCreateEventDTO(projectName, assignerId, collaboratorIds);
-//        kafkaTemplateCreate.send("project-create-events", projectCreateEventDTO);
-//    }
 
     public void sendCreatedProjectMessage(String projectName, int assignerId, List<Integer> collaboratorIds) {
         try {
@@ -46,13 +35,6 @@ public class ProjectProducer {
         }
     }
 
-//    public void sendUpdateProjectMessage(String projectName, int assignerId, String collaboratorAssignmentType, List<Integer> collaboratorIds) {
-//        log.info(String.format("#### -> Producing message -> %s", projectName, collaboratorIds));
-//
-//        ProjectUpdateEventDTO projectCreateEventDTO = new ProjectUpdateEventDTO(projectName, assignerId, collaboratorAssignmentType, collaboratorIds);
-//        kafkaTemplateUpdate.send("project-update-events", projectCreateEventDTO);
-//    }
-
     public void sendUpdateProjectMessage(String projectName, int assignerId, String collaboratorAssignmentType, List<Integer> collaboratorIds) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -66,13 +48,6 @@ public class ProjectProducer {
             log.error("Error sending message", e);
         }
     }
-
-//    public void sendDeleteProjectMessage(int projectId, String projectName, int assignerId, List<Integer> collaboratorIds) {
-//        log.info(String.format("#### -> Producing message -> %s", projectName, collaboratorIds));
-//
-////        ProjectDeleteEventDTO projectDeleteEventDTO = new ProjectDeleteEventDTO(projectId, projectName, assignerId, collaboratorIds);
-//        kafkaTemplateDelete.send("project-delete-events", projectId);
-//    }
 
     public void sendDeleteProjectMessage(int projectId, String projectName, int assignerId, List<Integer> collaboratorIds) {
         try {

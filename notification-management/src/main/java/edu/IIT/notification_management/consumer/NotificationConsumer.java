@@ -16,19 +16,6 @@ public class NotificationConsumer {
 
     private final NotificationService notificationService;
 
-//    @KafkaListener(topics = "project-create-events", groupId = "notification-management")
-//    public void consumeCreateProject(ProjectCreateEventDTO message) {
-//        try {
-//            assert message != null;
-//
-//            notificationService.sendEmails(message);
-//            notificationService.createProjectNotification(message, null, "PROJECT");
-//
-//        } catch (Exception e) {
-//            log.error("Error consuming message", e);
-//        }
-//    }
-
     @KafkaListener(topics = "project-create-events", groupId = "notification-management")
     public void consumeCreateProject(String message) {
         try {
@@ -47,20 +34,6 @@ public class NotificationConsumer {
             log.error("Error consuming message", e);
         }
     }
-
-
-//    @KafkaListener(topics = "project-update-events", groupId = "notification-management")
-//    public void consumeUpdateProject(ProjectUpdateEventDTO message) {
-//        try {
-//            assert message != null;
-//
-//            notificationService.sendUpdatedEmails(message);
-//            notificationService.updateProjectNotification(message, null, "PROJECT");
-//
-//        } catch (Exception e) {
-//            log.error("Error consuming message", e);
-//        }
-//    }
 
     @KafkaListener(topics = "project-update-events", groupId = "notification-management")
     public void consumeUpdateProject(String message) {
@@ -81,19 +54,6 @@ public class NotificationConsumer {
         }
     }
 
-//    @KafkaListener(topics = "project-delete-events", groupId = "notification-management")
-//    public void consumeDeleteProject(ProjectDeleteEventDTO message) {
-//        try {
-//            assert message != null;
-//
-//            notificationService.sendDeleteEmails(message);
-//            notificationService.deleteProjectNotification(message, null, "PROJECT");
-//
-//        } catch (Exception e) {
-//            log.error("Error consuming message", e);
-//        }
-//    }
-
     @KafkaListener(topics = "project-delete-events", groupId = "notification-management")
     public void consumeDeleteProject(String message) {
         try {
@@ -113,18 +73,6 @@ public class NotificationConsumer {
         }
     }
 
-//    @KafkaListener(topics = "task-create-events", groupId = "notification-management")
-//    public void consumeCreateTask(TaskCreateEventDTO message) {
-//        try {
-//            assert message != null;
-//
-//            notificationService.sendTaskCreateEmails(message);
-//            notificationService.createTaskNotification(message, null, "task");
-//
-//        } catch (Exception e) {
-//            log.error("Error consuming message", e);
-//        }
-//    }
 
     @KafkaListener(topics = "task-create-events", groupId = "notification-management")
     public void consumeCreateTask(String message) {
@@ -145,18 +93,6 @@ public class NotificationConsumer {
         }
     }
 
-//    @KafkaListener(topics = "task-update-events", groupId = "notification-management")
-//    public void consumeUpdateTask(TaskUpdateEventDTO message) {
-//        try {
-//            assert message != null;
-//
-//            notificationService.sendTaskUpdatedEmails(message);
-//            notificationService.updateTaskNotification(message, null, "task");
-//
-//        } catch (Exception e) {
-//            log.error("Error consuming message", e);
-//        }
-//    }
 
     @KafkaListener(topics = "task-update-events", groupId = "notification-management")
     public void consumeUpdateTask(String message) {
@@ -177,18 +113,23 @@ public class NotificationConsumer {
         }
     }
 
-//    @KafkaListener(topics = "task-delete-events", groupId = "notification-management")
-//    public void consumeDeleteTask(TaskDeleteEventDTO message) {
-//        try {
-//            assert message != null;
-//
-//            notificationService.sendTaskDeleteEmails(message);
-//            notificationService.deleteTaskNotification(message, null, "task");
-//
-//        } catch (Exception e) {
-//            log.error("Error consuming message", e);
-//        }
-//    }
+    @KafkaListener(topics = "task-status-events", groupId = "notification-management")
+    public void consumeUpdateStatusTask(String message) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            TaskUpdateEventDTO taskUpdateEventDTO = objectMapper.readValue(message, TaskUpdateEventDTO.class);
+
+            System.out.println("Task update message: " + taskUpdateEventDTO.getTaskName());
+            System.out.println("Task update message: " + taskUpdateEventDTO.getAssignerId());
+            System.out.println("Task update message: " + taskUpdateEventDTO.getCollaboratorIds());
+
+            notificationService.sendTaskStatusUpdatedEmails(taskUpdateEventDTO);
+            notificationService.updateTaskStatusNotification(taskUpdateEventDTO);
+
+        } catch (Exception e) {
+            log.error("Error consuming message", e);
+        }
+    }
 
     @KafkaListener(topics = "task-delete-events", groupId = "notification-management")
     public void consumeDeleteTask(String message) {
@@ -209,21 +150,6 @@ public class NotificationConsumer {
         }
     }
 
-
-//    Team
-//    @KafkaListener(topics = "team-create-events", groupId = "notification-management")
-//    public void consumeCreateTeam(TeamCreateEventDTO message) {
-//        try {
-//            assert message != null;
-//
-//            notificationService.sendTeamCreateEmails(message);
-//            notificationService.createTeamNotification(message, null, "team");
-//
-//        } catch (Exception e) {
-//            log.error("Error consuming message", e);
-//        }
-//    }
-
     @KafkaListener(topics = "team-create-events", groupId = "notification-management")
     public void consumeCreateTeam(String message) {
         try {
@@ -242,19 +168,6 @@ public class NotificationConsumer {
             log.error("Error consuming message", e);
         }
     }
-
-//    @KafkaListener(topics = "team-update-events", groupId = "notification-management")
-//    public void consumeUpdateTeam(TeamUpdateEventDTO message) {
-//        try {
-//            assert message != null;
-//
-//            notificationService.sendTeamUpdatedEmails(message);
-//            notificationService.updateTeamNotification(message, null, "team");
-//
-//        } catch (Exception e) {
-//            log.error("Error consuming message", e);
-//        }
-//    }
 
     @KafkaListener(topics = "team-update-events", groupId = "notification-management")
     public void consumeUpdateTeam(String message) {
@@ -275,19 +188,6 @@ public class NotificationConsumer {
         }
     }
 
-//    @KafkaListener(topics = "team-delete-events", groupId = "notification-management")
-//    public void consumeDeleteTeam(TeamDeleteEventDTO message) {
-//        try {
-//            assert message != null;
-//
-//            notificationService.sendTeamDeleteEmails(message);
-//            notificationService.deleteTeamNotification(message, null, "team");
-//
-//        } catch (Exception e) {
-//            log.error("Error consuming message", e);
-//        }
-//    }
-
     @KafkaListener(topics = "team-delete-events", groupId = "notification-management")
     public void consumeDeleteTeam(String message) {
         try {
@@ -306,20 +206,6 @@ public class NotificationConsumer {
             log.error("Error consuming message", e);
         }
     }
-
-
-    //    Work
-//    @KafkaListener(topics = "work-create-events", groupId = "notification-management")
-//    public void consumeCreateWork(WorkCreateEventDTO message) {
-//        try {
-//            assert message != null;
-//            notificationService.sendWorkCreateEmails(message);
-//            notificationService.createWorkNotification(message, null, "work");
-//
-//        } catch (Exception e) {
-//            log.error("Error consuming message", e);
-//        }
-//    }
 
     @KafkaListener(topics = "work-create-events", groupId = "notification-management")
     public void consumeCreateWork(String message) {
@@ -340,19 +226,6 @@ public class NotificationConsumer {
         }
     }
 
-//    @KafkaListener(topics = "work-update-events", groupId = "notification-management")
-//    public void consumeUpdateWork(WorkUpdateEventDTO message) {
-//        try {
-//            assert message != null;
-//
-//            notificationService.sendWorkUpdatedEmails(message);
-//            notificationService.updateWorkNotification(message, null, "work");
-//
-//        } catch (Exception e) {
-//            log.error("Error consuming message", e);
-//        }
-//    }
-
     @KafkaListener(topics = "work-update-events", groupId = "notification-management")
     public void consumeUpdateWork(String message) {
         try {
@@ -371,19 +244,6 @@ public class NotificationConsumer {
             log.error("Error consuming message", e);
         }
     }
-
-//    @KafkaListener(topics = "work-delete-events", groupId = "notification-management")
-//    public void consumeDeleteWork(WorkDeleteEventDTO message) {
-//        try {
-//            assert message != null;
-//
-//            notificationService.sendWorkDeleteEmails(message);
-//            notificationService.deleteWorkNotification(message, null, "work");
-//
-//        } catch (Exception e) {
-//            log.error("Error consuming message", e);
-//        }
-//    }
 
     @KafkaListener(topics = "work-delete-events", groupId = "notification-management")
     public void consumeDeleteWork(String message) {

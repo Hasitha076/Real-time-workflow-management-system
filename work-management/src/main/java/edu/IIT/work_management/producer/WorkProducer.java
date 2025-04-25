@@ -16,11 +16,6 @@ import java.util.List;
 @Slf4j
 public class WorkProducer {
 
-//    private final KafkaTemplate<WorkDTO, WorkDTO> kafkaTemplate;
-//    private final KafkaTemplate<String, WorkCreateEventDTO> kafkaTemplateCreate;
-//    private final KafkaTemplate<String, WorkUpdateEventDTO> kafkaTemplateUpdate;
-//    private final KafkaTemplate<String, WorkDeleteEventDTO> kafkaTemplateDelete;
-
     private final KafkaTemplate<String, String> kafkaTemplateCreate;
     private final KafkaTemplate<String, String> kafkaTemplateUpdate;
     private final KafkaTemplate<String, String> kafkaTemplateDelete;
@@ -30,14 +25,6 @@ public class WorkProducer {
 //    public void sendMessage(WorkDTO workDTO) {
 //        log.info(String.format("#### -> Producing message -> %s", workDTO));
 //        kafkaTemplate.send("task-events", workDTO);
-//    }
-
-
-//    public void sendCreateTaskMessage(String taskName, int assigneeId, List<Integer> collaboratorIds) {
-//        log.info(String.format("#### -> Producing message -> %s", taskName, collaboratorIds));
-//
-//        WorkCreateEventDTO taskDTO = new WorkCreateEventDTO(taskName, assigneeId, collaboratorIds);
-//        kafkaTemplateCreate.send("task-create-events", taskDTO);
 //    }
 
     public void sendCreateWorkMessage(String workName, int assigneeId, List<Integer> collaboratorIds) {
@@ -54,13 +41,6 @@ public class WorkProducer {
         }
     }
 
-//    public void sendUpdateWorkMessage(String workName, int assignerId, String collaboratorAssignmentType, List<Integer> collaboratorIds) {
-//        log.info(String.format("#### -> Producing work update message -> %s", workName, collaboratorIds));
-//
-//        WorkUpdateEventDTO workDTO = new WorkUpdateEventDTO(workName, assignerId, collaboratorAssignmentType, collaboratorIds);
-//        kafkaTemplateUpdate.send("work-update-events", workDTO);
-//    }
-
     public void sendUpdateWorkMessage(String workName, int assignerId, String collaboratorAssignmentType, List<Integer> collaboratorIds) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -74,13 +54,6 @@ public class WorkProducer {
             log.error("Error sending message", e);
         }
     }
-
-//    public void sendDeleteWorkMessage(int workId, String workName, int assignerId, List<Integer> collaboratorIds) {
-//        log.info(String.format("#### -> Producing work delete message -> %s", workName, collaboratorIds));
-//
-//        WorkDeleteEventDTO workDeleteEventDTO = new WorkDeleteEventDTO(workId, workName, assignerId, collaboratorIds);
-//        kafkaTemplateDelete.send("work-delete-events", workDeleteEventDTO);
-//    }
 
     public void sendDeleteWorkMessage(int workId, String workName, int assignerId, List<Integer> collaboratorIds) {
         try {

@@ -172,6 +172,26 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
     }
 
     @Override
+    public void sendTaskStatusUpdatedEmails(TaskUpdateEventDTO taskUpdateEventDTO) {
+        List<Integer> ids = taskUpdateEventDTO.getCollaboratorIds();
+
+        List<String> recipients = userWebClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/filterUsers") // Ensure path matches the controller
+                        .queryParam("ids", ids) // Ensure param name matches the controller
+                        .build())
+                .retrieve()
+                .bodyToMono(List.class)
+                .block();
+
+        log.info("#### -> Sending email -> {}", recipients);
+       String subject = taskUpdateEventDTO.getTaskName() + " status";
+        String body = taskUpdateEventDTO.getTaskName() + " status has been changed";
+
+        assert recipients != null;
+        sendMail(recipients, subject, body);
+    }
+
+    @Override
     public void sendTaskDeleteEmails(TaskDeleteEventDTO taskDeleteEventDTO) {
         List<Integer> ids = taskDeleteEventDTO.getCollaboratorIds();
 
@@ -390,6 +410,23 @@ public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO) {
         notificationEventDTO.setAssignerId(taskUpdateEventDTO.getAssignerId());
         notificationEventDTO.setCollaboratorIds(taskUpdateEventDTO.getCollaboratorIds());
         notificationEventDTO.setSubject(subject);
+        notificationEventDTO.setBody(body);
+        notificationEventDTO.setNotificationType(NotificationType.TASK);
+        notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));
+    }
+
+    @Override
+    public void updateTaskStatusNotification(TaskUpdateEventDTO taskUpdateEventDTO) {
+        System.out.println("#### -> Update notification -> " + taskUpdateEventDTO);
+
+        String subject1 = "task-status-changed";
+        String body = taskUpdateEventDTO.getTaskName() + " status has been changed";
+
+        NotificationEventDTO notificationEventDTO = new NotificationEventDTO();
+        notificationEventDTO.setNotificationName(taskUpdateEventDTO.getTaskName());
+        notificationEventDTO.setAssignerId(taskUpdateEventDTO.getAssignerId());
+        notificationEventDTO.setCollaboratorIds(taskUpdateEventDTO.getCollaboratorIds());
+        notificationEventDTO.setSubject(subject1);
         notificationEventDTO.setBody(body);
         notificationEventDTO.setNotificationType(NotificationType.TASK);
         notificationRepository.save(modelMapper.map(notificationEventDTO, Notification.class));

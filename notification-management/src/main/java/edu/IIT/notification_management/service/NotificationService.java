@@ -15,6 +15,7 @@ public interface NotificationService {
 //    Task Email Notification
     public void sendTaskCreateEmails(TaskCreateEventDTO taskCreateEventDTO);
     public void sendTaskUpdatedEmails(TaskUpdateEventDTO taskUpdateEventDTO);
+    public void sendTaskStatusUpdatedEmails(TaskUpdateEventDTO taskUpdateEventDTO);
     public void sendTaskDeleteEmails(TaskDeleteEventDTO taskDeleteEventDTO);
 
 //    Team Email Notification
@@ -32,6 +33,7 @@ public interface NotificationService {
 //    Task Inbox Notification
     public void createTaskNotification(TaskCreateEventDTO taskCreateEventDTO, String subject, String type);
     public void updateTaskNotification(TaskUpdateEventDTO taskUpdateEventDTO, String subject, String type);
+    public void updateTaskStatusNotification(TaskUpdateEventDTO taskUpdateEventDTO);
     public void deleteTaskNotification(TaskDeleteEventDTO taskDeleteEventDTO, String subject, String type);
 
 //    Project Inbox Notification
