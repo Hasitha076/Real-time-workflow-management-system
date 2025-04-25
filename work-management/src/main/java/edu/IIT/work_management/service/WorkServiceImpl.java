@@ -179,7 +179,7 @@ public class WorkServiceImpl implements WorkService {
         WorkDTO work = getWorkById(id);
         workRepository.deleteById(id);
 
-        workProducer.sendDeleteWorkMessage(work.getWorkId(), work.getProjectId(), work.getWorkName(), work.getAssignerId(), work.getCollaboratorIds());
+        workProducer.sendDeleteWorkMessage(work.getWorkId(), work.getWorkName(), work.getAssignerId(), work.getCollaboratorIds());
     }
 
     @Transactional
@@ -197,7 +197,7 @@ public class WorkServiceImpl implements WorkService {
             workRepository.deleteById(work.getWorkId());
 
             // Send notification for deleted task
-            workProducer.sendDeleteWorkMessage( work.getWorkId(), work.getProjectId(), work.getWorkName(), work.getAssignerId(), work.getCollaboratorIds());
+            workProducer.sendDeleteWorkMessage( work.getWorkId(), work.getWorkName(), work.getAssignerId(), work.getCollaboratorIds());
         });
     }
 

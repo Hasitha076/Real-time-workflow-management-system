@@ -23,7 +23,7 @@ public class ProjectProducer {
 
     private final KafkaTemplate<String, String> kafkaTemplateCreate;
     private final KafkaTemplate<String, String> kafkaTemplateUpdate;
-    private final KafkaTemplate<ProjectDeleteEventDTO, ProjectDeleteEventDTO> kafkaTemplateDelete;
+    private final KafkaTemplate<String, String> kafkaTemplateDelete;
 
 //    public void sendCreatedProjectMessage(String projectName, int assignerId, List<Integer> collaboratorIds) {
 //        log.info(String.format("#### -> Producing message -> %s", projectName, assignerId, collaboratorIds));
@@ -67,24 +67,24 @@ public class ProjectProducer {
         }
     }
 
-    public void sendDeleteProjectMessage(int projectId, String projectName, int assignerId, List<Integer> collaboratorIds) {
-        log.info(String.format("#### -> Producing message -> %s", projectName, collaboratorIds));
-
-        ProjectDeleteEventDTO projectDeleteEventDTO = new ProjectDeleteEventDTO(projectId, projectName, assignerId, collaboratorIds);
-        kafkaTemplateDelete.send("project-delete-events", projectDeleteEventDTO);
-    }
-
 //    public void sendDeleteProjectMessage(int projectId, String projectName, int assignerId, List<Integer> collaboratorIds) {
-//        try {
-//            ObjectMapper objectMapper = new ObjectMapper();
-//            ProjectDeleteEventDTO event = new ProjectDeleteEventDTO(projectId, projectName, assignerId, collaboratorIds);
+//        log.info(String.format("#### -> Producing message -> %s", projectName, collaboratorIds));
 //
-//            String message = objectMapper.writeValueAsString(event);
-//            kafkaTemplateDelete.send("project-delete-events", message);
-//
-//            log.info("Sent message: {}", message);
-//        } catch (Exception e) {
-//            log.error("Error sending message", e);
-//        }
+////        ProjectDeleteEventDTO projectDeleteEventDTO = new ProjectDeleteEventDTO(projectId, projectName, assignerId, collaboratorIds);
+//        kafkaTemplateDelete.send("project-delete-events", projectId);
 //    }
+
+    public void sendDeleteProjectMessage(int projectId, String projectName, int assignerId, List<Integer> collaboratorIds) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            ProjectDeleteEventDTO event = new ProjectDeleteEventDTO(projectId, projectName, assignerId, collaboratorIds);
+
+            String message = objectMapper.writeValueAsString(event);
+            kafkaTemplateDelete.send("project-delete-events", message);
+
+            log.info("Sent message: {}", message);
+        } catch (Exception e) {
+            log.error("Error sending message", e);
+        }
+    }
 }

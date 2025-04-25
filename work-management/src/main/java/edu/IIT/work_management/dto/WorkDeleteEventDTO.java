@@ -12,7 +12,6 @@ import java.util.List;
 public class WorkDeleteEventDTO {
     private int workId;
     private String workName;
-    private int projectId;
     private int assignerId;
     private List<Integer> collaboratorIds;
 }

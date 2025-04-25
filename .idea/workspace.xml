@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Workflow automation function are implemented">
-      <change afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TaskCommentDTO.java" afterDir="false" />
+    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Kafka changes done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/producer/ProjectProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/producer/ProjectProducer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/consumer/TaskConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/consumer/TaskConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TaskDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/dto/TaskDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/model/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/model/Task.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/consumer/WorkConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/consumer/WorkConsumer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/dto/WorkDeleteEventDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/dto/WorkDeleteEventDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/producer/WorkProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/producer/WorkProducer.java" afterDir="false" />
@@ -422,14 +417,6 @@
       <workItem from="1735926693268" duration="1146000" />
       <workItem from="1735927856941" duration="225000" />
     </task>
-    <task id="LOCAL-00003" summary="Notification service is finished. Collaborators can get an email.">
-      <option name="closed" value="true" />
-      <created>1735284322401</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1735284322401</updated>
-    </task>
     <task id="LOCAL-00004" summary="Collaborators can get an email when updated the project.">
       <option name="closed" value="true" />
       <created>1735302054828</created>
@@ -814,7 +801,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745522808402</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="Kafka changes done">
+      <option name="closed" value="true" />
+      <created>1745588309990</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1745588309990</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -832,7 +827,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Project service Changes done" />
     <MESSAGE value="Project service status updating process done" />
     <MESSAGE value="User service changes done" />
     <MESSAGE value="User auth part is implemented" />
@@ -857,7 +851,8 @@
     <MESSAGE value="Full updated implementations" />
     <MESSAGE value="Notification clear function implementation done" />
     <MESSAGE value="Workflow automation function are implemented" />
-    <option name="LAST_COMMIT_MESSAGE" value="Workflow automation function are implemented" />
+    <MESSAGE value="Kafka changes done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Kafka changes done" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Real_time_workflow_management_system$UserManagementApplication.ic" NAME="UserManagementApplication Coverage Results" MODIFIED="1742930709486" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
