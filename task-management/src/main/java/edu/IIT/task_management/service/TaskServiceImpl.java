@@ -819,10 +819,32 @@ public class TaskServiceImpl implements TaskService {
         Task existingTask = taskOptional.get();
 
         // Handle comments
+//        if (taskDTO.getComments() != null) {
+//            List<String> commentList = new ArrayList<>(existingTask.getComments() != null ? existingTask.getComments() : new ArrayList<>());
+//            commentList.addAll(taskDTO.getComments());
+//            taskDTO.setComments(commentList);
+//        } else {
+//            taskDTO.setComments(existingTask.getComments());
+//        }
+
         if (taskDTO.getComments() != null) {
-            List<String> commentList = new ArrayList<>(existingTask.getComments() != null ? existingTask.getComments() : new ArrayList<>());
-            commentList.addAll(taskDTO.getComments());
-            taskDTO.setComments(commentList);
+
+            // Preserve existing comments
+            List<TaskCommentDTO> existingComments = existingTask.getComments() != null
+                    ? existingTask.getComments()
+                    : new ArrayList<>();
+
+            // Create a new list with only the comment text (strip out userId)
+            List<TaskCommentDTO> mergedComments = new ArrayList<>(existingComments);
+
+            for (TaskCommentDTO newComment : taskDTO.getComments()) {
+                TaskCommentDTO cleanedComment = new TaskCommentDTO();
+                cleanedComment.setComment(newComment.getComment()); // only keep comment text
+                cleanedComment.setUserId(newComment.getUserId());
+                mergedComments.add(cleanedComment);
+            }
+
+            taskDTO.setComments(mergedComments);
         } else {
             taskDTO.setComments(existingTask.getComments());
         }
@@ -1364,12 +1386,7 @@ public class TaskServiceImpl implements TaskService {
                             if (key.equals("Duedate is changed:Create task")) {
                                 System.out.println("Duedate is changed ===> Create task");
 
-                                Map<String, Object> triggerAssignee = (Map<String, Object>) trigger.getTriggerDetails().get("assignee");
-                                Integer triggerMemberId = (Integer) triggerAssignee.get("id");
-
-                                newCollaboratorIds.stream().filter(id -> id.equals(triggerMemberId)).findFirst().ifPresent(id -> {
-
-
+                                if(!existingTask.getDueDate().isEqual(taskDTO.getDueDate())) {
                                     Map<String, Object> task = (Map<String, Object>) action.getActionDetails().get("task");
                                     String taskName = (String) task.get("name");
                                     String description = (String) task.get("description");
@@ -1377,6 +1394,7 @@ public class TaskServiceImpl implements TaskService {
                                     List<Integer> collaboratorIds = (List<Integer>) task.get("collaboratorIds");
                                     List<Integer> teamIds = (List<Integer>) task.get("teamIds");
                                     String priority = (String) task.get("priority");
+                                    Integer assignerId = (Integer) task.get("assignerId");
 
                                     System.out.println("Task: " + task);
 
@@ -1394,41 +1412,46 @@ public class TaskServiceImpl implements TaskService {
                                     newTaskDTO.setPriority(TaskPriorityLevel.valueOf(priority.toUpperCase()));
                                     newTaskDTO.setProjectId(taskDTO.getProjectId());
                                     newTaskDTO.setWorkId(ActionWorkId);
-                                    newTaskDTO.setAssignerId(taskDTO.getAssignerId());
+                                    newTaskDTO.setAssignerId(assignerId);
                                     newTaskDTO.setStatus(false);
 
                                     taskRepository.save(modelMapper.map(newTaskDTO, Task.class));
                                     taskProducer.sendCreateTaskMessage(newTaskDTO.getTaskName(), newTaskDTO.getAssignerId(), newTaskDTO.getCollaboratorIds());
-                                });
+                                }
                             }
 
                             if (key.equals("Duedate is changed:Set assignee to")) {
                                 System.out.println("Duedate is changed ===> Set assignee to");
 
-                                Map<String, Object> triggerAssignee = (Map<String, Object>) trigger.getTriggerDetails().get("assignee");
-                                Integer triggerMemberId = (Integer) triggerAssignee.get("id");
+                                if(!existingTask.getDueDate().isEqual(taskDTO.getDueDate())) {
+                                    Map<String, Object> triggerAssignee = (Map<String, Object>) trigger.getTriggerDetails().get("assignee");
+                                    Integer triggerMemberId = (Integer) triggerAssignee.get("id");
 
-                                Map<String, Object> actionAssignee = (Map<String, Object>) action.getActionDetails().get("assignee");
-                                Integer actionMemberId = (Integer) actionAssignee.get("id");
+                                    Map<String, Object> actionAssignee = (Map<String, Object>) action.getActionDetails().get("assignee");
+                                    Integer actionMemberId = (Integer) actionAssignee.get("id");
 
-                                newCollaboratorIds.stream().filter(id -> id.equals(triggerMemberId)).findFirst().ifPresent(id -> {
-                                    newCollaboratorIds.add(actionMemberId);
-                                    taskDTO.setCollaboratorIds(newCollaboratorIds);
-                                });
+                                    newCollaboratorIds.stream().filter(id -> id.equals(triggerMemberId)).findFirst().ifPresent(id -> {
+                                        newCollaboratorIds.add(actionMemberId);
+                                        taskDTO.setCollaboratorIds(newCollaboratorIds);
+                                    });
+                                }
                             }
 
                             if (key.equals("Duedate is changed:Clear assignee")) {
                                 System.out.println("Duedate is changed ===> Clear assignee");
 
-                                    taskDTO.setCollaboratorIds(new ArrayList<>());
-                                    taskDTO.setTeamIds(new ArrayList<>());
+                                    if(!existingTask.getDueDate().isEqual(taskDTO.getDueDate())) {
+                                        taskDTO.setCollaboratorIds(new ArrayList<>());
+                                        taskDTO.setTeamIds(new ArrayList<>());
+                                    }
+
 
                             }
 
                             if (key.equals("Duedate is changed:Remove task from the project")) {
                                 System.out.println("Duedate is changed ===> Remove task from the project");
 
-                                if(!newCollaborators.isEmpty()) {
+                                if(!existingTask.getDueDate().isEqual(taskDTO.getDueDate())) {
                                     taskRepository.deleteById(taskDTO.getTaskId());
                                 }
                             }

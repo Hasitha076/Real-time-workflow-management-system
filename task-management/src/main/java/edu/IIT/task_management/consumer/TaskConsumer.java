@@ -1,6 +1,7 @@
 package edu.IIT.task_management.consumer;
 
 import edu.IIT.task_management.service.TaskService;
+import edu.IIT.work_management.dto.WorkDeleteEventDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -23,28 +24,28 @@ public class TaskConsumer {
 //        }
 //    }
 
-    @KafkaListener(topics = "project-delete-events", groupId = "task-management")
-    public void consumeProject(Integer message) {
-        try {
-            assert message != null;
-            log.info(String.format("#### -> Consumed message -> %s", message));
-            taskService.deleteByProjectId(message);
-
-        } catch (Exception e) {
-            log.error("Error consuming message", e);
-        }
-    }
-
-//    @KafkaListener(topics = "work-delete-events", groupId = "task-management")
-//    public void consumeWork(WorkDeleteEventDTO message) {
+//    @KafkaListener(topics = "project-delete-events", groupId = "task-management")
+//    public void consumeProject(Integer message) {
 //        try {
 //            assert message != null;
 //            log.info(String.format("#### -> Consumed message -> %s", message));
-//            taskService.deleteByProjectId(message.getWorkId());
+//            taskService.deleteByProjectId(message);
 //
 //        } catch (Exception e) {
 //            log.error("Error consuming message", e);
 //        }
 //    }
+
+    @KafkaListener(topics = "work-delete-events", groupId = "task-management")
+    public void consumeWork(WorkDeleteEventDTO message) {
+        try {
+            assert message != null;
+            log.info(String.format("#### -> Consumed message -> %s", message));
+            taskService.deleteByProjectId(message.getProjectId());
+
+        } catch (Exception e) {
+            log.error("Error consuming message", e);
+        }
+    }
 
 }

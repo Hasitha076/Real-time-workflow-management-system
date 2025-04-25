@@ -30,7 +30,7 @@ public class TaskDTO {
     private List<Integer> teamIds;
     private List<String> memberIcons;
     private List<String> tags;
-    private List<String> comments;
+    private List<TaskCommentDTO> comments;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

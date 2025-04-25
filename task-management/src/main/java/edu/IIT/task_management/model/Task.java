@@ -1,6 +1,7 @@
 package edu.IIT.task_management.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import edu.IIT.task_management.dto.TaskCommentDTO;
 import edu.IIT.task_management.dto.TaskPriorityLevel;
 import jakarta.persistence.*;
 import lombok.*;
@@ -54,10 +55,14 @@ public class Task {
     @Column(name = "tag_id")
     private List<String> tags;
 
+//    @ElementCollection
+//    @CollectionTable(name = "task_comments", joinColumns = @JoinColumn(name = "task_id"))
+//    @Column(name = "comment_id")
+//    private List<String> comments;
+
     @ElementCollection
     @CollectionTable(name = "task_comments", joinColumns = @JoinColumn(name = "task_id"))
-    @Column(name = "comment_id")
-    private List<String> comments;
+    private List<TaskCommentDTO> comments;
 
     @Column(updatable = false)
     private LocalDateTime createdAt;

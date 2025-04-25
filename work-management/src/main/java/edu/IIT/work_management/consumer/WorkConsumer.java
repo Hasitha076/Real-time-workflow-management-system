@@ -1,5 +1,6 @@
 package edu.IIT.work_management.consumer;
 
+import edu.IIT.project_management.dto.ProjectDeleteEventDTO;
 import edu.IIT.work_management.service.WorkService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,11 +25,12 @@ public class WorkConsumer {
 //    }
 
     @KafkaListener(topics = "project-delete-events", groupId = "work-management")
-    public void consumeProject(Integer message) {
+    public void consumeProject(ProjectDeleteEventDTO message) {
+        System.out.println(String.format("#### -> Consumed project delete message -> %s", message));
         try {
             assert message != null;
             log.info(String.format("#### -> Consumed project delete message -> %s", message));
-            workService.deleteByProjectId(message);
+            workService.deleteByProjectId(message.getProjectId());
 
         } catch (Exception e) {
             log.error("Error consuming message", e);
