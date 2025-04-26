@@ -101,9 +101,7 @@ class TaskControllerTest {
     void testDeleteTask() {
         int taskId = 1;
         when(taskService.deleteTask(taskId)).thenReturn("Task deleted successfully");
-
         taskController.deleteTask(taskId);
-
         verify(taskService).deleteTask(taskId);
     }
 
@@ -112,7 +110,6 @@ class TaskControllerTest {
         int taskId = 1;
         TaskDTO taskDTO = new TaskDTO();
         when(taskService.getTaskById(taskId)).thenReturn(taskDTO);
-
         taskController.getTask(taskId);
         verify(taskService).getTaskById(taskId);
     }
@@ -123,9 +120,7 @@ class TaskControllerTest {
         int projectId = 1;
         List<TaskDTO> taskList = List.of(new TaskDTO());
         when(taskService.getTasksByProjectId(projectId)).thenReturn(taskList);
-
         taskController.getTasksByProjectId(projectId);
-
         verify(taskService).getTasksByProjectId(projectId);
     }
 
@@ -134,9 +129,7 @@ class TaskControllerTest {
         int workId = 1;
         List<TaskDTO> taskList = List.of(new TaskDTO());
         when(taskService.getTasksByWorkId(workId)).thenReturn(taskList);
-
         taskController.getTasksByWorkId(workId);
-
         verify(taskService).getTasksByWorkId(workId);
     }
 
@@ -144,9 +137,7 @@ class TaskControllerTest {
     void testGetAllTasks() {
         List<TaskDTO> taskList = List.of(new TaskDTO());
         when(taskService.getAllTasks()).thenReturn(taskList);
-
         taskController.getAllTasks();
-
         verify(taskService).getAllTasks();
     }
 
@@ -154,9 +145,7 @@ class TaskControllerTest {
     void testChangeTaskStatus() {
         int taskId = 1;
         doNothing().when(taskService).changeTaskStatus(taskId);
-
         taskController.changeTaskStatus(taskId);
-
         verify(taskService).changeTaskStatus(taskId);
     }
 
@@ -164,9 +153,7 @@ class TaskControllerTest {
     void testCreateTaskTemplate() {
         TemplateDTO taskTemplateDTO = new TemplateDTO();
         when(taskService.createTaskTemplate(taskTemplateDTO)).thenReturn("Task template created successfully");
-
         taskController.addTaskTemplate(taskTemplateDTO);
-
         verify(taskService).createTaskTemplate(taskTemplateDTO);
     }
 
@@ -174,9 +161,7 @@ class TaskControllerTest {
     void testUpdateTaskTemplate() {
         TemplateDTO taskTemplateDTO = new TemplateDTO();
         when(taskService.updateTaskTemplate(taskTemplateDTO)).thenReturn("Task template updated successfully");
-
         taskController.updateTaskTemplate(taskTemplateDTO);
-
         verify(taskService).updateTaskTemplate(taskTemplateDTO);
     }
 
@@ -184,9 +169,7 @@ class TaskControllerTest {
     void testDeleteTaskTemplate() {
         int taskTemplateId = 1;
         when(taskService.deleteTaskTemplate(taskTemplateId)).thenReturn("Task template deleted successfully");
-
         taskController.deleteTaskTemplate(taskTemplateId);
-
         verify(taskService).deleteTaskTemplate(taskTemplateId);
     }
 
@@ -196,9 +179,7 @@ class TaskControllerTest {
         int taskTemplateId = 1;
         TemplateDTO taskTemplateDTO = new TemplateDTO();
         when(taskService.getTaskTemplateById(taskTemplateId)).thenReturn(taskTemplateDTO);
-
         TemplateDTO response = taskController.getTaskTemplate(taskTemplateId);
-
         verify(taskService).getTaskTemplateById(taskTemplateId);
     }
 
@@ -207,9 +188,7 @@ class TaskControllerTest {
     void testCreateCollaboratorsBlock() {
         CollaboratorsBlockDTO collaboratorsBlockDTO = new CollaboratorsBlockDTO();
         doNothing().when(taskService).createCollaboratorsBlock(collaboratorsBlockDTO);
-
         taskController.createCollaboratorsBlock(collaboratorsBlockDTO);
-
         verify(taskService).createCollaboratorsBlock(collaboratorsBlockDTO);
     }
 
@@ -217,9 +196,7 @@ class TaskControllerTest {
     void testUpdateCollaboratorsBlock() {
         CollaboratorsBlockDTO collaboratorsBlockDTO = new CollaboratorsBlockDTO();
         when(taskService.updateCollaboratorsBlock(collaboratorsBlockDTO)).thenReturn("Collaborators block updated successfully");
-
         taskController.updateCollaboratorsBlock(collaboratorsBlockDTO);
-
         verify(taskService).updateCollaboratorsBlock(collaboratorsBlockDTO);
     }
 
@@ -228,9 +205,7 @@ class TaskControllerTest {
         int workId = 1;
         CollaboratorsBlockDTO collaboratorsBlockDTO = new CollaboratorsBlockDTO();
         when(taskService.getCollaboratorsBlockByWorkId(workId)).thenReturn(collaboratorsBlockDTO);
-
         taskController.getCollaboratorsBlock(workId);
-
         verify(taskService).getCollaboratorsBlockByWorkId(workId);
     }
 
@@ -239,9 +214,7 @@ class TaskControllerTest {
     void testCreateRule() {
         RuleDTO ruleDTO = new RuleDTO();
         when(taskService.createRule(ruleDTO)).thenReturn("Rule created successfully");
-
         taskController.createRule(ruleDTO);
-
         verify(taskService).createRule(ruleDTO);
     }
 
@@ -250,9 +223,7 @@ class TaskControllerTest {
     void testUpdateRule() {
         RuleDTO ruleDTO = new RuleDTO();
         when(taskService.updateRule(ruleDTO)).thenReturn("Rule updated successfully");
-
         taskController.updateRule(ruleDTO);
-
         verify(taskService).updateRule(ruleDTO);
     }
 
@@ -260,9 +231,7 @@ class TaskControllerTest {
     void testDeleteRule() {
         int ruleId = 1;
         when(taskService.deleteRule(ruleId)).thenReturn("Rule deleted successfully");
-
         taskController.deleteRule(ruleId);
-
         verify(taskService).deleteRule(ruleId);
     }
 
@@ -271,9 +240,7 @@ class TaskControllerTest {
         int ruleId = 1;
         RuleDTO ruleDTO = new RuleDTO();
         when(taskService.getRuleById(ruleId)).thenReturn(ruleDTO);
-
         taskController.getRule(ruleId);
-
         verify(taskService).getRuleById(ruleId);
     }
 
@@ -281,9 +248,7 @@ class TaskControllerTest {
     void testGetAllRules() {
         List<RuleDTO> ruleList = List.of(new RuleDTO());
         when(taskService.getAllRules()).thenReturn(ruleList);
-
         taskController.getAllRules();
-
         verify(taskService).getAllRules();
     }
 
@@ -292,9 +257,7 @@ class TaskControllerTest {
         int projectId = 1;
         List<RuleDTO> ruleList = List.of(new RuleDTO());
         when(taskService.getRulesByProjectId(projectId)).thenReturn(ruleList);
-
         taskController.getRulesByProjectId(projectId);
-
         verify(taskService).getRulesByProjectId(projectId);
     }
 
@@ -302,9 +265,7 @@ class TaskControllerTest {
     void testCreatePublishFlow() {
         PublishFlowDTO publishFlowDTO = new PublishFlowDTO();
         when(taskService.createPublishFlow(publishFlowDTO)).thenReturn("Publish flow created successfully");
-
         taskController.createPublishFlow(publishFlowDTO);
-
         verify(taskService).createPublishFlow(publishFlowDTO);
     }
 
@@ -312,9 +273,7 @@ class TaskControllerTest {
     void testUpdatePublishFlow() {
         PublishFlowDTO publishFlowDTO = new PublishFlowDTO();
         when(taskService.updatePublishFlow(publishFlowDTO)).thenReturn("Publish flow updated successfully");
-
         taskController.updatePublishFlow(publishFlowDTO);
-
         verify(taskService).updatePublishFlow(publishFlowDTO);
     }
 
@@ -322,9 +281,7 @@ class TaskControllerTest {
     void testDeletePublishFlow() {
         int publishFlowId = 1;
         when(taskService.deletePublishFlow(publishFlowId)).thenReturn("Publish flow deleted successfully");
-
         taskController.deletePublishFlow(publishFlowId);
-
         verify(taskService).deletePublishFlow(publishFlowId);
     }
 
@@ -333,9 +290,7 @@ class TaskControllerTest {
         int publishFlowId = 1;
         PublishFlowDTO publishFlowDTO = new PublishFlowDTO();
         when(taskService.getPublishFlowById(publishFlowId)).thenReturn(publishFlowDTO);
-
         taskController.getPublishFlow(publishFlowId);
-
         verify(taskService).getPublishFlowById(publishFlowId);
     }
 
@@ -344,9 +299,7 @@ class TaskControllerTest {
         int projectId = 1;
         PublishFlowDTO publishFlowDTO = new PublishFlowDTO();
         when(taskService.findPublishFlowByProjectId(projectId)).thenReturn(publishFlowDTO);
-
         taskController.getPublishFlowByProjectId(projectId);
-
         verify(taskService).findPublishFlowByProjectId(projectId);
     }
 
@@ -354,9 +307,7 @@ class TaskControllerTest {
     void testMovedAndUpdateTask() {
         TaskDTO taskDTO = new TaskDTO();
         when(taskService.movedAndUpdateTask(taskDTO)).thenReturn("Task moved and updated successfully");
-
         taskController.movedAndUpdateTask(taskDTO);
-
         verify(taskService).movedAndUpdateTask(taskDTO);
     }
 
@@ -365,9 +316,7 @@ class TaskControllerTest {
         int ruleId = 1;
         PublishFlowDTO publishFlowDTO = new PublishFlowDTO();
         when(taskService.findPublishFlowByRuleId(ruleId)).thenReturn(publishFlowDTO);
-
         taskController.getPublishFlowByRuleId(ruleId);
-
         verify(taskService).findPublishFlowByRuleId(ruleId);
     }
 
@@ -375,9 +324,7 @@ class TaskControllerTest {
     void testDeletePublishFlowByRuleId() {
         int ruleId = 1;
         doNothing().when(taskService).deletePublishFlowByRuleId(ruleId);
-
         taskController.deletePublishFlowByRuleId(ruleId);
-
         verify(taskService).deletePublishFlowByRuleId(ruleId);
     }
 }

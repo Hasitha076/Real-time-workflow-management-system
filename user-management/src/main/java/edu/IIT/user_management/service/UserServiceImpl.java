@@ -149,11 +149,6 @@ public class UserServiceImpl implements UserService {
         return "User updated successfully";
     }
 
-//    @Override
-//    public void resetPassword(UserDTO userDTO) {
-//        userRepository.save(modelMapper.map(userDTO, new TypeToken<User>(){}.getType()));
-//    }
-
     @Override
     public void deleteUser(int id) {
         userRepository.deleteById(id);

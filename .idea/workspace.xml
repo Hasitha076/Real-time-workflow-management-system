@@ -4,9 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Assynchronus communication implementation done">
+    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="workflow implementation done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/consumer/NotificationConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/consumer/NotificationConsumer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/test/java/edu/IIT/task_management/TaskControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/test/java/edu/IIT/task_management/TaskControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management/src/test/java/edu/IIT/task_management/TaskServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/test/java/edu/IIT/task_management/TaskServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/main/java/edu/IIT/user_management/service/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-management/src/test/java/edu/IIT/user_management/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-management/src/test/java/edu/IIT/user_management/UserServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/service/WorkServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/service/WorkServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,75 +69,75 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.DiscoveryServerApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.NotificationManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.ProjectManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.TaskManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.TeamManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.UserManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.WorkManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.All in Real-time-workflow-management-system.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthControllerTest.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.AuthControllerTest.testLogin_ValidCredentials.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.NotificationControllerTest.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.NotificationManagementApplicationTests.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.NotificationServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.NotificationServiceTest.testCreateTaskNotification.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.NotificationServiceTest.testSendEmails.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.NotificationServiceTest.testSendTaskCreateEmails.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.ProjectControllerTest.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.ProjectServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProjectServiceTest.testUpdateProject.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.TaskControllerTest.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.TaskControllerTest.testDeleteTaskTemplate.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.TaskControllerTest.testUpdateTask.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.TaskManagementApplicationTests.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TaskServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TaskServiceTest.testChangeTaskStatus.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.TeamControllerTest.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.TeamServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserControllerTest (1).executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.UserControllerTest.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.UserServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.WorkControllerTest.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.WorkControllerTest.testCreateWork.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.WorkControllerTest.testCreateWork_controllerLayer.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.WorkServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Real-time-workflow-management-system [clean...].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Real-time-workflow-management-system [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Real-time-workflow-management-system [install].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.NotificationManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.ProjectManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.TaskManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.TeamManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.UserManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.WorkManagementApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/hasithamadushanepa/Desktop/MSc/Academic/sem 05/Software Development Project/CODE/Real-time-workflow-management-system/notification-management/src/main/java/edu/IIT/notification_management/dto&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.github.copilot.settings.ApplicationConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.DiscoveryServerApplication.executor": "Debug",
+    "Application.NotificationManagementApplication.executor": "Debug",
+    "Application.ProjectManagementApplication.executor": "Debug",
+    "Application.TaskManagementApplication.executor": "Debug",
+    "Application.TeamManagementApplication.executor": "Debug",
+    "Application.UserManagementApplication.executor": "Debug",
+    "Application.WorkManagementApplication.executor": "Debug",
+    "JUnit.All in Real-time-workflow-management-system.executor": "Run",
+    "JUnit.AuthControllerTest.executor": "Debug",
+    "JUnit.AuthControllerTest.testLogin_ValidCredentials.executor": "Debug",
+    "JUnit.NotificationControllerTest.executor": "Debug",
+    "JUnit.NotificationManagementApplicationTests.executor": "Debug",
+    "JUnit.NotificationServiceTest.executor": "Run",
+    "JUnit.NotificationServiceTest.testCreateTaskNotification.executor": "Debug",
+    "JUnit.NotificationServiceTest.testSendEmails.executor": "Debug",
+    "JUnit.NotificationServiceTest.testSendTaskCreateEmails.executor": "Debug",
+    "JUnit.ProjectControllerTest.executor": "Debug",
+    "JUnit.ProjectServiceTest.executor": "Run",
+    "JUnit.ProjectServiceTest.testUpdateProject.executor": "Debug",
+    "JUnit.TaskControllerTest.executor": "Debug",
+    "JUnit.TaskControllerTest.testDeleteTaskTemplate.executor": "Debug",
+    "JUnit.TaskControllerTest.testUpdateTask.executor": "Debug",
+    "JUnit.TaskManagementApplicationTests.executor": "Run",
+    "JUnit.TaskServiceTest.executor": "Debug",
+    "JUnit.TaskServiceTest.testChangeTaskStatus.executor": "Debug",
+    "JUnit.TeamControllerTest.executor": "Debug",
+    "JUnit.TeamServiceTest.executor": "Run",
+    "JUnit.UserControllerTest (1).executor": "Debug",
+    "JUnit.UserControllerTest.executor": "Debug",
+    "JUnit.UserServiceTest.executor": "Run",
+    "JUnit.WorkControllerTest.executor": "Debug",
+    "JUnit.WorkControllerTest.testCreateWork.executor": "Debug",
+    "JUnit.WorkControllerTest.testCreateWork_controllerLayer.executor": "Debug",
+    "JUnit.WorkServiceTest.executor": "Run",
+    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
+    "Maven.Real-time-workflow-management-system [clean...].executor": "Run",
+    "Maven.Real-time-workflow-management-system [clean].executor": "Run",
+    "Maven.Real-time-workflow-management-system [install].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.NotificationManagementApplication.executor": "Debug",
+    "Spring Boot.ProjectManagementApplication.executor": "Debug",
+    "Spring Boot.TaskManagementApplication.executor": "Debug",
+    "Spring Boot.TeamManagementApplication.executor": "Debug",
+    "Spring Boot.UserManagementApplication.executor": "Debug",
+    "Spring Boot.WorkManagementApplication.executor": "Debug",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/hasithamadushanepa/Desktop/MSc/Academic/sem 05/Software Development Project/CODE/Real-time-workflow-management-system/notification-management/src/main/java/edu/IIT/notification_management/dto",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "com.github.copilot.settings.ApplicationConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -181,7 +188,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Compound.Real-time workflow application">
+  <component name="RunManager" selected="JUnit.TaskServiceTest">
     <configuration name="NotificationManagementApplication" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.IIT.notification_management.NotificationManagementApplication" />
       <module name="notification-management" />
@@ -411,14 +418,6 @@
       <workItem from="1735499458267" duration="105690000" />
       <workItem from="1735926693268" duration="1146000" />
       <workItem from="1735927856941" duration="225000" />
-    </task>
-    <task id="LOCAL-00006" summary="Collaborators can get an email after created &amp; updated the task.">
-      <option name="closed" value="true" />
-      <created>1735316249707</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1735316249708</updated>
     </task>
     <task id="LOCAL-00007" summary="Collaborators can get an email after delete the task.">
       <option name="closed" value="true" />
@@ -804,7 +803,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745595135240</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="workflow implementation done">
+      <option name="closed" value="true" />
+      <created>1745669952080</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1745669952080</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -822,7 +829,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="User auth part is implemented" />
     <MESSAGE value="new changes done after the security integrated&#10;(After the troubleshoot)" />
     <MESSAGE value="docker-compose file added" />
     <MESSAGE value="docker-compose file edit and mvn install successfully done" />
@@ -847,7 +853,8 @@
     <MESSAGE value="Kafka changes done" />
     <MESSAGE value="Notification service changes done" />
     <MESSAGE value="Assynchronus communication implementation done" />
-    <option name="LAST_COMMIT_MESSAGE" value="Assynchronus communication implementation done" />
+    <MESSAGE value="workflow implementation done" />
+    <option name="LAST_COMMIT_MESSAGE" value="workflow implementation done" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Real_time_workflow_management_system$UserManagementApplication.ic" NAME="UserManagementApplication Coverage Results" MODIFIED="1742930709486" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">

@@ -40,7 +40,6 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public String createTask(TaskDTO taskDTO) {
 
-
         List<PublishFlow> publishFlows = publishFlowRepository.findPublishFlowsByProjectId(taskDTO.getProjectId());
 
         System.out.println("publishFlows: " + publishFlows);
@@ -2206,31 +2205,13 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public String createPublishFlow(PublishFlowDTO publishFlowDTO) {
         try {
-//            List<PublishFlow> existingPublishFlows = publishFlowRepository.findAll();
-//
-//            // Check if a record with the same projectId exists
-//            Optional<PublishFlow> matchedFlow = existingPublishFlows.stream()
-//                    .filter(flow -> flow.getProjectId() == publishFlowDTO.getProjectId())
-//                    .findFirst();
-//
-//            if (matchedFlow.isPresent()) {
-//                // Update the existing record
-//                PublishFlow flowToUpdate = matchedFlow.get();
-//                flowToUpdate.setPublishFlowName(publishFlowDTO.getPublishFlowName());
-//                flowToUpdate.setTriggers(publishFlowDTO.getTriggers());
-//                flowToUpdate.setActions(publishFlowDTO.getActions());
-//                flowToUpdate.setUpdatedAt(LocalDateTime.now());
-//
-//                publishFlowRepository.save(flowToUpdate);
-//            } else {
-                // Save as a new record
-                PublishFlow newFlow = modelMapper.map(publishFlowDTO, PublishFlow.class);
-                newFlow.setCreatedAt(LocalDateTime.now());
-                newFlow.setUpdatedAt(LocalDateTime.now());
-                publishFlowRepository.save(newFlow);
-//            }
+            // Save as a new record
+            PublishFlow newFlow = modelMapper.map(publishFlowDTO, PublishFlow.class);
+            newFlow.setCreatedAt(LocalDateTime.now());
+            newFlow.setUpdatedAt(LocalDateTime.now());
+            publishFlowRepository.save(newFlow);
 
-            return "Publish flow created or updated successfully";
+            return "Publish flow created successfully";
         } catch (Exception e) {
             e.printStackTrace();
             return "Error while creating or updating publish flow";

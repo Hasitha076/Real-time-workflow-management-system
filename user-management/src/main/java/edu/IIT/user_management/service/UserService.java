@@ -23,5 +23,4 @@ public interface UserService {
     public List<String> filterUserNames(List<Integer> userIds);
     public UserDTO findByEmail(String email);
     public boolean checkPassword(String rawPassword, String encodedPassword);
-//    public void resetPassword(UserDTO userDTO);
 }

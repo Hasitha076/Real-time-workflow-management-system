@@ -49,10 +49,6 @@ public class WorkServiceImpl implements WorkService {
                 .bodyToMono(List.class)
                 .block();
 
-        System.out.println("Users: " + users);
-        System.out.println("Teams: " + teams);
-
-
         List<String> userInitials = users.stream()
                 .map(name -> name.substring(0, 1).toUpperCase())
                 .collect(Collectors.toList());
@@ -130,10 +126,6 @@ public class WorkServiceImpl implements WorkService {
                 .retrieve()
                 .bodyToMono(List.class)
                 .block();
-
-        System.out.println("Users: " + users);
-        System.out.println("Teams: " + teams);
-
 
         List<String> userInitials = users.stream()
                 .map(name -> name.substring(0, 1).toUpperCase())

@@ -82,7 +82,7 @@ public class TaskServiceTest {
         taskDTO.setCollaboratorIds(List.of(1, 2, 3));
         taskDTO.setTeamIds(List.of(1, 4, 5));
         taskDTO.setTags(List.of("urgent", "feature"));
-        taskDTO.setComments(List.of("Initial comment"));
+//        taskDTO.setComments(TaskCommentDTO(List.of("qqqqq"), 1));
         taskDTO.setCreatedAt(LocalDateTime.of(2021, 9, 1, 0, 0));
         taskDTO.setUpdatedAt(LocalDateTime.of(2021, 9, 10, 0, 0));
 
@@ -99,7 +99,7 @@ public class TaskServiceTest {
         task.setCollaboratorIds(taskDTO.getCollaboratorIds());
         task.setTeamIds(taskDTO.getTeamIds());
         task.setTags(taskDTO.getTags());
-        task.setComments(taskDTO.getComments());
+//        task.setComments(taskDTO.getComments());
         task.setCreatedAt(taskDTO.getCreatedAt());
         task.setUpdatedAt(taskDTO.getUpdatedAt());
 
@@ -163,7 +163,7 @@ public class TaskServiceTest {
         taskDTO.setCollaboratorIds(List.of(4, 5));
         taskDTO.setTeamIds(List.of(2, 6));
         taskDTO.setTags(List.of("updated", "backend"));
-        taskDTO.setComments(List.of("Updated comment"));
+//        taskDTO.setComments(List.of("Updated comment"));
         taskDTO.setCreatedAt(LocalDateTime.of(2021, 9, 1, 0, 0));
         taskDTO.setUpdatedAt(LocalDateTime.of(2021, 9, 15, 0, 0));
 
@@ -1104,36 +1104,5 @@ public class TaskServiceTest {
         // Assert
         verify(publishFlowRepository, times(1)).deletePublishFlowByRuleId(ruleId);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

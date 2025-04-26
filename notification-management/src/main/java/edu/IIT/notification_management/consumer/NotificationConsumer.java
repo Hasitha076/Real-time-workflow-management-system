@@ -41,9 +41,9 @@ public class NotificationConsumer {
             ObjectMapper objectMapper = new ObjectMapper();
             ProjectUpdateEventDTO projectUpdateEventDTO = objectMapper.readValue(message, ProjectUpdateEventDTO.class);
 
-            System.out.println("Project create message: " + projectUpdateEventDTO.getProjectName());
-            System.out.println("Project create message: " + projectUpdateEventDTO.getAssignerId());
-            System.out.println("Project create message: " + projectUpdateEventDTO.getCollaboratorIds());
+            System.out.println("Project update message: " + projectUpdateEventDTO.getProjectName());
+            System.out.println("Project update message: " + projectUpdateEventDTO.getAssignerId());
+            System.out.println("Project update message: " + projectUpdateEventDTO.getCollaboratorIds());
 
 
             notificationService.sendUpdatedEmails(projectUpdateEventDTO);
@@ -60,9 +60,9 @@ public class NotificationConsumer {
             ObjectMapper objectMapper = new ObjectMapper();
             ProjectDeleteEventDTO projectDeleteEventDTO = objectMapper.readValue(message, ProjectDeleteEventDTO.class);
 
-            System.out.println("Project create message: " + projectDeleteEventDTO.getProjectName());
-            System.out.println("Project create message: " + projectDeleteEventDTO.getAssignerId());
-            System.out.println("Project create message: " + projectDeleteEventDTO.getCollaboratorIds());
+            System.out.println("Project delete message: " + projectDeleteEventDTO.getProjectName());
+            System.out.println("Project delete message: " + projectDeleteEventDTO.getAssignerId());
+            System.out.println("Project delete message: " + projectDeleteEventDTO.getCollaboratorIds());
 
 
             notificationService.sendDeleteEmails(projectDeleteEventDTO);
@@ -119,9 +119,9 @@ public class NotificationConsumer {
             ObjectMapper objectMapper = new ObjectMapper();
             TaskUpdateEventDTO taskUpdateEventDTO = objectMapper.readValue(message, TaskUpdateEventDTO.class);
 
-            System.out.println("Task update message: " + taskUpdateEventDTO.getTaskName());
-            System.out.println("Task update message: " + taskUpdateEventDTO.getAssignerId());
-            System.out.println("Task update message: " + taskUpdateEventDTO.getCollaboratorIds());
+            System.out.println("Task update status message: " + taskUpdateEventDTO.getTaskName());
+            System.out.println("Task update status message: " + taskUpdateEventDTO.getAssignerId());
+            System.out.println("Task update status message: " + taskUpdateEventDTO.getCollaboratorIds());
 
             notificationService.sendTaskStatusUpdatedEmails(taskUpdateEventDTO);
             notificationService.updateTaskStatusNotification(taskUpdateEventDTO);
