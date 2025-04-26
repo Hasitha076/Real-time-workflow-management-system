@@ -22,7 +22,7 @@ Welcome to the Real-Time Workflow Management System - a scalable and secure plat
 # Technologies Used
 - Frontend: React.js, Redux, Material-UI, Styled Components
 - Backend: Java Spring Boot, Microservices Architecture
-- Database: MySQL (Relational) and MongoDB (NoSQL)
+- Database: MySQL (Relational)
 - Event Streaming: Apache Kafka for real-time communication between services
 - Authentication: Keycloak for secure authentication and authorization
 - API Gateway: Centralized gateway for efficient microservices interaction
@@ -35,5 +35,5 @@ Welcome to the Real-Time Workflow Management System - a scalable and secure plat
 - Node.js (16.x or higher)
 - Apache Kafka (setup and running locally or in the cloud)
 - MySQL (configured and running)
-- MongoDB (configured and running)
+- GraphQL (configured and running)
 - Keycloak (configured for user authentication)
