@@ -192,6 +192,8 @@ public class TaskServiceImpl implements TaskService {
                                         if (ActionMovedSection != null) {
                                             Integer workid = (Integer) ActionMovedSection.get("workId");
                                             taskDTO.setWorkId(workid);
+
+
                                         }
                                     }
                                 }
@@ -306,8 +308,6 @@ public class TaskServiceImpl implements TaskService {
                                     Integer workId = (Integer) triggerSection.get("workId");
 
                                     if(taskDTO.getWorkId() == workId) {
-                                        String templateName = (String) trigger.getTriggerDetails().get("taskTemplateName");
-
                                         taskDTO.setStatus(true);
                                     }
                                 }
@@ -790,6 +790,19 @@ public class TaskServiceImpl implements TaskService {
                     }
                 }
             }
+        }
+
+        if (taskDTO.getCollaboratorIds() == null) {
+            CollaboratorsBlock collaboratorsBlocks = modelMapper.map(
+                    taskRepository.findByWorkId(taskDTO.getWorkId()),
+                    new TypeToken<CollaboratorsBlock>() {}.getType()
+            );
+
+            List<Integer> collaboratorIds = collaboratorsBlocks.getMemberIds();
+
+            System.out.println(collaboratorIds);
+
+            taskDTO.setCollaboratorIds(collaboratorIds);
         }
 
         taskRepository.save(modelMapper.map(taskDTO, Task.class));
@@ -1923,6 +1936,7 @@ public class TaskServiceImpl implements TaskService {
                             System.out.println("Key: " + key);
 
                             if (key.equals("Status is changed:Move task to section")) {
+                                System.out.println("Status is changed ===> Move task to section");
                                 if(task.isStatus()) {
                                     Map<String, Object> ActionMovedSection = (Map<String, Object>) action.getActionDetails().get("ActionMovedSection");
                                     if (ActionMovedSection != null) {
@@ -1957,6 +1971,117 @@ public class TaskServiceImpl implements TaskService {
                                         Integer workId = (Integer) ActionMovedSection.get("workId");
                                         task.setWorkId(workId);
                                     }
+                                }
+                            }
+
+                            if (key.equals("Status is changed:Create task")) {
+                                System.out.println("Status is changed ===> Create task");
+                                    Map<String, Object> taskNew = (Map<String, Object>) action.getActionDetails().get("task");
+                                    String taskName = (String) taskNew.get("name");
+                                    String description = (String) taskNew.get("description");
+                                    LocalDate dueDate = LocalDate.parse((String) taskNew.get("dueDate"));
+                                    List<Integer> collaboratorIds = (List<Integer>) taskNew.get("collaboratorIds");
+                                    List<Integer> teamIds = (List<Integer>) taskNew.get("teamIds");
+                                    Integer assignerId = (Integer) task.getAssignerId();
+                                    String priority  = (String) taskNew.get("priority");
+                                    List<String> tags = (List<String>) task.getTags();
+
+                                    System.out.println("Task: " + task);
+
+                                    Map<String, Object> whichSection = (Map<String, Object>) action.getActionDetails().get("whichSection");
+                                    Integer ActionWorkId = (Integer) whichSection.get("workId");
+
+                                    TaskDTO newTaskDTO = new TaskDTO();
+
+                                    newTaskDTO.setTaskName(taskName);
+                                    newTaskDTO.setDescription(description);
+                                    newTaskDTO.setDueDate(dueDate);
+                                    newTaskDTO.setCollaboratorIds(collaboratorIds);
+                                    newTaskDTO.setTeamIds(teamIds);
+                                    newTaskDTO.setTags(tags);
+                                    newTaskDTO.setPriority(TaskPriorityLevel.valueOf(priority.toUpperCase()));
+                                    newTaskDTO.setProjectId(task.getProjectId());
+                                    newTaskDTO.setWorkId(ActionWorkId);
+                                    newTaskDTO.setAssignerId(assignerId);
+                                    newTaskDTO.setStatus(false);
+
+                                    taskRepository.save(modelMapper.map(newTaskDTO, Task.class));
+                                    taskProducer.sendCreateTaskMessage(newTaskDTO.getTaskName(), newTaskDTO.getAssignerId(), newTaskDTO.getCollaboratorIds());
+                            }
+
+                            if (key.equals("Status is incomplete:Create task")) {
+
+                                System.out.println("Status is incomplete ===> Create task");
+                                if(task.isStatus()) {
+                                    Map<String, Object> taskNew = (Map<String, Object>) action.getActionDetails().get("task");
+                                    String taskName = (String) taskNew.get("name");
+                                    String description = (String) taskNew.get("description");
+                                    LocalDate dueDate = LocalDate.parse((String) taskNew.get("dueDate"));
+                                    List<Integer> collaboratorIds = (List<Integer>) taskNew.get("collaboratorIds");
+                                    List<Integer> teamIds = (List<Integer>) taskNew.get("teamIds");
+                                    String priority  = (String) taskNew.get("priority");
+                                    Integer assignerId = (Integer) task.getAssignerId();
+                                    List<String> tags = (List<String>) task.getTags();
+
+                                    System.out.println("Task: " + task);
+
+                                    Map<String, Object> whichSection = (Map<String, Object>) action.getActionDetails().get("whichSection");
+                                    Integer ActionWorkId = (Integer) whichSection.get("workId");
+
+                                    TaskDTO newTaskDTO = new TaskDTO();
+
+                                    newTaskDTO.setTaskName(taskName);
+                                    newTaskDTO.setDescription(description);
+                                    newTaskDTO.setDueDate(dueDate);
+                                    newTaskDTO.setCollaboratorIds(collaboratorIds);
+                                    newTaskDTO.setTeamIds(teamIds);
+                                    newTaskDTO.setTags(tags);
+                                    newTaskDTO.setPriority(TaskPriorityLevel.valueOf(priority.toUpperCase()));
+                                    newTaskDTO.setProjectId(task.getProjectId());
+                                    newTaskDTO.setWorkId(ActionWorkId);
+                                    newTaskDTO.setAssignerId(assignerId);
+                                    newTaskDTO.setStatus(false);
+
+                                    taskRepository.save(modelMapper.map(newTaskDTO, Task.class));
+                                    taskProducer.sendCreateTaskMessage(newTaskDTO.getTaskName(), newTaskDTO.getAssignerId(), newTaskDTO.getCollaboratorIds());
+                                }
+                            }
+
+                            if (key.equals("Status is complete:Create task")) {
+
+                                System.out.println("Status is complete ===> Create task");
+                                if(!task.isStatus()) {
+                                    Map<String, Object> taskNew = (Map<String, Object>) action.getActionDetails().get("task");
+                                    String taskName = (String) taskNew.get("name");
+                                    String description = (String) taskNew.get("description");
+                                    LocalDate dueDate = LocalDate.parse((String) taskNew.get("dueDate"));
+                                    List<Integer> collaboratorIds = (List<Integer>) taskNew.get("collaboratorIds");
+                                    List<Integer> teamIds = (List<Integer>) taskNew.get("teamIds");
+                                    String priority  = (String) taskNew.get("priority");
+                                    Integer assignerId = (Integer) task.getAssignerId();
+                                    List<String> tags = (List<String>) task.getTags();
+
+                                    System.out.println("Task: " + task);
+
+                                    Map<String, Object> whichSection = (Map<String, Object>) action.getActionDetails().get("whichSection");
+                                    Integer ActionWorkId = (Integer) whichSection.get("workId");
+
+                                    TaskDTO newTaskDTO = new TaskDTO();
+
+                                    newTaskDTO.setTaskName(taskName);
+                                    newTaskDTO.setDescription(description);
+                                    newTaskDTO.setDueDate(dueDate);
+                                    newTaskDTO.setCollaboratorIds(collaboratorIds);
+                                    newTaskDTO.setTeamIds(teamIds);
+                                    newTaskDTO.setTags(tags);
+                                    newTaskDTO.setPriority(TaskPriorityLevel.valueOf(priority.toUpperCase()));
+                                    newTaskDTO.setProjectId(task.getProjectId());
+                                    newTaskDTO.setWorkId(ActionWorkId);
+                                    newTaskDTO.setAssignerId(assignerId);
+                                    newTaskDTO.setStatus(false);
+
+                                    taskRepository.save(modelMapper.map(newTaskDTO, Task.class));
+                                    taskProducer.sendCreateTaskMessage(newTaskDTO.getTaskName(), newTaskDTO.getAssignerId(), newTaskDTO.getCollaboratorIds());
                                 }
                             }
 

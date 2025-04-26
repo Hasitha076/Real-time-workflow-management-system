@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Notification service changes done">
+    <list default="true" id="0964fe85-5cb7-41c2-a6d6-c961341ec39f" name="Changes" comment="Assynchronus communication implementation done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/consumer/NotificationConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/consumer/NotificationConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-management/src/main/java/edu/IIT/notification_management/service/NotificationServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/producer/ProjectProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/project-management/src/main/java/edu/IIT/project_management/producer/ProjectProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/producer/TaskProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/producer/TaskProducer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management/src/main/java/edu/IIT/task_management/service/TaskServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/team-management/src/main/java/edu/IIT/team_management/producer/TeamProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/team-management/src/main/java/edu/IIT/team_management/producer/TeamProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/producer/WorkProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/work-management/src/main/java/edu/IIT/work_management/producer/WorkProducer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -419,14 +412,6 @@
       <workItem from="1735926693268" duration="1146000" />
       <workItem from="1735927856941" duration="225000" />
     </task>
-    <task id="LOCAL-00005" summary="Collaborators can get an email after deleted the project.">
-      <option name="closed" value="true" />
-      <created>1735311236543</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1735311236543</updated>
-    </task>
     <task id="LOCAL-00006" summary="Collaborators can get an email after created &amp; updated the task.">
       <option name="closed" value="true" />
       <created>1735316249707</created>
@@ -811,7 +796,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745592965320</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="Assynchronus communication implementation done">
+      <option name="closed" value="true" />
+      <created>1745595135240</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1745595135240</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -829,7 +822,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="User service changes done" />
     <MESSAGE value="User auth part is implemented" />
     <MESSAGE value="new changes done after the security integrated&#10;(After the troubleshoot)" />
     <MESSAGE value="docker-compose file added" />
@@ -854,7 +846,8 @@
     <MESSAGE value="Workflow automation function are implemented" />
     <MESSAGE value="Kafka changes done" />
     <MESSAGE value="Notification service changes done" />
-    <option name="LAST_COMMIT_MESSAGE" value="Notification service changes done" />
+    <MESSAGE value="Assynchronus communication implementation done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Assynchronus communication implementation done" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Real_time_workflow_management_system$UserManagementApplication.ic" NAME="UserManagementApplication Coverage Results" MODIFIED="1742930709486" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
